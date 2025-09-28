@@ -161,7 +161,7 @@ class Application(tk.Frame):
     def saveFileAs(self):
         filename = filedialog.asksaveasfilename()
     def exportFile(self):
-        filename = filedialog.asksaveasfilename(filetypes=[("S-expressions", ".scm"),], defaulktextension='.scm')
+        filename = filedialog.asksaveasfilename(filetypes=[("S-expressions", ".scm"),], defaultextension='.scm')
         if filename:
             code = self.model.emit()
             with open(filename, 'w', encoding='utf8') as fptr:
