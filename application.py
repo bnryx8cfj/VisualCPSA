@@ -12,14 +12,16 @@ class Application(tk.Frame):
         """
         root = tk.Tk() if root is None else root
         super().__init__(root)
-        self.master = root
-        self.model = None
+        self.master: tk.Tk = root
         self.height= height* 2
         self.width = width * 2
-        self.dirty_flag = False
         self.configure_master(height, width)
         self.make_menubar()
         self.initialize_canvas(height, width)
+
+        # Should dirty flag be in the application or in the data model?
+        # self.dirty_flag = False
+        self.model: model.Model = model.Model(self)
 
     def configure_master(self, height, width):
         """
@@ -152,6 +154,16 @@ class Application(tk.Frame):
         heraldDialog = model.HeraldDialog(owner=self)
         heraldDialog.mainloop()
 
+    def exportFile(self):
+        if self.model is None or not self.model.ready():
+            tk.messagebox(master=self, message="Model is not ready to export.")
+        filename = filedialog.asksaveasfilename(filetypes=[("S-expressions", ".scm"),], defaultextension='.scm')
+        if filename:
+            code = self.model.emit()
+            with open(filename, 'w', encoding='utf8') as fptr:
+                fptr.write(code)
+
+    ## Stubs
     def openFile(self):
         filename = filedialog.askopenfilename()
         if filename:
@@ -160,12 +172,6 @@ class Application(tk.Frame):
         filename = filedialog.asksaveasfilename()
     def saveFileAs(self):
         filename = filedialog.asksaveasfilename()
-    def exportFile(self):
-        filename = filedialog.asksaveasfilename(filetypes=[("S-expressions", ".scm"),], defaultextension='.scm')
-        if filename:
-            code = self.model.emit()
-            with open(filename, 'w', encoding='utf8') as fptr:
-                fptr.write(code)
 
     def closeFile(self): pass
 

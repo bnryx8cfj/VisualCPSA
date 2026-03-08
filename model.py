@@ -103,7 +103,13 @@ class Model:
         self.herald: Herald|None = None
         self.protocol: Protocol|None = None
 
+    def ready(self) -> bool:
+        return self.herald is not None and self.protocol is not None
+
     def emit(self):
+        if not self.ready():
+            tk.messagebox(master=self, message='Model is not ready to export.')
+            return
         return '\n'.join([
             self.herald.emit(),
             self.protocol.emit()
@@ -128,6 +134,11 @@ class Protocol:
         self.messages = []
 
     def emit(self):
+        # Debug verification
+        print(f"Protocol {self.name} contains {len(self.messages)} messages")
+        for m in self.messages:
+            print('\t', m.dump())
+
         return '\n'.join([
             f"(defprotocol {self.name} {self.algebra}",
             '\n'.join([r.emit() for r in self.roles]),
@@ -156,7 +167,7 @@ class ProtocolDialog(tk.Toplevel):
         else:
             okButton = ttk.Button(frame, text='Okay', command=self.createProtocol)
             self.nameVar = tk.StringVar()
-            self.algebraVar = tk.StringVar()
+            self.algebraVar = tk.StringVar(value="basic")
 
         nameLabel = ttk.Label(frame, text='Protocol name:')
         nameEntry = ttk.Entry(frame, textvariable=self.nameVar)
