@@ -23,10 +23,12 @@ class Role:
             elif self.name == m.dst:
                 msgs.append(f"(recv {m.content})")
         return '\n'.join([
-            f"\t\t(defrole {self.name} \n\t(vars )\n\t(trace",
+            f"\t(defrole {self.name}",
+            "\t\t(vars )",
+            "\t\t(trace",
+            '\t\t\t' + '\n\t\t\t'.join(msgs) if msgs else "",
+            "\t\t)",
             "\t)",
-            '\n\t'.join(msgs),
-            ")",
         ])
 
 class RoleDialog(tk.Toplevel):
@@ -88,6 +90,9 @@ class Message:
         self.dst = dst
         self.message_tag = message_tag
         self.content = content
+
+    def dump(self) -> str:
+        return f"Message {self.object_id}: {self.src}-->{self.dst}: {self.message_tag=} {self.content=}"
 
 class MessageDialog(tk.Toplevel):
     def __init__(self, owner):  # owner is an application derived from tkinter.Frame
