@@ -1,10 +1,23 @@
-# VisualCPSA 0.1
+# VisualCPSA 0.2
 
 VisualCPSA is a Python/Tkinter prototype for drawing CPSA protocol-flow diagrams and exporting CPSA-style S-expression syntax.
 
 Target runtime: Python 3.10.7 on Windows 11.
 
 No third-party packages are required at runtime.
+
+## Usage
+
+```sh
+python .\main.py --help
+usage: main.py [-h] [--config CONFIG]
+
+VisualCPSA graphical CPSA protocol editor.
+
+options:
+  -h, --help       show this help message and exit
+  --config CONFIG  Path to the VisualCPSA settings JSON file. Defaults to visualcpsa_settings.json in the current working directory.
+```
 
 ## Command line
 
@@ -22,6 +35,22 @@ activate_venv.bat
 run_tests.bat
 run_app.bat
 ```
+
+## VisualCPSA Model and CPSA Export Unit Tests
+
+Run with Python 3.10.7:
+
+```bat
+python -m unittest discover -s tests -v
+```
+
+The suite tests:
+- the permissive editor representation
+- JSON round trips
+- global message ordering
+- paired send/receive generation
+- Needham-Schroeder trace order
+- separation of display markup from raw CPSA syntax.
 
 ## Splash screen
 
