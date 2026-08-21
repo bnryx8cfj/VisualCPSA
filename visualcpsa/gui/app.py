@@ -24,6 +24,7 @@ class VisualCPSAApp(tk.Tk):
         self.withdraw()
         start_intro_or_reveal(self, settings, config_path)
         self.title("VisualCPSA")
+        self.iconbitmap(r"VCPSA.ico")
         self.geometry("1200x800")
         self.project = CPSAGraphicalProject.new_default()
         self.current_tool = tk.StringVar(value="select")
@@ -41,11 +42,6 @@ class VisualCPSAApp(tk.Tk):
         self._build_tabs()
         self.render()
         self.refresh_previews()
-        # if self.settings.show_intro:
-        #     SplashScreen(self, self.settings, self._finish_splash)
-        # else:
-        #     self.deiconify()
-        # assert self.notebook is not None, "notebook must be initialized"
 
 
     def _finish_splash(self) -> None:

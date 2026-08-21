@@ -73,6 +73,8 @@ class SplashScreen(tk.Toplevel):
 
         self.withdraw()
         self.title(f"Welcome to {PROGRAM_NAME}")
+        self.iconbitmap(r"VCPSA.ico")
+
         self.geometry("900x650")
         self.resizable(False, False)
         self.protocol("WM_DELETE_WINDOW", self.dismiss)
