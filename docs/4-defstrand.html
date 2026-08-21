@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>4-defstrand.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-4-defstrand">Chapter 4: <code>defstrand</code></h1>
+<h2 id="41-overview">4.1 Overview</h2>
+<p>The <code>defstrand</code> construct is used within a CPSA skeleton to instantiate a role defined in a protocol. A strand represents a partially or fully realized execution of a protocol role and provides bindings between role variables and specific terms appearing in the analysis scenario.</p>
+<p>From the strand-space perspective, a strand is an ordered sequence of protocol events corresponding to one execution instance of a role. A <code>defstrand</code> declaration introduces such an execution instance into a skeleton.</p>
+<h3 id="metamodel-mapping">Metamodel Mapping</h3>
+<table>
+<thead>
+<tr>
+<th>Concrete Syntax</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defstrand</code></td>
+<td><code>Strand</code></td>
+</tr>
+<tr>
+<td>role reference</td>
+<td><code>Role</code></td>
+</tr>
+<tr>
+<td>variable binding</td>
+<td><code>VariableBinding</code></td>
+</tr>
+<tr>
+<td>event sequence</td>
+<td><code>Trace</code></td>
+</tr>
+<tr>
+<td>strand nodes</td>
+<td><code>Node</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="42-purpose">4.2 Purpose</h1>
+<p>The <code>defstrand</code> declaration serves four primary purposes:</p>
+<ol>
+<li>Instantiates a protocol role within a skeleton.</li>
+<li>Defines the strand height to be considered during analysis.</li>
+<li>Binds role variables to concrete terms.</li>
+<li>Establishes the initial assumptions from which CPSA derives shapes and realized executions.</li>
+</ol>
+<p>A skeleton without strands contains no protocol participants. Consequently, <code>defstrand</code> declarations provide the protocol behavior that CPSA analyzes.</p>
+<hr>
+<h1 id="43-semantics">4.3 Semantics</h1>
+<p>A <code>defstrand</code> declaration denotes:</p>
+<ul>
+<li>One instance of a protocol role.</li>
+<li>A prefix of that role's trace.</li>
+<li>A collection of variable substitutions.</li>
+<li>A participant whose execution contributes nodes to the containing skeleton.</li>
+</ul>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>defstrand(Role, Height, Bindings)
+</div></code></pre>
+<p>represents:</p>
+<blockquote>
+<p>A strand whose trace is derived from the referenced role and whose visible execution consists of the first Height events of that role under the specified substitution.</p>
+</blockquote>
+<p>A strand is not merely a syntactic construct. It represents a semantic execution object participating in:</p>
+<ul>
+<li>Authentication reasoning</li>
+<li>Secrecy reasoning</li>
+<li>Shape generation</li>
+<li>Realized execution construction</li>
+<li>Bundle derivation</li>
+</ul>
+<hr>
+<h1 id="44-concrete-syntax">4.4 Concrete Syntax</h1>
+<h2 id="general-form">General Form</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">defstrand</span> role-name height
+  (<span class="hljs-name">var1</span> value1)
+  (<span class="hljs-name">var2</span> value2)
+  ...
+)
+</div></code></pre>
+<h2 id="informal-syntax-description">Informal Syntax Description</h2>
+<p>A <code>defstrand</code> declaration consists of:</p>
+<ol>
+<li>The keyword <code>defstrand</code></li>
+<li>A role identifier</li>
+<li>A strand height</li>
+<li>Zero or more variable bindings</li>
+</ol>
+<h2 id="components">Components</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defstrand</code></td>
+<td>Strand declaration keyword</td>
+</tr>
+<tr>
+<td><code>role-name</code></td>
+<td>Referenced role</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Number of events included</td>
+</tr>
+<tr>
+<td>Binding pair</td>
+<td>Variable substitution</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="45-parameters-and-attributes">4.5 Parameters and Attributes</h1>
+<h2 id="role-reference">Role Reference</h2>
+<p>Identifies the role from which the strand is instantiated.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defstrand</span> initiator <span class="hljs-number">3</span> ...)
+</div></code></pre>
+<h2 id="height">Height</h2>
+<p>Specifies the number of events from the role trace that are included in the skeleton.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defstrand</span> responder <span class="hljs-number">2</span> ...)
+</div></code></pre>
+<h2 id="variable-bindings">Variable Bindings</h2>
+<p>Bind role variables to specific terms.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">a</span> alice)
+(<span class="hljs-name">b</span> bob)
+(<span class="hljs-name">n1</span> nonce1)
+</div></code></pre>
+<hr>
+<h1 id="46-uml-metamodel-representation">4.6 UML Metamodel Representation</h1>
+<h2 id="primary-class">Primary Class</h2>
+<pre class="hljs"><code><div>Strand
+</div></code></pre>
+<h2 id="package">Package</h2>
+<pre class="hljs"><code><div>Analysis Package
+</div></code></pre>
+<h2 id="stereotype">Stereotype</h2>
+<pre class="hljs"><code><div>&lt;&lt;AnalysisElement&gt;&gt;
+</div></code></pre>
+<h2 id="core-attributes">Core Attributes</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>String</td>
+<td>Unique strand identifier</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>Integer</td>
+<td>Active trace length</td>
+</tr>
+<tr>
+<td><code>realized</code></td>
+<td>Boolean</td>
+<td>Indicates realization status</td>
+</tr>
+<tr>
+<td><code>originRole</code></td>
+<td>Role</td>
+<td>Referenced role</td>
+</tr>
+</tbody>
+</table>
+<h2 id="additional-recommended-attributes">Additional Recommended Attributes</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>creationOrder</code></td>
+<td>Integer</td>
+</tr>
+<tr>
+<td><code>shapeDerived</code></td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td><code>annotation</code></td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="47-canonical-uml-relationships">4.7 Canonical UML Relationships</h1>
+<h2 id="association-strand-references-role">Association: Strand References Role</h2>
+<p><strong>Source</strong></p>
+<pre class="hljs"><code><div>Strand
+</div></code></pre>
+<p><strong>Target</strong></p>
+<pre class="hljs"><code><div>Role
+</div></code></pre>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>0..* Strand -&gt; 1 Role
+</div></code></pre>
+<p><strong>Navigability</strong></p>
+<pre class="hljs"><code><div>Strand -&gt; Role
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Every strand is an instantiation of exactly one role.</p>
+<hr>
+<h2 id="composition-skeleton-contains-strand">Composition: Skeleton Contains Strand</h2>
+<p><strong>Source</strong></p>
+<pre class="hljs"><code><div>Skeleton
+</div></code></pre>
+<p><strong>Target</strong></p>
+<pre class="hljs"><code><div>Strand
+</div></code></pre>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>1 Skeleton -&gt; 0..* Strands
+</div></code></pre>
+<p><strong>Navigability</strong></p>
+<pre class="hljs"><code><div>Skeleton -&gt; Strand
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Strands exist only within a skeleton.</p>
+<hr>
+<h2 id="composition-strand-contains-nodes">Composition: Strand Contains Nodes</h2>
+<p><strong>Source</strong></p>
+<pre class="hljs"><code><div>Strand
+</div></code></pre>
+<p><strong>Target</strong></p>
+<pre class="hljs"><code><div>Node
+</div></code></pre>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>1 Strand -&gt; 0..* Nodes
+</div></code></pre>
+<p><strong>Navigability</strong></p>
+<pre class="hljs"><code><div>Strand -&gt; Node
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Nodes represent occurrences of protocol events within a strand.</p>
+<hr>
+<h2 id="association-strand-references-variables">Association: Strand References Variables</h2>
+<p><strong>Source</strong></p>
+<pre class="hljs"><code><div>Strand
+</div></code></pre>
+<p><strong>Target</strong></p>
+<pre class="hljs"><code><div>Variable
+</div></code></pre>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>0..* &lt;-&gt; 0..*
+</div></code></pre>
+<p><strong>Navigability</strong></p>
+<pre class="hljs"><code><div>Bidirectional
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Variables declared by a role may be instantiated through strand bindings.</p>
+<hr>
+<h1 id="48-cardinality-constraints">4.8 Cardinality Constraints</h1>
+<h2 id="role-constraint">Role Constraint</h2>
+<p>A strand SHALL reference exactly one role.</p>
+<h2 id="skeleton-constraint">Skeleton Constraint</h2>
+<p>A skeleton MAY contain zero or more strands.</p>
+<h2 id="node-constraint">Node Constraint</h2>
+<p>A strand MAY contain zero or more nodes.</p>
+<h2 id="height-constraint">Height Constraint</h2>
+<pre class="hljs"><code><div>height &gt;= 0
+</div></code></pre>
+<h2 id="trace-constraint">Trace Constraint</h2>
+<pre class="hljs"><code><div>height &lt;= length(role.trace)
+</div></code></pre>
+<hr>
+<h1 id="49-umlocl-style-invariants">4.9 UML/OCL-Style Invariants</h1>
+<h2 id="height-within-trace">Height Within Trace</h2>
+<pre class="hljs"><code><div>context Strand
+inv HeightWithinTrace:
+height &lt;= originRole.trace.events-&gt;size()
+</div></code></pre>
+<h2 id="non-negative-height">Non-Negative Height</h2>
+<pre class="hljs"><code><div>context Strand
+inv NonNegativeHeight:
+height &gt;= 0
+</div></code></pre>
+<h2 id="mandatory-role-reference">Mandatory Role Reference</h2>
+<pre class="hljs"><code><div>context Strand
+inv MustReferenceRole:
+originRole &lt;&gt; null
+</div></code></pre>
+<h2 id="node-count-consistency">Node Count Consistency</h2>
+<pre class="hljs"><code><div>context Strand
+inv NodeCountMatchesHeight:
+nodes-&gt;size() = height
+</div></code></pre>
+<h2 id="skeleton-ownership">Skeleton Ownership</h2>
+<pre class="hljs"><code><div>context Strand
+inv OwnedBySkeleton:
+skeleton &lt;&gt; null
+</div></code></pre>
+<hr>
+<h1 id="410-containment-relationships">4.10 Containment Relationships</h1>
+<h2 id="concrete-syntax-containment">Concrete Syntax Containment</h2>
+<pre class="hljs"><code><div>defskeleton
+ └── defstrand
+</div></code></pre>
+<p>A <code>defstrand</code> declaration is contained within a <code>defskeleton</code> declaration.</p>
+<h2 id="semantic-containment">Semantic Containment</h2>
+<pre class="hljs"><code><div>Skeleton
+ └── Strand
+      └── Node
+</div></code></pre>
+<p>A strand cannot exist independently of a skeleton.</p>
+<hr>
+<h1 id="411-reference-relationships">4.11 Reference Relationships</h1>
+<h2 id="references">References</h2>
+<pre class="hljs"><code><div>Strand -&gt; Role
+</div></code></pre>
+<pre class="hljs"><code><div>Strand -&gt; Variable
+</div></code></pre>
+<h2 id="participates-in">Participates In</h2>
+<pre class="hljs"><code><div>Strand -&gt; Skeleton
+Strand -&gt; Shape
+Strand -&gt; Bundle
+Strand -&gt; RealizedExecution
+</div></code></pre>
+<hr>
+<h1 id="412-cpsa-processing-semantics">4.12 CPSA Processing Semantics</h1>
+<p>During CPSA analysis:</p>
+<ol>
+<li>Validate role reference.</li>
+<li>Validate strand height.</li>
+<li>Validate variable bindings.</li>
+<li>Apply substitutions to role variables.</li>
+<li>Construct strand nodes from the role trace.</li>
+<li>Create node ordering constraints.</li>
+<li>Derive origination assumptions.</li>
+<li>Generate successor skeletons.</li>
+<li>Compute possible shapes.</li>
+<li>Construct realized executions.</li>
+</ol>
+<hr>
+<h1 id="413-relationship-to-strand-space-theory">4.13 Relationship to Strand-Space Theory</h1>
+<h2 id="strand">Strand</h2>
+<p>A <code>defstrand</code> corresponds directly to a strand-space strand.</p>
+<h2 id="nodes">Nodes</h2>
+<p>Each event occurrence becomes a node.</p>
+<h2 id="trace">Trace</h2>
+<p>A role trace determines node ordering.</p>
+<h2 id="skeleton">Skeleton</h2>
+<p>A collection of strands forms a skeleton.</p>
+<h2 id="shape">Shape</h2>
+<p>Shape analysis derives minimal realized executions extending the skeleton.</p>
+<h2 id="bundle">Bundle</h2>
+<p>Bundles represent complete protocol executions containing the strand.</p>
+<hr>
+<h1 id="414-common-modeling-mistakes">4.14 Common Modeling Mistakes</h1>
+<h2 id="invalid-height">Invalid Height</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defstrand</span> initiator <span class="hljs-number">20</span>)
+</div></code></pre>
+<p>when the role trace contains fewer than twenty events.</p>
+<hr>
+<h2 id="missing-variable-bindings">Missing Variable Bindings</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defstrand</span> initiator <span class="hljs-number">3</span>)
+</div></code></pre>
+<p>when required role variables have not been assigned values.</p>
+<hr>
+<h2 id="incorrect-role-reference">Incorrect Role Reference</h2>
+<p>Referencing a role not defined within the protocol.</p>
+<hr>
+<h2 id="inconsistent-bindings">Inconsistent Bindings</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">a</span> alice)
+(<span class="hljs-name">a</span> bob)
+</div></code></pre>
+<p>for the same variable context.</p>
+<hr>
+<h2 id="redundant-strands">Redundant Strands</h2>
+<p>Introducing duplicate strands that contribute no new analytical information.</p>
+<hr>
+<h1 id="415-uml-metamodel-interpretation">4.15 UML Metamodel Interpretation</h1>
+<p>Within the canonical CPSA metamodel:</p>
+<pre class="hljs"><code><div>Protocol
+ └── Role
+
+Skeleton
+ └── Strand
+      └── Node
+</div></code></pre>
+<p>A strand forms the connection between:</p>
+<ol>
+<li>Protocol specifications</li>
+<li>Message algebra terms</li>
+<li>Analysis structures</li>
+<li>Realized executions</li>
+</ol>
+<p>Consequently, the <code>Strand</code> class serves as a central analysis concept within the CPSA metamodel.</p>
+<hr>
+<h1 id="416-grammar-to-metamodel-traceability">4.16 Grammar-to-Metamodel Traceability</h1>
+<table>
+<thead>
+<tr>
+<th>Grammar Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defstrand</code></td>
+<td><code>Strand</code></td>
+</tr>
+<tr>
+<td>role-name</td>
+<td><code>Role</code></td>
+</tr>
+<tr>
+<td>height</td>
+<td><code>Strand.height</code></td>
+</tr>
+<tr>
+<td>variable binding</td>
+<td><code>VariableBinding</code></td>
+</tr>
+<tr>
+<td>trace prefix</td>
+<td><code>Trace</code></td>
+</tr>
+<tr>
+<td>event occurrence</td>
+<td><code>Node</code></td>
+</tr>
+<tr>
+<td>strand instance</td>
+<td><code>Strand</code></td>
+</tr>
+<tr>
+<td>execution participant</td>
+<td><code>Strand</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="417-diagram-placeholders">4.17 Diagram Placeholders</h1>
+<h2 id="svg-diagram-placeholder">SVG Diagram Placeholder</h2>
+<pre class="hljs"><code><div>[SVG PLACEHOLDER]
+
+Diagram Title:
+Chapter 4 – defstrand Metamodel View
+
+Highlight:
+Strand
+
+Canonical Content:
+Protocol
+Role
+Rule
+Skeleton
+Strand
+Node
+Listener
+Goal
+Formula
+Bundle
+Shape
+RealizedExecution
+Variable
+Term
+Trace
+Event
+
+Relationships:
+Complete canonical CPSA metamodel.
+
+Future Asset:
+chapter-04-defstrand.svg
+</div></code></pre>
+<hr>
+<h2 id="plantuml-diagram-placeholder">PlantUML Diagram Placeholder</h2>
+<pre class="hljs"><code><div>[PLANTUML PLACEHOLDER]
+
+Diagram Title:
+Chapter 4 – defstrand Metamodel View
+
+Content:
+Complete canonical CPSA metamodel.
+
+Highlighted Element:
+Strand
+
+Future Asset:
+chapter-04-defstrand.puml
+</div></code></pre>
+<hr>
+<h1 id="418-complete-examples">4.18 Complete Examples</h1>
+<h2 id="example-1-needham-schroeder-initiator-strand">Example 1: Needham-Schroeder Initiator Strand</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">defskeleton</span> ns
+  (<span class="hljs-name">vars</span>
+    (<span class="hljs-name">a</span> b name)
+    (<span class="hljs-name">n1</span> text))
+
+  (<span class="hljs-name">defstrand</span> init <span class="hljs-number">3</span>
+    (<span class="hljs-name">a</span> a)
+    (<span class="hljs-name">b</span> b)
+    (<span class="hljs-name">n1</span> n1)))
+</div></code></pre>
+<h3 id="interpretation">Interpretation</h3>
+<p>The skeleton contains:</p>
+<ul>
+<li>One instantiated initiator role</li>
+<li>Height 3</li>
+<li>Explicit bindings for <code>a</code>, <code>b</code>, and <code>n1</code></li>
+</ul>
+<p>CPSA analyzes all executions consistent with this partial execution.</p>
+<hr>
+<h2 id="example-2-responder-strand">Example 2: Responder Strand</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">defstrand</span> resp <span class="hljs-number">2</span>
+  (<span class="hljs-name">a</span> alice)
+  (<span class="hljs-name">b</span> bob)
+  (<span class="hljs-name">n1</span> nonce1))
+</div></code></pre>
+<h3 id="interpretation">Interpretation</h3>
+<p>Represents a responder role observed through the first two events of its trace.</p>
+<hr>
+<h1 id="419-validation-checklist">4.19 Validation Checklist</h1>
+<p>A valid <code>defstrand</code> declaration satisfies all of the following:</p>
+<ul>
+<li>Role exists.</li>
+<li>Protocol exists.</li>
+<li>Height is non-negative.</li>
+<li>Height does not exceed trace length.</li>
+<li>Variable substitutions are type-correct.</li>
+<li>Sort constraints are satisfied.</li>
+<li>Strand belongs to a skeleton.</li>
+<li>Generated nodes are consistent with the role trace.</li>
+</ul>
+<hr>
+<h1 id="420-section-bibliography">4.20 Section Bibliography</h1>
+<ul>
+<li>Guttman, J. D. <em>CPSA User Guide</em>.</li>
+<li>Ramsdell, J. D. <em>CPSA Documentation and Reference Materials</em>.</li>
+<li>Guttman, J. D. <em>Security Protocol Shapes</em>.</li>
+<li>Thayer, F. J., Herzog, J. C., &amp; Guttman, J. D. <em>Strand Spaces: Why Is a Security Protocol Correct?</em></li>
+<li>CPSA Project Repository and CPSA Language Documentation.</li>
+</ul>
+
+</body>
+</html>

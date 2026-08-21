@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CanonicalMetamodel.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="cpsa-4-canonical-uml-metamodel">CPSA 4 Canonical UML Metamodel</h1>
+<h2 id="1-purpose">1. Purpose</h2>
+<p>This metamodel defines the canonical structural UML model for the CPSA 4 DSL reference. It represents CPSA declarations, protocol structure, message algebra constructs, strand-space analysis concepts, channels, facts, assumptions, goals, rule formulas, and related logical structures.</p>
+<p>The metamodel is intended to support:</p>
+<ol>
+<li>A complete CPSA 4 DSL language reference.</li>
+<li>A canonical UML metamodel reused across all declaration chapters.</li>
+<li>PlantUML and SVG diagrams derived from the same model.</li>
+<li>Chapter-specific highlighting without changing the underlying model.</li>
+</ol>
+<h2 id="2-package-overview">2. Package Overview</h2>
+<h3 id="21-document-package">2.1 Document Package</h3>
+<p>The Document Package models a CPSA input or output document and its top-level declaration structure.</p>
+<h3 id="citation-note-document-package">Citation Note: Document Package</h3>
+<p>The <code>CPSADocument</code> and <code>TopLevelDeclaration</code> classes are metamodel abstractions for CPSA's S-expression input-output style and top-level declaration structure. CPSA documentation describes the analyzer as reading input problems and writing S-expression output, and the user guide states that input syntax is essentially the same as output syntax. 【5-a3b0b0】【4-5b9322】</p>
+<p>Classes:</p>
+<ul>
+<li><code>CPSADocument</code></li>
+<li><code>TopLevelDeclaration</code></li>
+</ul>
+<h3 id="22-protocol-package">2.2 Protocol Package</h3>
+<p>The Protocol Package models protocol definitions, role definitions, rule definitions, variables, traces, events, and channels.</p>
+<p>Classes:</p>
+<ul>
+<li><code>Protocol</code></li>
+<li><code>Role</code></li>
+<li><code>Rule</code></li>
+<li><code>Variable</code></li>
+<li><code>Sort</code></li>
+<li><code>Trace</code></li>
+<li><code>Event</code></li>
+<li><code>SendEvent</code></li>
+<li><code>ReceiveEvent</code></li>
+<li><code>ChannelEvent</code></li>
+<li><code>Channel</code></li>
+</ul>
+<p>Enumerations used:</p>
+<ul>
+<li><code>AlgebraType</code></li>
+<li><code>EventDirection</code></li>
+<li><code>ChannelType</code></li>
+</ul>
+<h3 id="23-message-algebra-package">2.3 Message Algebra Package</h3>
+<p>The Message Algebra Package models CPSA message terms and algebraic operators.</p>
+<p>Classes:</p>
+<ul>
+<li><code>Term</code></li>
+<li><code>Atom</code></li>
+<li><code>Constant</code></li>
+<li><code>VariableReference</code></li>
+<li><code>FunctionApplication</code></li>
+<li><code>Operator</code></li>
+<li><code>CatOperator</code></li>
+<li><code>EncOperator</code></li>
+<li><code>HashOperator</code></li>
+<li><code>PubkOperator</code></li>
+<li><code>PrivkOperator</code></li>
+<li><code>LtkOperator</code></li>
+<li><code>GenOperator</code></li>
+<li><code>ExpOperator</code></li>
+<li><code>MulOperator</code></li>
+<li><code>RecOperator</code></li>
+<li><code>OneOperator</code></li>
+</ul>
+<h3 id="24-analysis-package">2.4 Analysis Package</h3>
+<p>The Analysis Package models skeletons, strands, listeners, nodes, bundles, shapes, facts, assumptions, role instances, and ordering constraints.</p>
+<p>Classes:</p>
+<ul>
+<li><code>Skeleton</code></li>
+<li><code>Strand</code></li>
+<li><code>Listener</code></li>
+<li><code>Node</code></li>
+<li><code>Instance</code></li>
+<li><code>PrecedenceRelation</code></li>
+<li><code>Fact</code></li>
+<li><code>NonOrigAssumption</code></li>
+<li><code>UniqOrigAssumption</code></li>
+<li><code>UniqGenAssumption</code></li>
+<li><code>Bundle</code></li>
+<li><code>CommunicationEdge</code></li>
+<li><code>Shape</code></li>
+<li><code>RealizedExecution</code></li>
+</ul>
+<h3 id="25-goal-package">2.5 Goal Package</h3>
+<p>The Goal Package models CPSA goals, rule formulas, predicates, predicate applications, and formula structure.</p>
+<p>Classes:</p>
+<ul>
+<li><code>Goal</code></li>
+<li><code>Formula</code></li>
+<li><code>AtomicFormula</code></li>
+<li><code>Predicate</code></li>
+<li><code>PredicateApplication</code></li>
+<li><code>Conjunction</code></li>
+<li><code>Disjunction</code></li>
+<li><code>Implication</code></li>
+<li><code>Negation</code></li>
+<li><code>UniversalFormula</code></li>
+<li><code>ExistentialFormula</code></li>
+</ul>
+<h3 id="26-enumeration-package">2.6 Enumeration Package</h3>
+<p>The Enumeration Package models controlled vocabularies used by the metamodel.</p>
+<p>Enumerations:</p>
+<ul>
+<li><code>AlgebraType</code></li>
+<li><code>EventDirection</code></li>
+<li><code>ChannelType</code></li>
+</ul>
+<h2 id="3-class-responsibilities">3. Class Responsibilities</h2>
+<h3 id="31-document-package">3.1 Document Package</h3>
+<h4 id="cpsadocument"><code>CPSADocument</code></h4>
+<p>Represents one CPSA S-expression document containing top-level declarations.</p>
+<p>Attributes:</p>
+<ul>
+<li><code>path : String</code></li>
+<li><code>dialect : String</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>zero or more <code>TopLevelDeclaration</code> elements</li>
+</ul>
+<h4 id="topleveldeclaration"><code>TopLevelDeclaration</code></h4>
+<p>Abstract superclass for CPSA top-level declarations.</p>
+<p>Specializations:</p>
+<ul>
+<li><code>Protocol</code></li>
+<li><code>Skeleton</code></li>
+<li><code>Strand</code></li>
+<li><code>Listener</code></li>
+<li><code>Goal</code></li>
+<li><code>Rule</code></li>
+</ul>
+<h2 id="4-protocol-package">4. Protocol Package</h2>
+<h3 id="citation-note-protocol-package">Citation Note: Protocol Package</h3>
+<p>The <code>Protocol</code>, <code>Role</code>, and <code>Rule</code> classes reflect CPSA 4's protocol structure. The CPSA foundation paper states that protocols in CPSA 4 include both roles and rules, which justifies modeling <code>Role</code> and <code>Rule</code> as contents of <code>Protocol</code>. 【6-0924c4】</p>
+<p>The <code>Trace</code>, <code>Event</code>, <code>SendEvent</code>, and <code>ReceiveEvent</code> classes are grounded in strand-space theory, where strands are sequences of transmission and reception events. 【8-3e1455】【9-e4a22f】</p>
+<p>The <code>Channel</code> and <code>ChannelEvent</code> classes are included because CPSA 4 extends ordinary communication events with optional channel annotations, and the CPSA foundation paper distinguishes authenticated, confidential, secure, and plain channel behavior. 【6-0924c4】</p>
+<h3 id="41-protocol">4.1 <code>Protocol</code></h3>
+<p>Represents a <code>defprotocol</code> declaration.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;defprotocol&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+<li><code>algebra : AlgebraType</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more <code>Role</code> elements</li>
+<li>zero or more <code>Rule</code> elements</li>
+</ul>
+<p>References:</p>
+<ul>
+<li><code>AlgebraType</code></li>
+</ul>
+<h3 id="42-role">4.2 <code>Role</code></h3>
+<p>Represents a <code>defrole</code> declaration inside a protocol.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;defrole&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>zero or more <code>Variable</code> elements</li>
+<li>exactly one <code>Trace</code></li>
+</ul>
+<h3 id="43-rule">4.3 <code>Rule</code></h3>
+<p>Represents a <code>defrule</code> declaration associated with a protocol.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;defrule&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Formula</code></li>
+</ul>
+<h3 id="44-variable">4.4 <code>Variable</code></h3>
+<p>Represents a CPSA variable declaration.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;vars&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Sort</code></li>
+</ul>
+<h3 id="45-sort">4.5 <code>Sort</code></h3>
+<p>Represents a CPSA order-sorted message algebra sort.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;sort&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+</ul>
+<h3 id="46-trace">4.6 <code>Trace</code></h3>
+<p>Represents the event sequence associated with a role.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;trace&gt;&gt;</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more <code>Event</code> elements</li>
+</ul>
+<h3 id="47-event">4.7 <code>Event</code></h3>
+<p>Abstract superclass for trace events.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;event&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>direction : EventDirection</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Term</code></li>
+</ul>
+<p>Specializations:</p>
+<ul>
+<li><code>SendEvent</code></li>
+<li><code>ReceiveEvent</code></li>
+<li><code>ChannelEvent</code></li>
+</ul>
+<h3 id="48-sendevent">4.8 <code>SendEvent</code></h3>
+<p>Represents a send event.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;send&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Event</code></li>
+</ul>
+<h3 id="49-receiveevent">4.9 <code>ReceiveEvent</code></h3>
+<p>Represents a receive event.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;recv&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Event</code></li>
+</ul>
+<h3 id="410-channelevent">4.10 <code>ChannelEvent</code></h3>
+<p>Represents a send or receive event that occurs on a channel.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;channel-event&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Event</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Channel</code></li>
+</ul>
+<h3 id="411-channel">4.11 <code>Channel</code></h3>
+<p>Represents a CPSA channel abstraction.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;channel&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+<li><code>type : ChannelType</code></li>
+</ul>
+<h2 id="5-message-algebra-package">5. Message Algebra Package</h2>
+<h3 id="citation-note-message-algebra-package">Citation Note: Message Algebra Package</h3>
+<p>The <code>Term</code>, <code>Variable</code>, <code>Sort</code>, <code>FunctionApplication</code>, <code>Operator</code>, and concrete operator classes model CPSA's order-sorted message algebra. The CPSA foundation paper describes messages as the carrier set of a term algebra and states that variables have unique sorts in an order-sorted algebra. 【6-0924c4】【7-7756e1】</p>
+<p>The basic and Diffie-Hellman operator classes follow the CPSA 4 manual's algebra feature discussion, including generic messages, long-term keys, hashing, constants, and Diffie-Hellman modeling. 【1-817011】</p>
+<h3 id="51-term">5.1 <code>Term</code></h3>
+<p>Abstract superclass for CPSA message algebra terms.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;term&gt;&gt;</code></li>
+</ul>
+<p>Specializations:</p>
+<ul>
+<li><code>Atom</code></li>
+<li><code>Constant</code></li>
+<li><code>VariableReference</code></li>
+<li><code>FunctionApplication</code></li>
+</ul>
+<h3 id="52-atom">5.2 <code>Atom</code></h3>
+<p>Represents an atomic message value.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;atom&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Term</code></li>
+</ul>
+<h3 id="53-constant">5.3 <code>Constant</code></h3>
+<p>Represents a named constant in the message algebra.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;constant&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Term</code></li>
+</ul>
+<h3 id="54-variablereference">5.4 <code>VariableReference</code></h3>
+<p>Represents a reference to a declared variable.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;var-ref&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Term</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Variable</code></li>
+</ul>
+<h3 id="55-functionapplication">5.5 <code>FunctionApplication</code></h3>
+<p>Represents application of a message algebra operator to argument terms.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;operator-application&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Term</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Operator</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more <code>Term</code> arguments</li>
+</ul>
+<h3 id="56-operator">5.6 <code>Operator</code></h3>
+<p>Abstract superclass for CPSA algebraic operators.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;operator&gt;&gt;</code></li>
+</ul>
+<p>Specializations:</p>
+<ul>
+<li><code>CatOperator</code></li>
+<li><code>EncOperator</code></li>
+<li><code>HashOperator</code></li>
+<li><code>PubkOperator</code></li>
+<li><code>PrivkOperator</code></li>
+<li><code>LtkOperator</code></li>
+<li><code>GenOperator</code></li>
+<li><code>ExpOperator</code></li>
+<li><code>MulOperator</code></li>
+<li><code>RecOperator</code></li>
+<li><code>OneOperator</code></li>
+</ul>
+<h3 id="57-basic-algebra-operators">5.7 Basic Algebra Operators</h3>
+<h4 id="catoperator"><code>CatOperator</code></h4>
+<p>Represents the <code>cat</code> operator.</p>
+<h4 id="encoperator"><code>EncOperator</code></h4>
+<p>Represents the <code>enc</code> operator.</p>
+<h4 id="hashoperator"><code>HashOperator</code></h4>
+<p>Represents the <code>hash</code> operator.</p>
+<h4 id="pubkoperator"><code>PubkOperator</code></h4>
+<p>Represents the <code>pubk</code> operator.</p>
+<h4 id="privkoperator"><code>PrivkOperator</code></h4>
+<p>Represents the <code>privk</code> operator.</p>
+<h4 id="ltkoperator"><code>LtkOperator</code></h4>
+<p>Represents the <code>ltk</code> operator.</p>
+<h3 id="58-diffie-hellman-operators">5.8 Diffie-Hellman Operators</h3>
+<h4 id="genoperator"><code>GenOperator</code></h4>
+<p>Represents the <code>gen</code> operator.</p>
+<h4 id="expoperator"><code>ExpOperator</code></h4>
+<p>Represents the <code>exp</code> operator.</p>
+<h4 id="muloperator"><code>MulOperator</code></h4>
+<p>Represents the <code>mul</code> operator.</p>
+<h4 id="recoperator"><code>RecOperator</code></h4>
+<p>Represents the <code>rec</code> operator.</p>
+<h4 id="oneoperator"><code>OneOperator</code></h4>
+<p>Represents the <code>one</code> operator.</p>
+<h2 id="6-analysis-package">6. Analysis Package</h2>
+<h3 id="citation-note-analysis-package">Citation Note: Analysis Package</h3>
+<p>The <code>Skeleton</code>, <code>Strand</code>, <code>Node</code>, <code>Bundle</code>, <code>Shape</code>, and <code>RealizedExecution</code> classes reflect CPSA's strand-space analysis vocabulary. CPSA documentation describes shapes as essentially different executions compatible with initial behavior, and strand-space literature defines strands as sequences of events and bundles as causally structured executions. 【2-cf98f8】【8-3e1455】【9-e4a22f】</p>
+<p>The <code>Fact</code>, <code>PrecedenceRelation</code>, <code>NonOrigAssumption</code>, <code>UniqOrigAssumption</code>, and <code>UniqGenAssumption</code> classes represent structural analysis constraints and assumptions used in CPSA-style skeleton analysis. Facts and channels are explicitly identified as CPSA 4 additions to bundles and skeletons in the foundation paper. 【6-0924c4】</p>
+<h3 id="61-skeleton">6.1 <code>Skeleton</code></h3>
+<p>Represents a <code>defskeleton</code> declaration.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;defskeleton&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>label : String</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Protocol</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>zero or more <code>Instance</code> elements</li>
+<li>zero or more <code>Strand</code> elements</li>
+<li>zero or more <code>Listener</code> elements</li>
+<li>zero or more <code>Fact</code> elements</li>
+<li>zero or more <code>PrecedenceRelation</code> elements</li>
+<li>zero or more <code>NonOrigAssumption</code> elements</li>
+<li>zero or more <code>UniqOrigAssumption</code> elements</li>
+<li>zero or more <code>UniqGenAssumption</code> elements</li>
+</ul>
+<h3 id="62-instance">6.2 <code>Instance</code></h3>
+<p>Represents a role instance in a skeleton.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;instance&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Role</code></li>
+<li>exactly one <code>Strand</code></li>
+</ul>
+<h3 id="63-strand">6.3 <code>Strand</code></h3>
+<p>Represents a <code>defstrand</code> declaration or a strand instance.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;defstrand&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>instanceId : Integer</code></li>
+<li><code>height : Integer</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Role</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more <code>Node</code> elements</li>
+</ul>
+<h3 id="64-listener">6.4 <code>Listener</code></h3>
+<p>Represents a <code>deflistener</code> declaration.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;deflistener&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Term</code></li>
+</ul>
+<h3 id="65-node">6.5 <code>Node</code></h3>
+<p>Represents an event occurrence at a strand position.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;node&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>index : Integer</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Event</code></li>
+</ul>
+<h3 id="66-precedencerelation">6.6 <code>PrecedenceRelation</code></h3>
+<p>Represents an ordering relation between two nodes.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;precedes&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one predecessor <code>Node</code></li>
+<li>exactly one successor <code>Node</code></li>
+</ul>
+<h3 id="67-fact">6.7 <code>Fact</code></h3>
+<p>Represents a named fact associated with a skeleton or analysis state.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;fact&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>zero or more <code>PredicateApplication</code> elements</li>
+</ul>
+<h3 id="68-nonorigassumption">6.8 <code>NonOrigAssumption</code></h3>
+<p>Represents a non-origination assumption over a term.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;non-orig&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Term</code></li>
+</ul>
+<h3 id="69-uniqorigassumption">6.9 <code>UniqOrigAssumption</code></h3>
+<p>Represents a unique-origination assumption over a term.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;uniq-orig&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Term</code></li>
+</ul>
+<h3 id="610-uniqgenassumption">6.10 <code>UniqGenAssumption</code></h3>
+<p>Represents a unique-generation assumption over a term.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;uniq-gen&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Term</code></li>
+</ul>
+<h3 id="611-bundle">6.11 <code>Bundle</code></h3>
+<p>Represents an execution bundle.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;bundle&gt;&gt;</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more <code>Strand</code> elements</li>
+<li>zero or more <code>CommunicationEdge</code> elements</li>
+</ul>
+<h3 id="612-communicationedge">6.12 <code>CommunicationEdge</code></h3>
+<p>Represents a communication edge from a sending node to a receiving node.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;communication&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one sender <code>Node</code></li>
+<li>exactly one receiver <code>Node</code></li>
+</ul>
+<h3 id="613-shape">6.13 <code>Shape</code></h3>
+<p>Represents a CPSA shape.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;shape&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Skeleton</code></li>
+</ul>
+<h3 id="614-realizedexecution">6.14 <code>RealizedExecution</code></h3>
+<p>Represents a realized skeleton or realized execution artifact.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;realized&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Skeleton</code></li>
+<li>zero or one <code>Bundle</code></li>
+</ul>
+<h2 id="7-goal-package">7. Goal Package</h2>
+<h3 id="citation-note-goal-package">Citation Note: Goal Package</h3>
+<p>The <code>Goal</code>, <code>Formula</code>, <code>AtomicFormula</code>, quantified formula, Boolean formula, <code>Predicate</code>, and <code>PredicateApplication</code> classes model the structural form of CPSA security goals and rule formulas. Ramsdell describes CPSA goals in terms of formulas over shape-analysis results and shows how logical deduction can be used to determine whether a goal is satisfied. 【10-074f2f】【11-ffa6be】</p>
+<p>The formula hierarchy in this metamodel is an abstraction suitable for UML modeling. It is inspired by Ramsdell's formal treatment of security goals as quantified logical formulas and CPSA's strand-oriented goal language. 【10-074f2f】【2-cf98f8】</p>
+<h3 id="71-goal">7.1 <code>Goal</code></h3>
+<p>Represents a <code>defgoal</code> declaration.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;defgoal&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Protocol</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more <code>Formula</code> elements</li>
+</ul>
+<h3 id="72-formula">7.2 <code>Formula</code></h3>
+<p>Abstract superclass for goal and rule formulas.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;formula&gt;&gt;</code></li>
+</ul>
+<p>Specializations:</p>
+<ul>
+<li><code>AtomicFormula</code></li>
+<li><code>Conjunction</code></li>
+<li><code>Disjunction</code></li>
+<li><code>Implication</code></li>
+<li><code>Negation</code></li>
+<li><code>UniversalFormula</code></li>
+<li><code>ExistentialFormula</code></li>
+</ul>
+<h3 id="73-atomicformula">7.3 <code>AtomicFormula</code></h3>
+<p>Represents an atomic formula.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;atomic&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>exactly one <code>PredicateApplication</code></li>
+</ul>
+<h3 id="74-predicate">7.4 <code>Predicate</code></h3>
+<p>Represents a predicate symbol.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;predicate&gt;&gt;</code></li>
+</ul>
+<p>Attributes:</p>
+<ul>
+<li><code>name : String</code></li>
+<li><code>arity : Integer</code></li>
+</ul>
+<h3 id="75-predicateapplication">7.5 <code>PredicateApplication</code></h3>
+<p>Represents application of a predicate to term arguments.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;predicate-application&gt;&gt;</code></li>
+</ul>
+<p>References:</p>
+<ul>
+<li>exactly one <code>Predicate</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>zero or more <code>Term</code> arguments</li>
+</ul>
+<h3 id="76-conjunction">7.6 <code>Conjunction</code></h3>
+<p>Formula specialization representing conjunction.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;and&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>two or more <code>Formula</code> operands</li>
+</ul>
+<h3 id="77-disjunction">7.7 <code>Disjunction</code></h3>
+<p>Formula specialization representing disjunction.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;or&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>two or more <code>Formula</code> operands</li>
+</ul>
+<h3 id="78-implication">7.8 <code>Implication</code></h3>
+<p>Formula specialization representing implication.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;implies&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>exactly two <code>Formula</code> elements representing antecedent and consequent</li>
+</ul>
+<h3 id="79-negation">7.9 <code>Negation</code></h3>
+<p>Formula specialization representing negation.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;not&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>exactly one <code>Formula</code> operand</li>
+</ul>
+<h3 id="710-universalformula">7.10 <code>UniversalFormula</code></h3>
+<p>Formula specialization representing universal quantification.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;forall&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more bound <code>Variable</code> elements</li>
+<li>exactly one <code>Formula</code> body</li>
+</ul>
+<h3 id="711-existentialformula">7.11 <code>ExistentialFormula</code></h3>
+<p>Formula specialization representing existential quantification.</p>
+<p>Stereotype:</p>
+<ul>
+<li><code>&lt;&lt;exists&gt;&gt;</code></li>
+</ul>
+<p>Generalization:</p>
+<ul>
+<li>specializes <code>Formula</code></li>
+</ul>
+<p>Contains:</p>
+<ul>
+<li>one or more bound <code>Variable</code> elements</li>
+<li>exactly one <code>Formula</code> body</li>
+</ul>
+<h2 id="8-enumerations">8. Enumerations</h2>
+<h3 id="81-algebratype">8.1 <code>AlgebraType</code></h3>
+<p>Represents the CPSA algebra selected by a protocol.</p>
+<p>Values:</p>
+<ul>
+<li><code>basic</code></li>
+<li><code>diffie-hellman</code></li>
+</ul>
+<h3 id="82-eventdirection">8.2 <code>EventDirection</code></h3>
+<p>Represents the direction of a trace event.</p>
+<p>Values:</p>
+<ul>
+<li><code>send</code></li>
+<li><code>receive</code></li>
+</ul>
+<h3 id="83-channeltype">8.3 <code>ChannelType</code></h3>
+<p>Represents the modeled security property of a channel.</p>
+<p>Values:</p>
+<ul>
+<li><code>plain</code></li>
+<li><code>confidential</code></li>
+<li><code>authenticated</code></li>
+<li><code>secure</code></li>
+</ul>
+<h2 id="9-relationship-summary">9. Relationship Summary</h2>
+<h3 id="91-document-relationships">9.1 Document Relationships</h3>
+<ul>
+<li><code>CPSADocument</code> composes zero or more <code>TopLevelDeclaration</code> elements.</li>
+<li><code>Protocol</code> specializes <code>TopLevelDeclaration</code>.</li>
+<li><code>Skeleton</code> specializes <code>TopLevelDeclaration</code>.</li>
+<li><code>Strand</code> specializes <code>TopLevelDeclaration</code>.</li>
+<li><code>Listener</code> specializes <code>TopLevelDeclaration</code>.</li>
+<li><code>Goal</code> specializes <code>TopLevelDeclaration</code>.</li>
+<li><code>Rule</code> specializes <code>TopLevelDeclaration</code>.</li>
+</ul>
+<h3 id="92-protocol-relationships">9.2 Protocol Relationships</h3>
+<ul>
+<li><code>Protocol</code> composes one or more <code>Role</code> elements.</li>
+<li><code>Protocol</code> composes zero or more <code>Rule</code> elements.</li>
+<li><code>Protocol</code> references exactly one <code>AlgebraType</code>.</li>
+<li><code>Role</code> composes zero or more <code>Variable</code> elements.</li>
+<li><code>Role</code> composes exactly one <code>Trace</code>.</li>
+<li><code>Variable</code> references exactly one <code>Sort</code>.</li>
+<li><code>Trace</code> composes one or more <code>Event</code> elements.</li>
+<li><code>Event</code> references exactly one <code>Term</code>.</li>
+<li><code>SendEvent</code> specializes <code>Event</code>.</li>
+<li><code>ReceiveEvent</code> specializes <code>Event</code>.</li>
+<li><code>ChannelEvent</code> specializes <code>Event</code>.</li>
+<li><code>ChannelEvent</code> references exactly one <code>Channel</code>.</li>
+<li><code>Channel</code> references exactly one <code>ChannelType</code>.</li>
+<li><code>Event</code> references exactly one <code>EventDirection</code>.</li>
+</ul>
+<h3 id="93-message-algebra-relationships">9.3 Message Algebra Relationships</h3>
+<ul>
+<li><code>Atom</code> specializes <code>Term</code>.</li>
+<li><code>Constant</code> specializes <code>Term</code>.</li>
+<li><code>VariableReference</code> specializes <code>Term</code>.</li>
+<li><code>FunctionApplication</code> specializes <code>Term</code>.</li>
+<li><code>VariableReference</code> references exactly one <code>Variable</code>.</li>
+<li><code>FunctionApplication</code> references exactly one <code>Operator</code>.</li>
+<li><code>FunctionApplication</code> composes one or more <code>Term</code> arguments.</li>
+<li>Each concrete operator specializes <code>Operator</code>.</li>
+</ul>
+<p>Concrete operator specializations:</p>
+<ul>
+<li><code>CatOperator</code> specializes <code>Operator</code>.</li>
+<li><code>EncOperator</code> specializes <code>Operator</code>.</li>
+<li><code>HashOperator</code> specializes <code>Operator</code>.</li>
+<li><code>PubkOperator</code> specializes <code>Operator</code>.</li>
+<li><code>PrivkOperator</code> specializes <code>Operator</code>.</li>
+<li><code>LtkOperator</code> specializes <code>Operator</code>.</li>
+<li><code>GenOperator</code> specializes <code>Operator</code>.</li>
+<li><code>ExpOperator</code> specializes <code>Operator</code>.</li>
+<li><code>MulOperator</code> specializes <code>Operator</code>.</li>
+<li><code>RecOperator</code> specializes <code>Operator</code>.</li>
+<li><code>OneOperator</code> specializes <code>Operator</code>.</li>
+</ul>
+<h3 id="94-analysis-relationships">9.4 Analysis Relationships</h3>
+<ul>
+<li><code>Skeleton</code> references exactly one <code>Protocol</code>.</li>
+<li><code>Skeleton</code> composes zero or more <code>Instance</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>Strand</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>Listener</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>Fact</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>PrecedenceRelation</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>NonOrigAssumption</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>UniqOrigAssumption</code> elements.</li>
+<li><code>Skeleton</code> composes zero or more <code>UniqGenAssumption</code> elements.</li>
+<li><code>Instance</code> references exactly one <code>Role</code>.</li>
+<li><code>Instance</code> references exactly one <code>Strand</code>.</li>
+<li><code>Strand</code> references exactly one <code>Role</code>.</li>
+<li><code>Strand</code> composes one or more <code>Node</code> elements.</li>
+<li><code>Node</code> references exactly one <code>Event</code>.</li>
+<li><code>Listener</code> references exactly one <code>Term</code>.</li>
+<li><code>PrecedenceRelation</code> references exactly one predecessor <code>Node</code>.</li>
+<li><code>PrecedenceRelation</code> references exactly one successor <code>Node</code>.</li>
+<li><code>Fact</code> composes zero or more <code>PredicateApplication</code> elements.</li>
+<li><code>NonOrigAssumption</code> references exactly one <code>Term</code>.</li>
+<li><code>UniqOrigAssumption</code> references exactly one <code>Term</code>.</li>
+<li><code>UniqGenAssumption</code> references exactly one <code>Term</code>.</li>
+<li><code>Bundle</code> composes one or more <code>Strand</code> elements.</li>
+<li><code>Bundle</code> composes zero or more <code>CommunicationEdge</code> elements.</li>
+<li><code>CommunicationEdge</code> references exactly one sender <code>Node</code>.</li>
+<li><code>CommunicationEdge</code> references exactly one receiver <code>Node</code>.</li>
+<li><code>Shape</code> references exactly one <code>Skeleton</code>.</li>
+<li><code>RealizedExecution</code> references exactly one <code>Skeleton</code>.</li>
+<li><code>RealizedExecution</code> references zero or one <code>Bundle</code>.</li>
+</ul>
+<h3 id="95-goal-relationships">9.5 Goal Relationships</h3>
+<ul>
+<li><code>Goal</code> references exactly one <code>Protocol</code>.</li>
+<li><code>Goal</code> composes one or more <code>Formula</code> elements.</li>
+<li><code>Rule</code> references exactly one <code>Formula</code>.</li>
+<li><code>AtomicFormula</code> specializes <code>Formula</code>.</li>
+<li><code>Conjunction</code> specializes <code>Formula</code>.</li>
+<li><code>Disjunction</code> specializes <code>Formula</code>.</li>
+<li><code>Implication</code> specializes <code>Formula</code>.</li>
+<li><code>Negation</code> specializes <code>Formula</code>.</li>
+<li><code>UniversalFormula</code> specializes <code>Formula</code>.</li>
+<li><code>ExistentialFormula</code> specializes <code>Formula</code>.</li>
+<li><code>AtomicFormula</code> composes exactly one <code>PredicateApplication</code>.</li>
+<li><code>PredicateApplication</code> references exactly one <code>Predicate</code>.</li>
+<li><code>PredicateApplication</code> composes zero or more <code>Term</code> arguments.</li>
+<li><code>Conjunction</code> composes two or more <code>Formula</code> operands.</li>
+<li><code>Disjunction</code> composes two or more <code>Formula</code> operands.</li>
+<li><code>Implication</code> composes exactly two <code>Formula</code> elements.</li>
+<li><code>Negation</code> composes exactly one <code>Formula</code> operand.</li>
+<li><code>UniversalFormula</code> composes one or more bound <code>Variable</code> elements.</li>
+<li><code>UniversalFormula</code> composes exactly one <code>Formula</code> body.</li>
+<li><code>ExistentialFormula</code> composes one or more bound <code>Variable</code> elements.</li>
+<li><code>ExistentialFormula</code> composes exactly one <code>Formula</code> body.</li>
+</ul>
+<h2 id="10-ocl-style-constraints">10. OCL-Style Constraints</h2>
+<pre class="hljs"><code><div>context Protocol
+inv HasName:
+    name &lt;&gt; ''
+
+context Protocol
+inv HasAlgebra:
+    algebra = basic or algebra = diffie-hellman
+
+context Protocol
+inv ContainsRole:
+    role-&gt;size() &gt;= 1
+
+context Role
+inv HasTrace:
+    trace-&gt;size() = 1
+
+context Trace
+inv NonEmptyTrace:
+    event-&gt;size() &gt;= 1
+
+context Event
+inv HasMessage:
+    term-&gt;size() = 1
+
+context ChannelEvent
+inv HasChannel:
+    channel-&gt;size() = 1
+
+context Variable
+inv HasSort:
+    sort-&gt;size() = 1
+
+context FunctionApplication
+inv HasOperator:
+    operator-&gt;size() = 1
+
+context FunctionApplication
+inv HasArgument:
+    argument-&gt;size() &gt;= 1
+
+context Skeleton
+inv HasProtocol:
+    protocol-&gt;size() = 1
+
+context Strand
+inv HasRole:
+    role-&gt;size() = 1
+
+context Strand
+inv HasNode:
+    node-&gt;size() &gt;= 1
+
+context Node
+inv HasEvent:
+    event-&gt;size() = 1
+
+context PrecedenceRelation
+inv OrderedNodes:
+    predecessor-&gt;size() = 1 and successor-&gt;size() = 1
+
+context Goal
+inv HasProtocol:
+    protocol-&gt;size() = 1
+
+context Goal
+inv HasFormula:
+    formula-&gt;size() &gt;= 1
+
+context AtomicFormula
+inv HasPredicateApplication:
+    predicateApplication-&gt;size() = 1
+</div></code></pre>
+<h2 id="source-basis">Source Basis</h2>
+<p>The metamodel is based on the CPSA 4 public documentation and repository materials, including the CPSA 4 manual, the MITRE CPSA GitHub repository, the CPSA user guide, the CPSA foundation paper on strand spaces with channels and rules, the original strand-space literature, and Ramsdell's work on deriving security goals from shape analysis sentences. The CPSA 4 manual identifies Moses D. Liskov, John D. Ramsdell, Joshua D. Guttman, and Paul D. Rowe as authors and describes CPSA 4 as the Cryptographic Protocol Shapes Analyzer manual for CPSA Version 4.4.8, dated February 27, 2026. 【1-817011】 The MITRE CPSA GitHub repository identifies CPSA as an experimental Cryptographic Protocol Shapes Analyzer and provides source, documentation, examples, and tooling materials. 【2-cf98f8】【3-c98920】</p>
+<p>Key source-derived modeling commitments:</p>
+<ul>
+<li>CPSA analyzes protocol executions by attempting to enumerate the essentially different executions possible for a cryptographic protocol, which CPSA calls the protocol's shapes. 【2-cf98f8】【4-5b9322】</li>
+<li>CPSA input and output are S-expression based, and the CPSA user guide states that the input syntax is essentially the same as the output syntax. 【5-a3b0b0】</li>
+<li>A CPSA document-level metamodel class is included to represent a CPSA S-expression document as a container for top-level declarations. This is a metamodel abstraction derived from CPSA's S-expression document model and tool input-output convention. 【5-a3b0b0】【2-cf98f8】</li>
+<li>Protocols include roles and rules in CPSA 4; the foundation paper states that protocols have been redefined so that they include both roles and rules. 【6-0924c4】</li>
+<li>CPSA 4 adds channels and facts to the strand-space formalism used by CPSA; the foundation paper says that channels and facts have been added to bundles and skeletons. 【6-0924c4】</li>
+<li>CPSA 4 communication events may optionally occur on a channel, and channels are interpreted in terms of authenticated, confidential, and secure communication. 【6-0924c4】</li>
+<li>CPSA uses a message-algebra formalism in which messages form the carrier set of a term algebra, variables have sorts, and predicate symbols are parameters to the strand-space formalism. 【6-0924c4】【7-7756e1】</li>
+<li>The strand-space basis for this metamodel is grounded in the original strand-space literature, which describes a strand as a sequence of events and a strand space as a collection of strands with graph structure generated by causal interaction. 【8-3e1455】【9-e4a22f】</li>
+<li>The goal-language portion of the metamodel is informed by Ramsdell's treatment of security goals as formulas over CPSA shape-analysis results and by the CPSA repository statement that CPSA 4 implemented a strand-oriented security goal language. 【10-074f2f】【2-cf98f8】</li>
+<li>Examples in this metamodel that refer to shapes, skeletons, bundles, events, nodes, channels, facts, rules, and goal formulas are structural abstractions inspired by CPSA documentation and strand-space research, not direct quotations of CPSA grammar. 【1-817011】【6-0924c4】【10-074f2f】</li>
+</ul>
+<h2 id="citation-policy-for-this-metamodel">Citation Policy for This Metamodel</h2>
+<p>Inline citations are attached to source-derived claims, paraphrases, and examples. UML class names, association names, and diagram labels are metamodel design artifacts derived from source terminology. Where a class is an abstraction rather than an explicitly named CPSA syntax form, the surrounding explanatory prose identifies the source basis.</p>
+<p>References that do not expose an ISBN or DOI in the consulted public source are marked as having no DOI or ISBN found in the consulted source.</p>
+<h2 id="example-attribution-and-use">Example Attribution and Use</h2>
+<p>Examples that illustrate protocol shapes, skeletons, bundles, strands, events, and nodes are inspired by CPSA's description of shape analysis and the strand-space literature. CPSA describes its analysis as discovering shapes compatible with an initial behavior, while strand-space work describes strands as event sequences and bundles as causally organized collections of nodes. 【2-cf98f8】【8-3e1455】【9-e4a22f】</p>
+<p>Examples that use channels, channel events, facts, and rules are inspired by the CPSA 4 foundation paper, which states that channels and facts were added to bundles and skeletons and that protocols were redefined to include roles and rules. 【6-0924c4】</p>
+<p>Examples that express authentication or secrecy goals using formulas, predicates, quantifiers, conjunctions, implications, or disjunctions are inspired by Ramsdell's work on deducing security goals from shape-analysis sentences. Ramsdell presents security goals as logical formulas evaluated against CPSA shape-analysis results. 【10-074f2f】【11-ffa6be】</p>
+<p>Needham-Schroeder or Needham-Schroeder-Lowe examples, if used in later chapters, must be explicitly attributed to the Needham-Schroeder protocol lineage and to strand-space analyses that discuss the Needham-Schroeder-Lowe protocol and the original Needham-Schroeder failure. 【8-3e1455】【9-e4a22f】</p>
+<h2 id="bibliography">Bibliography</h2>
+<pre class="hljs"><code><div>Guttman, J. D., &amp; Ramsdell, J. D. (2026). *Strand spaces with channels and rules* (CPSA Version 4.4.8). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.8/src/doc/cpsafoundation.pdf
+DOI: Not found in the consulted public source. ISBN: Not applicable.
+
+Liskov, M. D., Ramsdell, J. D., Guttman, J. D., &amp; Rowe, P. D. (2026). *The Cryptographic Protocol Shapes Analyzer: A manual for CPSA 4* (CPSA Version 4.4.8). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.8/src/doc/cpsa4manual.pdf
+DOI: Not found in the consulted public source. ISBN: Not applicable.
+
+MITRE Corporation. (n.d.). *mitre/cpsa: Experimental CPSA, the Cryptographic Protocol Shapes Analyzer experimental version* [Source code repository]. GitHub. Retrieved August 9, 2026, from https://github.com/mitre/cpsa
+DOI: Not found in the consulted public source. ISBN: Not applicable.
+
+MITRE Corporation. (n.d.). *cpsa/doc/cpsa4manual.pdf at master* [Repository document]. GitHub. Retrieved August 9, 2026, from https://github.com/mitre/cpsa/blob/master/doc/cpsa4manual.pdf
+DOI: Not found in the consulted public source. ISBN: Not applicable.
+
+Ramsdell, J. D. (2018). *Deducing security goals from shape analysis sentences* (arXiv:1204.0480v4). arXiv. https://arxiv.org/abs/1204.0480
+DOI: https://doi.org/10.48550/arXiv.1204.0480
+
+Thayer Fábrega, F. J., Herzog, J. C., &amp; Guttman, J. D. (1998). *Strand spaces: Why is a security protocol correct?* In *Proceedings of the 1998 IEEE Symposium on Security and Privacy*. IEEE Computer Society. https://www.mitre.org/sites/default/files/pdf/guttman_strands.pdf
+DOI: Not found in the consulted public source. ISBN: Not found in the consulted public source.
+
+Thayer Fábrega, F. J., Herzog, J. C., &amp; Guttman, J. D. (1999). Strand spaces: Proving security protocols correct. *Journal of Computer Security, 7*(2-3), 191-230. https://journals.sagepub.com/doi/pdf/10.3233/JCS-1999-72-304?download=true
+DOI: https://doi.org/10.3233/JCS-1999-72-304
+</div></code></pre>
+
+</body>
+</html>

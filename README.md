@@ -1,18 +1,34 @@
-# Visual CPSA
+# VisualCPSA 0.1
 
-GUI Front-end for Mitre's CPSA
+VisualCPSA is a Python/Tkinter prototype for drawing CPSA protocol-flow diagrams and exporting CPSA-style S-expression syntax.
 
-## Development Notes
+Target runtime: Python 3.10.7 on Windows 11.
 
-### Add Objects experiment
+No third-party packages are required at runtime.
 
-1. Menu: add a Role
+## Command line
 
-https://www.tcl-lang.org/man/tcl8.6/TkCmd/getOpenFile.htm
+```bat
+python main.py --config visualcpsa_settings.json
+```
 
-https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+If `--config` is omitted, VisualCPSA looks for `visualcpsa_settings.json` in the current working directory.
 
-Role is a line and a text label.  Tag both with horizontally movable and the role number.
+## Setup
 
-https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+```bat
+create_venv.bat
+activate_venv.bat
+run_tests.bat
+run_app.bat
+```
 
+## Splash screen
+
+If `show_intro` is true in the settings file, a splash screen appears before the main window. The splash screen includes:
+
+- a welcome banner,
+- an announcement panel loaded from `announcements.md`,
+- an animated GIF introduction,
+- a `show introduction` checkbox,
+- and a `Dismiss` button.

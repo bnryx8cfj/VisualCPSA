@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>5-deflistener.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-5-deflistener">Chapter 5: <code>deflistener</code></h1>
+<blockquote>
+<p><strong>Incremental Development Note</strong></p>
+<p>This chapter contains complete <code>deflistener</code> specification content and explicit placeholders for the canonical SVG and PlantUML metamodel diagrams. Diagram placeholders are intended to be replaced during publication assembly.</p>
+</blockquote>
+<hr>
+<h1 id="51-purpose">5.1 Purpose</h1>
+<p>The <code>deflistener</code> declaration introduces a listener strand into a CPSA skeleton. A listener is an analysis construct used to determine whether a specified term can be received within a realized execution.</p>
+<p>Unlike protocol roles defined with <code>defrole</code>, a listener is not an honest participant and does not model protocol behavior. Instead, it expresses an observational requirement that becomes part of the analysis problem.</p>
+<p>Typical uses include:</p>
+<ul>
+<li>Secrecy analysis</li>
+<li>Confidentiality verification</li>
+<li>Message reachability analysis</li>
+<li>Disclosure analysis</li>
+<li>Derivability analysis</li>
+<li>Adversary knowledge exploration</li>
+<li>Attack confirmation</li>
+<li>Shape refinement</li>
+</ul>
+<hr>
+<h1 id="52-relationship-to-strand-space-theory">5.2 Relationship to Strand-Space Theory</h1>
+<p>Within strand-space semantics a listener is represented as a specialized strand.</p>
+<p>The listener contains a receive event for the target term:</p>
+<pre class="hljs"><code><div>trace(listener) = &lt; -T &gt;
+</div></code></pre>
+<p>where:</p>
+<ul>
+<li><code>T</code> is the target term</li>
+<li><code>-</code> denotes message reception</li>
+</ul>
+<p>Associated strand-space concepts include:</p>
+<ul>
+<li>Event</li>
+<li>ReceiveEvent</li>
+<li>Node</li>
+<li>Strand</li>
+<li>Skeleton</li>
+<li>Bundle</li>
+<li>Shape</li>
+<li>RealizedExecution</li>
+</ul>
+<p>The successful realization of a listener demonstrates that the target term is obtainable within an execution satisfying all protocol assumptions and skeleton constraints.</p>
+<hr>
+<h1 id="53-language-context">5.3 Language Context</h1>
+<h2 id="parent-construct">Parent Construct</h2>
+<p><code>deflistener</code> may appear only within a <code>defskeleton</code>.</p>
+<pre class="hljs"><code><div>defskeleton
+ └── deflistener
+</div></code></pre>
+<h2 id="metamodel-mapping">Metamodel Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Concrete Syntax</th>
+<th>Semantic Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deflistener</code></td>
+<td><code>Listener</code></td>
+</tr>
+<tr>
+<td>listener term</td>
+<td><code>Term</code></td>
+</tr>
+<tr>
+<td>receive action</td>
+<td><code>ReceiveEvent</code></td>
+</tr>
+<tr>
+<td>listener strand</td>
+<td><code>Strand</code></td>
+</tr>
+<tr>
+<td>listener node</td>
+<td><code>Node</code></td>
+</tr>
+<tr>
+<td>listener analysis target</td>
+<td><code>Term</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="54-complete-syntax-specification">5.4 Complete Syntax Specification</h1>
+<h2 id="canonical-syntax">Canonical Syntax</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> term)
+</div></code></pre>
+<h2 id="grammar-production">Grammar Production</h2>
+<pre class="hljs"><code><div>listener-declaration ::=
+    '(' 'deflistener' term ')'
+</div></code></pre>
+<h2 id="syntax-elements">Syntax Elements</h2>
+<h3 id="keyword">Keyword</h3>
+<pre class="hljs"><code><div>deflistener
+</div></code></pre>
+<p>Identifies a listener declaration.</p>
+<h3 id="target-term">Target Term</h3>
+<pre class="hljs"><code><div>term
+</div></code></pre>
+<p>A CPSA message algebra term whose reception is to be analyzed.</p>
+<h2 id="cardinality">Cardinality</h2>
+<p>The declaration contains exactly one target term.</p>
+<pre class="hljs"><code><div>deflistener
+ └── Term [1]
+</div></code></pre>
+<h2 id="abstract-syntax">Abstract Syntax</h2>
+<pre class="hljs"><code><div>Listener {
+    targetTerm : Term
+}
+</div></code></pre>
+<h2 id="simplified-bnf">Simplified BNF</h2>
+<pre class="hljs"><code><div>&lt;listener&gt; ::= '(' 'deflistener' &lt;term&gt; ')'
+</div></code></pre>
+<hr>
+<h1 id="55-parameter-specification">5.5 Parameter Specification</h1>
+<h2 id="target-term">Target Term</h2>
+<h3 id="name">Name</h3>
+<pre class="hljs"><code><div>term
+</div></code></pre>
+<h3 id="type">Type</h3>
+<pre class="hljs"><code><div>Term
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1
+</div></code></pre>
+<h3 id="description">Description</h3>
+<p>The message term whose reception CPSA attempts to realize.</p>
+<h3 id="required">Required</h3>
+<p>Yes.</p>
+<hr>
+<h1 id="56-supported-term-categories">5.6 Supported Term Categories</h1>
+<p>The target term may reference any valid CPSA message algebra construct.</p>
+<h2 id="variables">Variables</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> n)
+</div></code></pre>
+<h2 id="atoms">Atoms</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> secret)
+</div></code></pre>
+<h2 id="concatenations">Concatenations</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">cat</span> a b))
+</div></code></pre>
+<h2 id="encryptions">Encryptions</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">enc</span> n k))
+</div></code></pre>
+<h2 id="hashes">Hashes</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">hash</span> secret))
+</div></code></pre>
+<h2 id="public-keys">Public Keys</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">pubk</span> a))
+</div></code></pre>
+<h2 id="private-keys">Private Keys</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">privk</span> a))
+</div></code></pre>
+<h2 id="long-term-keys">Long-Term Keys</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">ltk</span> a b))
+</div></code></pre>
+<h2 id="diffie-hellman-terms">Diffie-Hellman Terms</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">exp</span> (<span class="hljs-name">gen</span>) x))
+</div></code></pre>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">mul</span> x y))
+</div></code></pre>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">rec</span> x))
+</div></code></pre>
+<hr>
+<h1 id="57-formal-semantics">5.7 Formal Semantics</h1>
+<p>Given:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> T)
+</div></code></pre>
+<p>CPSA constructs a listener strand <code>L</code> such that:</p>
+<pre class="hljs"><code><div>trace(L) = &lt; -T &gt;
+</div></code></pre>
+<p>The resulting structure contains:</p>
+<pre class="hljs"><code><div>1 Listener
+1 Strand
+1 Node
+1 ReceiveEvent
+1 Term Reference
+</div></code></pre>
+<p>The term becomes an analysis objective.</p>
+<hr>
+<h1 id="58-processing-semantics">5.8 Processing Semantics</h1>
+<p>When CPSA processes a listener declaration:</p>
+<ol>
+<li>Parse the target term.</li>
+<li>Validate term well-formedness.</li>
+<li>Create a Listener instance.</li>
+<li>Create a corresponding Strand instance.</li>
+<li>Create a ReceiveEvent.</li>
+<li>Create a Node representing the reception.</li>
+<li>Associate the node with the receive event.</li>
+<li>Add the listener to the Skeleton.</li>
+<li>Extend the skeleton constraint set.</li>
+<li>Search for realized executions.</li>
+<li>Generate compatible bundles.</li>
+<li>Generate shapes satisfying all constraints.</li>
+</ol>
+<p>Possible outcomes:</p>
+<ul>
+<li>Realized listener</li>
+<li>Unrealizable listener</li>
+<li>Additional protocol assumptions required</li>
+<li>Discovery of attacks or message exposure</li>
+</ul>
+<hr>
+<h1 id="59-uml-metamodel-specification">5.9 UML Metamodel Specification</h1>
+<h2 id="class-listener">Class: Listener</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;AnalysisConstruct&gt;&gt;
+</div></code></pre>
+<h3 id="generalization">Generalization</h3>
+<pre class="hljs"><code><div>Strand
+  ^
+  |
+Listener
+</div></code></pre>
+<h3 id="attributes">Attributes</h3>
+<pre class="hljs"><code><div>targetTerm : Term [1]
+generated  : Boolean [1]
+</div></code></pre>
+<h3 id="description">Description</h3>
+<p>Represents a specialized analysis strand used to test whether a target term can be received.</p>
+<hr>
+<h1 id="510-normative-relationships">5.10 Normative Relationships</h1>
+<h2 id="skeleton-contains-listener">Skeleton Contains Listener</h2>
+<p><strong>Source:</strong> Skeleton</p>
+<p><strong>Target:</strong> Listener</p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Skeleton [1] -&gt; Listener [0..*]
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>A skeleton may contain zero or more listeners.</p>
+<h3 id="navigability">Navigability</h3>
+<pre class="hljs"><code><div>Skeleton -&gt; Listener
+</div></code></pre>
+<hr>
+<h2 id="listener-references-term">Listener References Term</h2>
+<p><strong>Source:</strong> Listener</p>
+<p><strong>Target:</strong> Term</p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Listener [1] -&gt; Term [1]
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Every listener references exactly one target term.</p>
+<h3 id="navigability">Navigability</h3>
+<pre class="hljs"><code><div>Listener -&gt; Term
+</div></code></pre>
+<hr>
+<h2 id="listener-contains-node">Listener Contains Node</h2>
+<p><strong>Source:</strong> Listener</p>
+<p><strong>Target:</strong> Node</p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Listener [1] -&gt; Node [1]
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>The listener trace contains one node.</p>
+<hr>
+<h2 id="node-references-receiveevent">Node References ReceiveEvent</h2>
+<p><strong>Source:</strong> Node</p>
+<p><strong>Target:</strong> ReceiveEvent</p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Node [1] -&gt; ReceiveEvent [1]
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>The node corresponds to a reception event.</p>
+<hr>
+<h2 id="bundle-references-listener">Bundle References Listener</h2>
+<p><strong>Source:</strong> Bundle</p>
+<p><strong>Target:</strong> Listener</p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Bundle [1] -&gt; Listener [0..*]
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Bundles may contain listener strands.</p>
+<hr>
+<h2 id="shape-references-listener">Shape References Listener</h2>
+<p><strong>Source:</strong> Shape</p>
+<p><strong>Target:</strong> Listener</p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Shape [1] -&gt; Listener [0..*]
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Shapes may contain listener strands.</p>
+<hr>
+<h1 id="511-containment-relationships">5.11 Containment Relationships</h1>
+<pre class="hljs"><code><div>defskeleton
+    contains
+        deflistener
+</div></code></pre>
+<h2 id="multiplicity">Multiplicity</h2>
+<pre class="hljs"><code><div>defskeleton -&gt; 0..* deflistener
+</div></code></pre>
+<hr>
+<h1 id="512-reference-relationships">5.12 Reference Relationships</h1>
+<p>A listener target term may reference:</p>
+<ul>
+<li>Variable</li>
+<li>Sort</li>
+<li>Atom</li>
+<li>Term</li>
+<li>FunctionApplication</li>
+<li><code>cat</code></li>
+<li><code>enc</code></li>
+<li><code>hash</code></li>
+<li><code>pubk</code></li>
+<li><code>privk</code></li>
+<li><code>ltk</code></li>
+<li><code>gen</code></li>
+<li><code>exp</code></li>
+<li><code>mul</code></li>
+<li><code>rec</code></li>
+<li><code>one</code></li>
+</ul>
+<hr>
+<h1 id="513-cardinality-constraints">5.13 Cardinality Constraints</h1>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Cardinality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Listener per Skeleton</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Target Term per Listener</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Node per Listener</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ReceiveEvent per Listener</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Skeleton per Listener</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="514-umlocl-invariants">5.14 UML/OCL Invariants</h1>
+<h2 id="listener-has-exactly-one-target-term">Listener Has Exactly One Target Term</h2>
+<pre class="hljs"><code><div>context Listener
+inv OneTargetTerm:
+    self.targetTerm-&gt;size() = 1
+</div></code></pre>
+<h2 id="listener-has-exactly-one-node">Listener Has Exactly One Node</h2>
+<pre class="hljs"><code><div>context Listener
+inv OneNode:
+    self.node-&gt;size() = 1
+</div></code></pre>
+<h2 id="listener-uses-receive-events-only">Listener Uses Receive Events Only</h2>
+<pre class="hljs"><code><div>context Listener
+inv ReceiveOnly:
+    self.node.event.oclIsTypeOf(ReceiveEvent)
+</div></code></pre>
+<h2 id="listener-must-belong-to-a-skeleton">Listener Must Belong To A Skeleton</h2>
+<pre class="hljs"><code><div>context Listener
+inv OwnedBySkeleton:
+    self.skeleton-&gt;size() = 1
+</div></code></pre>
+<hr>
+<h1 id="515-common-modeling-patterns">5.15 Common Modeling Patterns</h1>
+<h2 id="nonce-secrecy">Nonce Secrecy</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> n)
+</div></code></pre>
+<h2 id="session-key-disclosure">Session-Key Disclosure</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> k)
+</div></code></pre>
+<h2 id="ciphertext-reachability">Ciphertext Reachability</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">enc</span> n (<span class="hljs-name">pubk</span> a)))
+</div></code></pre>
+<h2 id="hash-disclosure">Hash Disclosure</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">hash</span> secret))
+</div></code></pre>
+<h2 id="diffie-hellman-value-disclosure">Diffie-Hellman Value Disclosure</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">deflistener</span> (<span class="hljs-name">exp</span> (<span class="hljs-name">gen</span>) x))
+</div></code></pre>
+<hr>
+<h1 id="516-common-modeling-errors">5.16 Common Modeling Errors</h1>
+<ol>
+<li>Treating a listener as a protocol participant.</li>
+<li>Using listeners instead of goals.</li>
+<li>Using ill-sorted terms.</li>
+<li>Assuming listener realization automatically proves an attack.</li>
+<li>Ignoring message-algebra constraints.</li>
+</ol>
+<hr>
+<h1 id="517-canonical-svg-diagram-placeholder">5.17 Canonical SVG Diagram Placeholder</h1>
+<h2 id="placeholder-identifier">Placeholder Identifier</h2>
+<pre class="hljs"><code><div>SVG-DIAGRAM-CH05-DEFLISTENER
+</div></code></pre>
+<h2 id="purpose">Purpose</h2>
+<p>Highlight the <code>Listener</code> class within the canonical CPSA metamodel.</p>
+<h2 id="required-content">Required Content</h2>
+<ul>
+<li>Protocol Package</li>
+<li>Analysis Package</li>
+<li>Goal Package</li>
+<li>Message Algebra Package</li>
+<li>Protocol</li>
+<li>Role</li>
+<li>Rule</li>
+<li>Skeleton</li>
+<li>Strand</li>
+<li>Listener</li>
+<li>Node</li>
+<li>Event</li>
+<li>SendEvent</li>
+<li>ReceiveEvent</li>
+<li>Term</li>
+<li>Atom</li>
+<li>Variable</li>
+<li>FunctionApplication</li>
+<li>Fact</li>
+<li>Goal</li>
+<li>Formula</li>
+<li>Predicate</li>
+<li>Bundle</li>
+<li>Shape</li>
+<li>RealizedExecution</li>
+<li>All multiplicities</li>
+<li>All navigable associations</li>
+<li>UML stereotypes</li>
+<li>Listener highlighted</li>
+</ul>
+<h2 id="future-svg-location">Future SVG Location</h2>
+<pre class="hljs"><code><div>[SVG-DIAGRAM-CH05-DEFLISTENER]
+</div></code></pre>
+<h2 id="publication-note">Publication Note</h2>
+<p>This placeholder shall be replaced by the canonical SVG metamodel diagram before publication.</p>
+<hr>
+<h1 id="518-canonical-plantuml-diagram-placeholder">5.18 Canonical PlantUML Diagram Placeholder</h1>
+<h2 id="placeholder-identifier">Placeholder Identifier</h2>
+<pre class="hljs"><code><div>PLANTUML-DIAGRAM-CH05-DEFLISTENER
+</div></code></pre>
+<h2 id="purpose">Purpose</h2>
+<p>Provide the authoritative PlantUML source corresponding to the SVG diagram.</p>
+<h2 id="required-content">Required Content</h2>
+<ul>
+<li>Identical semantics to SVG diagram</li>
+<li>Identical classes</li>
+<li>Identical stereotypes</li>
+<li>Identical multiplicities</li>
+<li>Identical package structure</li>
+<li>Identical navigability</li>
+<li>Canonical coordinate layout where applicable</li>
+<li>Listener highlighted</li>
+</ul>
+<h2 id="future-plantuml-location">Future PlantUML Location</h2>
+<pre class="hljs"><code><div>[PLANTUML-DIAGRAM-CH05-DEFLISTENER]
+</div></code></pre>
+<h2 id="publication-note">Publication Note</h2>
+<p>This placeholder shall be replaced by the final PlantUML source before publication.</p>
+<hr>
+<h1 id="519-complete-example">5.19 Complete Example</h1>
+<pre class="hljs"><code><div>(<span class="hljs-name">defskeleton</span> secret-analysis
+  (<span class="hljs-name">vars</span> (<span class="hljs-name">n</span> text))
+  (<span class="hljs-name">deflistener</span> n))
+</div></code></pre>
+<h2 id="interpretation">Interpretation</h2>
+<p>The analyst wishes to determine whether nonce <code>n</code> can be received in a realized execution.</p>
+<hr>
+<h1 id="520-grammar-to-metamodel-traceability">5.20 Grammar-to-Metamodel Traceability</h1>
+<table>
+<thead>
+<tr>
+<th>Grammar Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deflistener</code></td>
+<td><code>Listener</code></td>
+</tr>
+<tr>
+<td>target term</td>
+<td><code>Term</code></td>
+</tr>
+<tr>
+<td>receive event</td>
+<td><code>ReceiveEvent</code></td>
+</tr>
+<tr>
+<td>listener node</td>
+<td><code>Node</code></td>
+</tr>
+<tr>
+<td>listener strand</td>
+<td><code>Strand</code></td>
+</tr>
+<tr>
+<td>skeleton containment</td>
+<td><code>Skeleton</code></td>
+</tr>
+<tr>
+<td>bundle participation</td>
+<td><code>Bundle</code></td>
+</tr>
+<tr>
+<td>shape participation</td>
+<td><code>Shape</code></td>
+</tr>
+<tr>
+<td>realized execution analysis</td>
+<td><code>RealizedExecution</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="521-validation-checklist">5.21 Validation Checklist</h1>
+<ul>
+<li>Declaration represented.</li>
+<li>Syntax documented.</li>
+<li>Semantics documented.</li>
+<li>UML class documented.</li>
+<li>Relationships documented.</li>
+<li>Containment documented.</li>
+<li>Reference relationships documented.</li>
+<li>Multiplicities documented.</li>
+<li>Constraints documented.</li>
+<li>Processing semantics documented.</li>
+<li>Traceability documented.</li>
+<li>SVG placeholder included.</li>
+<li>PlantUML placeholder included.</li>
+</ul>
+<hr>
+<h1 id="522-section-bibliography">5.22 Section Bibliography</h1>
+<h2 id="cpsa-references">CPSA References</h2>
+<p>Ramsdell, J. D. <em>Cryptographic Protocol Shapes Analyzer (CPSA) Documentation and User Guides</em>.</p>
+<p>Ramsdell, J. D. <em>CPSA Version 4 Reference Materials</em>.</p>
+<h2 id="strand-space-references">Strand-Space References</h2>
+<p>Thayer, F. J., Herzog, J. C., &amp; Guttman, J. D. <em>Strand Spaces: Why Is a Security Protocol Correct?</em></p>
+<p>Guttman, J. D. Strand-space authentication and protocol-analysis publications.</p>
+<h2 id="analysis-references">Analysis References</h2>
+<p>Rowe, P. D., Ramsdell, J. D., Guttman, J. D., and collaborators. Publications on shape analysis, skeleton realization, and symbolic protocol verification.</p>
+
+</body>
+</html>

@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>6-defgoal.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-6-defgoal">Chapter 6. <code>defgoal</code></h1>
+<h2 id="61-introduction">6.1 Introduction</h2>
+<p>The <code>defgoal</code> declaration is the primary CPSA language construct used to specify formal security properties that a protocol is expected to satisfy. Whereas <code>defprotocol</code> defines a protocol, <code>defrole</code> defines participant behavior within that protocol, and <code>defskeleton</code> defines assumptions about a class of executions, <code>defgoal</code> defines logical properties that should hold across protocol executions consistent with CPSA analysis. (Guttman &amp; Ramsdell, 2020; Ramsdell, 2015). 【1-010047】【2-b546be】</p>
+<p>Within CPSA, protocol verification is performed by generating and analyzing protocol shapes. A security goal serves as a formally stated requirement against which those shapes may be evaluated. The purpose of a goal is therefore not to describe behavior, but rather to describe desired security properties that characterize correct behavior. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<p>The CPSA goal language is based on many-sorted first-order logic and supports quantification, implication, conjunction, disjunction, negation, equality, and protocol-specific predicates. These constructs allow protocol designers to express authentication requirements, secrecy requirements, agreement properties, correspondence properties, and protocol-specific invariants. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【2-b546be】【1-010047】</p>
+<p>Goals occupy a central role within CPSA because they bridge protocol modeling and protocol verification. A protocol specification defines possible executions, whereas goals define the security requirements those executions should satisfy. Protocol correctness is therefore evaluated with respect to specified goals rather than protocol execution alone. (Guttman &amp; Ramsdell, 2020; MITRE Corporation, 2026). 【1-010047】【3-e03bec】</p>
+<hr>
+<h1 id="62-purpose">6.2 Purpose</h1>
+<p>The purpose of a <code>defgoal</code> declaration is to formally express a security property that can be evaluated against protocol executions produced by CPSA shape analysis. Unlike protocol definitions, which describe behavior, goals define required properties of that behavior. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<p>More specifically, goals are used to:</p>
+<ol>
+<li>Specify authentication requirements. (Guttman et al., 2000; Guttman, 2000). 【1-010047】【2-b546be】</li>
+<li>Specify secrecy requirements. (Guttman &amp; Ramsdell, 2020; Ramsdell, 2015). 【1-010047】【2-b546be】</li>
+<li>Specify agreement properties among protocol participants. (Woo &amp; Lam, 1993; Guttman et al., 2000).</li>
+<li>Specify correspondence assertions between protocol events. (Guttman, 2000; Ramsdell, 2015).</li>
+<li>Specify protocol-wide invariants. (Guttman &amp; Ramsdell, 2020). 【1-010047】</li>
+<li>Provide machine-checkable security requirements. (MITRE Corporation, 2026; Guttman &amp; Ramsdell, 2020). 【3-e03bec】【1-010047】</li>
+<li>Enable automated verification through shape analysis. (MITRE Corporation, 2026). 【3-e03bec】</li>
+</ol>
+<p>The practical value of CPSA security goals is that they allow protocol designers to formulate security expectations independently of any particular execution. CPSA can then determine whether those expectations are consistent with all protocol shapes generated during analysis. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<hr>
+<h1 id="63-position-within-the-cpsa-dsl">6.3 Position Within the CPSA DSL</h1>
+<p>The <code>defgoal</code> declaration belongs to the logical reasoning layer of the CPSA DSL. While the protocol layer defines protocol structure and the analysis layer defines execution hypotheses, the goal layer defines security properties to be verified. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<h2 id="relationship-to-other-top-level-declarations">Relationship to Other Top-Level Declarations</h2>
+<h3 id="relationship-to-defprotocol">Relationship to <code>defprotocol</code></h3>
+<p>A goal is always associated with a protocol. The protocol provides the roles, variables, message structures, and semantics referenced by the goal. Every valid goal therefore exists within the context of a protocol specification. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<h3 id="relationship-to-defrole">Relationship to <code>defrole</code></h3>
+<p>Goal formulas frequently reference roles using role predicates. These predicates allow goals to reason about the existence and behavior of role instances occurring within protocol executions. (Ramsdell, 2015). 【2-b546be】</p>
+<h3 id="relationship-to-defskeleton">Relationship to <code>defskeleton</code></h3>
+<p>A skeleton describes assumptions about protocol executions. Goal evaluation ultimately occurs relative to shapes generated from skeleton analysis. Consequently, skeletons provide the execution context in which goals are tested. (Guttman &amp; Ramsdell, 2020; MITRE Corporation, 2026). 【1-010047】【3-e03bec】</p>
+<h3 id="relationship-to-defstrand">Relationship to <code>defstrand</code></h3>
+<p>Many goal predicates refer to strands and strand positions. Authentication goals, for example, commonly assert that the existence of one strand implies the existence of another corresponding strand. (Guttman et al., 2000; Ramsdell, 2015). 【2-b546be】【1-010047】</p>
+<h3 id="relationship-to-deflistener">Relationship to <code>deflistener</code></h3>
+<p>Listener strands represent adversarial observation of messages. Shape satisfaction of secrecy goals may depend upon whether a listener strand can be derived within a realized execution. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<h3 id="relationship-to-defrule">Relationship to <code>defrule</code></h3>
+<p>Rules constrain or extend analysis by introducing additional semantic assumptions. These assumptions may influence the set of realizable executions and therefore affect goal satisfaction. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<hr>
+<h1 id="64-uml-metamodel-mapping">6.4 UML Metamodel Mapping</h1>
+<p>Within the canonical CPSA metamodel, the <code>defgoal</code> declaration maps to the semantic element:</p>
+<pre class="hljs"><code><div>Goal
+</div></code></pre>
+<p>The Goal metamodel element represents a security requirement associated with a protocol. It serves as the root container for logical formulas used during protocol verification. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【2-b546be】【1-010047】</p>
+<h2 id="grammar-traceability">Grammar Traceability</h2>
+<table>
+<thead>
+<tr>
+<th>CPSA Syntax Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defgoal</code></td>
+<td>Goal</td>
+</tr>
+<tr>
+<td><code>forall</code></td>
+<td>UniversalFormula</td>
+</tr>
+<tr>
+<td><code>exists</code></td>
+<td>ExistentialFormula</td>
+</tr>
+<tr>
+<td><code>implies</code></td>
+<td>ImplicationFormula</td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td>ConjunctionFormula</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td>DisjunctionFormula</td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>NegationFormula</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>non</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>uniq</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>fact</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>prec</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td>variable declaration</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>term reference</td>
+<td>Term</td>
+</tr>
+</tbody>
+</table>
+<p>This mapping satisfies the CPSA metamodel requirement that every concrete syntax construct map to one or more semantic elements. Constructs should not exist solely as documentation artifacts when they possess independently identifiable semantics. (CPSA DSL Requirements Specification).</p>
+<hr>
+<h1 id="65-goal-package">6.5 Goal Package</h1>
+<p>The Goal Package contains the UML classes necessary for representing CPSA goal specifications.</p>
+<pre class="hljs"><code><div>Goal Package
+ ├── Goal
+ ├── Formula
+ ├── QuantifiedFormula
+ ├── UniversalFormula
+ ├── ExistentialFormula
+ ├── ImplicationFormula
+ ├── ConjunctionFormula
+ ├── DisjunctionFormula
+ ├── NegationFormula
+ ├── Predicate
+ ├── Variable
+ └── Term
+</div></code></pre>
+<h2 id="package-purpose">Package Purpose</h2>
+<p>The Goal Package provides a complete abstract representation of the CPSA goal language. Every goal declaration is represented as a Goal instance containing a Formula hierarchy composed of quantified formulas, predicates, variables, logical operators, and term references. (Ramsdell, 2015). 【2-b546be】</p>
+<p>The package separates logical structure from protocol structure. Protocol definitions reside elsewhere within the metamodel, while the Goal Package represents the logical formulas used to reason about those protocol elements. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<hr>
+<h1 id="66-uml-diagram-placeholders">6.6 UML Diagram Placeholders</h1>
+<p>Consistent with the incremental-development requirements, the diagram placeholders in this chapter identify the intended content, relationship coverage, and future artifact locations. These placeholders shall later be replaced with canonical SVG and PlantUML representations of the CPSA UML metamodel.</p>
+<h2 id="svg-uml-metamodel-placeholder">SVG UML Metamodel Placeholder</h2>
+<h3 id="diagram-identifier">Diagram Identifier</h3>
+<pre class="hljs"><code><div>CH06-GOAL-UML-SVG
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>This SVG diagram will present the canonical CPSA metamodel while highlighting the Goal Package and the <code>Goal</code> class.</p>
+<h3 id="intended-uml-content">Intended UML Content</h3>
+<p>The completed SVG diagram shall include:</p>
+<ul>
+<li>Protocol</li>
+<li>Role</li>
+<li>Rule</li>
+<li>Goal</li>
+<li>Formula</li>
+<li>Predicate</li>
+<li>Variable</li>
+<li>Term</li>
+<li>Event</li>
+<li>Node</li>
+<li>Strand</li>
+<li>Listener</li>
+<li>Skeleton</li>
+<li>Bundle</li>
+<li>Shape</li>
+<li>RealizedExecution</li>
+</ul>
+<p>The diagram shall display:</p>
+<ul>
+<li>Composition relationships</li>
+<li>Navigable associations</li>
+<li>Multiplicity labels</li>
+<li>UML stereotypes</li>
+<li>Package boundaries</li>
+</ul>
+<h3 id="rendering-requirements">Rendering Requirements</h3>
+<p>The diagram shall use:</p>
+<ul>
+<li>The canonical CPSA metamodel layout</li>
+<li>Consistent package structure</li>
+<li>Consistent coordinates</li>
+<li>Consistent multiplicities</li>
+<li>Consistent relationship routing</li>
+</ul>
+<p>Only Goal-related elements shall receive visual emphasis in this chapter.</p>
+<h3 id="future-svg-location">Future SVG Location</h3>
+<pre class="hljs"><code><div>/images/ch06-defgoal-metamodel.svg
+</div></code></pre>
+<hr>
+<h2 id="plantuml-diagram-placeholder">PlantUML Diagram Placeholder</h2>
+<h3 id="diagram-identifier">Diagram Identifier</h3>
+<pre class="hljs"><code><div>CH06-GOAL-UML-PLANTUML
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>This PlantUML diagram shall serve as the authoritative source representation from which the SVG diagram is generated.</p>
+<h3 id="intended-uml-content">Intended UML Content</h3>
+<p>The PlantUML source shall include:</p>
+<ul>
+<li>Goal Package</li>
+<li>Formula hierarchy</li>
+<li>Predicate hierarchy</li>
+<li>Variable relationships</li>
+<li>Protocol association</li>
+<li>Shape-analysis associations</li>
+<li>Multiplicities</li>
+<li>Navigability</li>
+<li>Stereotypes</li>
+</ul>
+<h3 id="future-plantuml-location">Future PlantUML Location</h3>
+<pre class="hljs"><code><div>/plantuml/ch06-defgoal.puml
+</div></code></pre>
+<hr>
+<h1 id="67-abstract-syntax">6.7 Abstract Syntax</h1>
+<p>The most general form of a goal declaration is:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> protocol-name
+  formula)
+</div></code></pre>
+<p>The declaration consists of the keyword <code>defgoal</code>, the name of the protocol to which the goal applies, and a logical formula expressing the desired security property. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【2-b546be】【1-010047】</p>
+<p>In practice, CPSA goals are usually expressed as quantified implications:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> protocol-name
+  (<span class="hljs-name">forall</span> (...)
+    (<span class="hljs-name">implies</span>
+      antecedent
+      consequent)))
+</div></code></pre>
+<p>This structure reflects the dominant usage pattern in CPSA authentication and secrecy reasoning, where the antecedent identifies an observed execution condition and the consequent identifies a required execution property. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Observation
+      ↓
+ Antecedent
+      ↓
+  Implies
+      ↓
+ Consequence
+</div></code></pre>
+<p>A protocol satisfies the goal only when every execution satisfying the antecedent also satisfies the consequent. (Ramsdell, 2015). 【2-b546be】</p>
+<hr>
+<h1 id="68-concrete-syntax">6.8 Concrete Syntax</h1>
+<h2 id="overview">Overview</h2>
+<p>The CPSA goal language is a many-sorted first-order logical language. It supports variable declarations, quantification, implication, conjunction, disjunction, negation, equality, and protocol-specific predicates. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【2-b546be】【1-010047】</p>
+<h2 id="canonical-grammar">Canonical Grammar</h2>
+<pre class="hljs"><code><div>GoalDeclaration ::=
+    (defgoal ProtocolName Formula)
+
+Formula ::=
+      Predicate
+    | (forall VariableList Formula)
+    | (exists VariableList Formula)
+    | (implies Formula Formula)
+    | (and Formula*)
+    | (or Formula*)
+    | (not Formula)
+
+VariableList ::=
+    ((Variable Sort)*)
+
+Predicate ::=
+      p
+    | non
+    | uniq
+    | uniq-at
+    | fact
+    | prec
+    | =
+</div></code></pre>
+<p>The grammar is recursive because formulas may contain nested formulas. This permits construction of arbitrarily complex logical sentences while preserving a uniform abstract syntax. (Ramsdell, 2015). 【2-b546be】</p>
+<h2 id="variable-declarations">Variable Declarations</h2>
+<p>Variables are declared using CPSA sorts.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>((<span class="hljs-name">a</span> name)
+ (<span class="hljs-name">b</span> name)
+ (<span class="hljs-name">n</span> text)
+ (<span class="hljs-name">z</span> strd))
+</div></code></pre>
+<p>In this example:</p>
+<ul>
+<li><code>a</code> is a name.</li>
+<li><code>b</code> is a name.</li>
+<li><code>n</code> is a text value.</li>
+<li><code>z</code> is a strand identifier.</li>
+</ul>
+<p>Variables must be declared before use. Undeclared variables are invalid and constitute a semantic error. (Ramsdell, 2015). 【2-b546be】</p>
+<h2 id="quantified-formulas">Quantified Formulas</h2>
+<p>Universal quantification:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">forall</span>
+   ((<span class="hljs-name">a</span> name)
+    (<span class="hljs-name">b</span> name))
+   formula)
+</div></code></pre>
+<p>Existential quantification:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">exists</span>
+   ((<span class="hljs-name">z</span> strd))
+   formula)
+</div></code></pre>
+<p>Universal quantification is generally used to define security requirements, while existential quantification is commonly used to establish the existence of authentication witnesses. (Guttman &amp; Ramsdell, 2020; Ramsdell, 2015). 【1-010047】【2-b546be】</p>
+<h2 id="implication-formulas">Implication Formulas</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">implies</span>
+   antecedent
+   consequent)
+</div></code></pre>
+<p>Implication expresses the fundamental structure of most CPSA security properties: if certain protocol conditions are observed, then additional security-relevant conditions must also hold. (Guttman &amp; Ramsdell, 2020). 【1-010047】</p>
+<h2 id="compound-formulas">Compound Formulas</h2>
+<p>Conjunction:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">and</span> A B C)
+</div></code></pre>
+<p>Disjunction:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">or</span> A B)
+</div></code></pre>
+<p>Negation:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">not</span> A)
+</div></code></pre>
+<p>These operators allow construction of complex logical expressions describing authentication, secrecy, and protocol correctness requirements. (Ramsdell, 2015). 【2-b546be】</p>
+<h1 id="69-semantic-interpretation">6.9 Semantic Interpretation</h1>
+<p>A <code>defgoal</code> declaration is interpreted over the protocol execution space generated by CPSA shape analysis. CPSA attempts to enumerate all essentially different executions that satisfy a protocol specification and a set of initial assumptions. These essentially different executions are called <em>shapes</em>. Security goals are evaluated against those shapes to determine whether the specified property is satisfied in all relevant executions. (Guttman &amp; Ramsdell, 2020; MITRE Corporation, 2026). 【1-57b8b1】【2-5b9611】</p>
+<p>The semantic meaning of a goal is therefore independent of any single protocol run. Instead, a goal is evaluated with respect to an entire class of executions represented by CPSA's shape analysis. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Protocol
+   ↓
+Analysis Assumptions
+   ↓
+Shape Generation
+   ↓
+Execution Models
+   ↓
+Goal Evaluation
+   ↓
+Satisfied or Violated
+</div></code></pre>
+<p>A goal succeeds when every execution satisfying the antecedent also satisfies the consequent. This corresponds to the standard logical interpretation of implication adopted by CPSA's security-goal framework. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【3-f59424】【1-57b8b1】</p>
+<p>Most goals describe a relationship between an observed execution fragment and an execution property that must also hold. In authentication reasoning, for example, an observed participant execution serves as the antecedent, while the existence of a corresponding participant execution forms the consequent. (Guttman et al., 2000; Guttman, 2000).</p>
+<p>Semantically:</p>
+<pre class="hljs"><code><div>Antecedent ⇒ Consequent
+</div></code></pre>
+<p>A violation occurs whenever CPSA discovers a shape satisfying the antecedent but not satisfying the consequent. Such a shape represents a counterexample to the security property being specified. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h1 id="610-quantification">6.10 Quantification</h1>
+<p>Quantification provides the mechanism by which goals express properties over protocol participants, strands, messages, and other protocol entities. CPSA uses many-sorted first-order logic, meaning every variable has an associated sort. (Ramsdell, 2015). 【3-f59424】</p>
+<h2 id="universal-quantification">Universal Quantification</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">forall</span>
+   ((<span class="hljs-name">a</span> name)
+    (<span class="hljs-name">b</span> name))
+   formula)
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Universal quantification states that the enclosed formula must hold for every assignment of values consistent with the declared sorts. (Ramsdell, 2015). 【3-f59424】</p>
+<p>Mathematically:</p>
+<pre class="hljs"><code><div>∀x F(x)
+</div></code></pre>
+<p>Universal quantification is commonly used to express security guarantees.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">forall</span>
+   ((<span class="hljs-name">z</span> strd))
+   formula)
+</div></code></pre>
+<p>Meaning:</p>
+<blockquote>
+<p>For every strand <code>z</code>, the enclosed property must hold.</p>
+</blockquote>
+<p>Authentication goals almost always begin with a universally quantified formula because they describe requirements that must hold for every qualifying execution. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h2 id="existential-quantification">Existential Quantification</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">exists</span>
+   ((<span class="hljs-name">z</span> strd))
+   formula)
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Existential quantification states that there exists at least one assignment satisfying the enclosed formula. (Ramsdell, 2015). 【3-f59424】</p>
+<p>Mathematically:</p>
+<pre class="hljs"><code><div>∃x F(x)
+</div></code></pre>
+<p>Existential quantification is frequently used to express authentication witnesses.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">exists</span>
+   ((<span class="hljs-name">z</span> strd))
+   (<span class="hljs-name">p</span> <span class="hljs-string">"resp"</span> z <span class="hljs-number">2</span>))
+</div></code></pre>
+<p>Meaning:</p>
+<blockquote>
+<p>There exists a responder strand that has reached position 2.</p>
+</blockquote>
+<p>Authentication goals typically include an existential consequent asserting the existence of another participant execution. (Guttman et al., 2000; Guttman, 2000).</p>
+<hr>
+<h1 id="611-logical-operators">6.11 Logical Operators</h1>
+<p>The CPSA goal language includes a small but expressive collection of logical operators. These operators are sufficient to express the authentication and secrecy properties typically required for symbolic protocol analysis. (Ramsdell, 2015). 【3-f59424】</p>
+<h2 id="implication">Implication</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">implies</span> A B)
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Implication expresses a conditional security property.</p>
+<p>Formally:</p>
+<pre class="hljs"><code><div>A ⇒ B
+</div></code></pre>
+<p>Meaning:</p>
+<blockquote>
+<p>If A is true, then B must also be true.</p>
+</blockquote>
+<p>Implication forms the basis of nearly all CPSA authentication goals because it provides a way to express security requirements as conditional guarantees. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h2 id="conjunction">Conjunction</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">and</span> A B C)
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Conjunction requires all enclosed formulas to evaluate to true.</p>
+<p>Formally:</p>
+<pre class="hljs"><code><div>A ∧ B ∧ C
+</div></code></pre>
+<p>Conjunction is commonly used to specify execution assumptions, participant assumptions, freshness assumptions, and key assumptions simultaneously. (Ramsdell, 2015). 【3-f59424】</p>
+<hr>
+<h2 id="disjunction">Disjunction</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">or</span> A B)
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Disjunction requires at least one enclosed formula to evaluate to true.</p>
+<p>Formally:</p>
+<pre class="hljs"><code><div>A ∨ B
+</div></code></pre>
+<p>Disjunction is less common than conjunction in CPSA security goals but remains useful for expressing alternative protocol behaviors. (Ramsdell, 2015). 【3-f59424】</p>
+<hr>
+<h2 id="negation">Negation</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">not</span> A)
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Negation requires the enclosed formula to evaluate to false.</p>
+<p>Formally:</p>
+<pre class="hljs"><code><div>¬A
+</div></code></pre>
+<p>Negation is used primarily in secrecy reasoning and in the specification of protocol constraints. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h1 id="612-goal-predicates">6.12 Goal Predicates</h1>
+<p>Predicates constitute the atomic building blocks of CPSA goal formulas. They allow formulas to reference protocol roles, variables, execution properties, and analysis assumptions. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【3-f59424】【1-57b8b1】</p>
+<h2 id="role-progress-predicate">Role Progress Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> z <span class="hljs-number">3</span>)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>The strand identified by <code>z</code> has progressed through position 3 of role <code>init</code>.</p>
+<p>This predicate is one of the most commonly used goal predicates because authentication goals often reason about completed or partially completed role executions. (Ramsdell, 2015). 【3-f59424】</p>
+<hr>
+<h2 id="role-parameter-predicate">Role Parameter Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> <span class="hljs-string">"a"</span> z a)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Role parameter <code>a</code> in strand <code>z</code> is bound to the value represented by term <code>a</code>.</p>
+<p>Parameter predicates are used extensively in agreement and authentication goals because they permit comparison of values across multiple strands. (Guttman et al., 2000).</p>
+<hr>
+<h2 id="non-originating-predicate">Non-Originating Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">non</span> k)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Term <code>k</code> is assumed not to originate during execution.</p>
+<p>Examples:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">non</span> (<span class="hljs-name">privk</span> a))
+</div></code></pre>
+<pre class="hljs"><code><div>(<span class="hljs-name">non</span> (<span class="hljs-name">privk</span> b))
+</div></code></pre>
+<p>These assumptions commonly represent uncompromised private keys or uncompromised shared secrets. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h2 id="unique-origination-predicate">Unique Origination Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">uniq</span> n)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Term <code>n</code> originates at exactly one point in the execution.</p>
+<p>Typical uses include:</p>
+<ul>
+<li>Nonces</li>
+<li>Session keys</li>
+<li>Fresh random values</li>
+</ul>
+<p>Unique origination assumptions are central to many authentication proofs because they provide evidence that specific message values originated from a unique source. (Guttman, 2000; Guttman et al., 2000).</p>
+<hr>
+<h2 id="fact-predicate">Fact Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">fact</span> f x y)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>The analysis fact identified by <code>f</code> holds for the supplied arguments.</p>
+<p>Fact predicates provide a mechanism for extending protocol reasoning through user-defined analysis facts and rule systems. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h2 id="equality-predicate">Equality Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">=</span> x y)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Terms <code>x</code> and <code>y</code> are equal.</p>
+<p>Equality predicates frequently appear in agreement goals because participant agreement often requires equality of identities, nonces, session keys, or message fields. (Woo &amp; Lam, 1993; Ramsdell, 2015).</p>
+<hr>
+<h2 id="precedence-predicate">Precedence Predicate</h2>
+<h3 id="syntax">Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">prec</span> n1 n2)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Node <code>n1</code> occurs before node <code>n2</code>.</p>
+<p>Precedence predicates express temporal and causal ordering constraints within protocol executions. Such constraints are often required when reasoning about authentication and causality. (Thayer, Herzog, &amp; Guttman, 1999; Guttman, 2000).</p>
+<hr>
+<h1 id="613-authentication-goals">6.13 Authentication Goals</h1>
+<p>Authentication goals are the most common use of <code>defgoal</code>. CPSA authentication goals typically express correspondence properties between multiple participant executions. Rather than focusing solely on message receipt, these goals reason about the existence of compatible executions that explain the observed behavior. (Guttman et al., 2000; Guttman, 2000).</p>
+<h2 id="general-authentication-pattern">General Authentication Pattern</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> protocol-name
+  (<span class="hljs-name">forall</span> (...)
+    (<span class="hljs-name">implies</span>
+      initiator-observation
+      responder-existence)))
+</div></code></pre>
+<p>The antecedent describes an observed execution state, while the consequent requires evidence of a corresponding participant execution. (Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Completed Execution
+         ↓
+     Observed
+         ↓
+     Requires
+         ↓
+ Matching Execution
+</div></code></pre>
+<p>This structure captures the central idea of authentication in strand-space analysis:</p>
+<blockquote>
+<p>If one participant has completed an execution under specified assumptions, another participant must have performed a corresponding execution. (Guttman et al., 2000; Thayer et al., 1999).</p>
+</blockquote>
+<hr>
+<h2 id="authentication-witnesses">Authentication Witnesses</h2>
+<p>Authentication goals typically use existential quantification to specify witnesses.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">exists</span>
+   ((<span class="hljs-name">z2</span> strd))
+   witness-formula)
+</div></code></pre>
+<p>The witness strand provides evidence that another legitimate participant execution occurred. (Guttman et al., 2000).</p>
+<hr>
+<h2 id="strong-and-weak-authentication">Strong and Weak Authentication</h2>
+<p>Authentication goals can express varying strengths of assurance.</p>
+<p>Weak authentication may require only existence of a corresponding execution.</p>
+<p>Stronger authentication may additionally require:</p>
+<ul>
+<li>Agreement on identities.</li>
+<li>Agreement on nonces.</li>
+<li>Agreement on session keys.</li>
+<li>Agreement on protocol parameters.</li>
+<li>Ordering constraints.</li>
+</ul>
+<p>These stronger forms of agreement are often achieved through additional predicates and equality constraints within the consequent. (Woo &amp; Lam, 1993; Guttman et al., 2000).</p>
+<hr>
+<h1 id="614-secrecy-goals">6.14 Secrecy Goals</h1>
+<p>Secrecy goals express requirements that protected information remain unavailable to the adversary. In symbolic protocol analysis this generally means that a protected term cannot be derived by the adversarial capabilities represented within the protocol model. (Guttman &amp; Ramsdell, 2020; Thayer et al., 1999). 【1-57b8b1】</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Protected Value
+        ↓
+Adversary Cannot Derive
+        ↓
+   Secrecy Preserved
+</div></code></pre>
+<p>Secrecy reasoning typically relies upon assumptions such as:</p>
+<ul>
+<li>Non-originating private keys.</li>
+<li>Honest participant behavior.</li>
+<li>Unique origination of fresh values.</li>
+<li>Correct message encryption.</li>
+</ul>
+<p>(Guttman &amp; Ramsdell, 2020). 【1-57b8b1】</p>
+<hr>
+<h2 id="generic-secrecy-pattern">Generic Secrecy Pattern</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> protocol-name
+  (<span class="hljs-name">forall</span> (...)
+    (<span class="hljs-name">implies</span>
+      secrecy-assumptions
+      secrecy-property)))
+</div></code></pre>
+<p>A secrecy violation occurs when CPSA discovers a shape demonstrating that a protected value can become accessible despite the stated assumptions. Such a shape constitutes a counterexample to the secrecy property. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【3-f59424】【1-57b8b1】</p>
+<hr>
+<h1 id="615-agreement-goals">6.15 Agreement Goals</h1>
+<p>Agreement goals require protocol participants to agree on selected protocol values. Agreement properties are often considered stronger forms of authentication because they require more than mere participation; they require consistency of participant beliefs concerning protocol state. (Woo &amp; Lam, 1993; Guttman et al., 2000).</p>
+<p>Agreement properties frequently concern:</p>
+<ul>
+<li>Participant identities</li>
+<li>Nonces</li>
+<li>Session keys</li>
+<li>Fresh values</li>
+<li>Role parameters</li>
+</ul>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Participant A
+        ↓
+ Shared Values
+        ↓
+Participant B
+</div></code></pre>
+<p>Agreement goals are usually encoded as authentication goals supplemented by equality predicates.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">and</span>
+   (<span class="hljs-name">=</span> a a2)
+   (<span class="hljs-name">=</span> b b2)
+   (<span class="hljs-name">=</span> n n2))
+</div></code></pre>
+<p>Such constraints ensure that corresponding participants agree upon the referenced values. (Woo &amp; Lam, 1993).</p>
+<hr>
+<h1 id="616-correspondence-goals">6.16 Correspondence Goals</h1>
+<p>Correspondence goals establish causal relationships between protocol events or executions. The central idea is that occurrence of one event implies occurrence of another event satisfying related conditions. (Guttman, 2000; Ramsdell, 2015). 【3-f59424】</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Event A Occurs
+        ↓
+    Implies
+        ↓
+Event B Occurred
+</div></code></pre>
+<p>Authentication reasoning in strand spaces is largely based on correspondence relationships of this form. The authentication witness provides the execution required by</p>
+<h1 id="617-goal-evaluation-process">6.17 Goal Evaluation Process</h1>
+<p>CPSA evaluates security goals through a multi-stage analysis workflow that combines logical formula processing with shape generation and verification. The objective of the evaluation process is to determine whether a specified security property is satisfied by every protocol execution represented within the generated shape analysis. (Guttman &amp; Ramsdell, 2020; MITRE Corporation, 2026). 【1-6a7c56】【2-e433cb】</p>
+<h2 id="conceptual-workflow">Conceptual Workflow</h2>
+<pre class="hljs"><code><div>Goal
+ ↓
+Parse
+ ↓
+Resolve Variables
+ ↓
+Resolve Roles
+ ↓
+Construct Logical Formula
+ ↓
+Generate Shapes
+ ↓
+Evaluate Formula
+ ↓
+Satisfied / Violated
+</div></code></pre>
+<p>The workflow demonstrates the relationship between logical security requirements and CPSA's execution-based analysis methodology. Goals are not evaluated directly against protocol syntax; they are evaluated against the set of protocol executions generated through shape analysis. (Guttman &amp; Ramsdell, 2020). 【1-6a7c56】</p>
+<hr>
+<h2 id="processing-semantics">Processing Semantics</h2>
+<h3 id="step-1-parse-declaration">Step 1. Parse Declaration</h3>
+<p>The <code>defgoal</code> declaration is parsed according to CPSA grammar rules and converted into an internal abstract representation consisting of formulas, predicates, variables, and logical operators. The parser verifies that the declaration conforms to CPSA syntactic requirements before analysis proceeds. (Ramsdell, 2015). 【3-839e84】</p>
+<hr>
+<h3 id="step-2-validate-variables">Step 2. Validate Variables</h3>
+<p>Variable declarations are analyzed to ensure:</p>
+<ul>
+<li>Every variable possesses a valid CPSA sort.</li>
+<li>Every variable reference corresponds to a declared variable.</li>
+<li>Quantifier scopes are well formed.</li>
+<li>Sort usage is semantically consistent.</li>
+</ul>
+<p>(Ramsdell, 2015). 【3-839e84】</p>
+<p>Examples of valid declarations include:</p>
+<pre class="hljs"><code><div>((<span class="hljs-name">a</span> name)
+ (<span class="hljs-name">b</span> name)
+ (<span class="hljs-name">n</span> text)
+ (<span class="hljs-name">z</span> strd))
+</div></code></pre>
+<p>Undeclared variables or variables used outside their scope constitute semantic errors.</p>
+<hr>
+<h3 id="step-3-resolve-protocol-references">Step 3. Resolve Protocol References</h3>
+<p>Role names, role parameters, predicates, and protocol identifiers referenced within the goal are resolved against the associated protocol definition.</p>
+<p>Validation includes:</p>
+<ul>
+<li>Role existence checking.</li>
+<li>Role parameter validation.</li>
+<li>Predicate reference validation.</li>
+<li>Protocol consistency verification.</li>
+</ul>
+<p>The objective is to ensure that every protocol element referenced by the goal exists within the protocol specification against which the goal is evaluated. (Guttman &amp; Ramsdell, 2020). 【1-6a7c56】</p>
+<hr>
+<h3 id="step-4-construct-formula-representation">Step 4. Construct Formula Representation</h3>
+<p>After validation, CPSA constructs an internal logical representation of the goal.</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Goal
+ └── UniversalFormula
+       └── ImplicationFormula
+             ├── Antecedent
+             └── Consequent
+</div></code></pre>
+<p>The resulting formula hierarchy preserves:</p>
+<ul>
+<li>Quantifier structure</li>
+<li>Predicate relationships</li>
+<li>Variable bindings</li>
+<li>Logical operators</li>
+</ul>
+<p>This representation becomes the basis for subsequent logical evaluation. (Ramsdell, 2015). 【3-839e84】</p>
+<hr>
+<h3 id="step-5-generate-shapes">Step 5. Generate Shapes</h3>
+<p>CPSA performs its protocol-analysis process using the protocol definition and execution assumptions supplied through skeletons, rules, and message-algebra constraints.</p>
+<p>The purpose of shape generation is to discover all essentially different protocol executions consistent with the supplied assumptions. CPSA refers to these executions as <em>shapes</em>. As noted by Guttman and Ramsdell, &quot;We call these essentially different executions the shapes of the protocol.&quot; (Guttman &amp; Ramsdell, 2020, p. 3). 【1-6a7c56】</p>
+<p>Shape generation incorporates:</p>
+<ul>
+<li>Strand-space semantics</li>
+<li>Adversary behavior</li>
+<li>Message-algebra reasoning</li>
+<li>Causal ordering constraints</li>
+<li>Protocol-role semantics</li>
+</ul>
+<p>(Guttman &amp; Ramsdell, 2020; MITRE Corporation, 2026). 【1-6a7c56】【2-e433cb】</p>
+<hr>
+<h3 id="step-6-evaluate-goal-satisfaction">Step 6. Evaluate Goal Satisfaction</h3>
+<p>The logical formula is evaluated against the generated shapes.</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Generated Shape
+       ↓
+ Formula Evaluation
+       ↓
+ True or False
+</div></code></pre>
+<p>For a universally quantified implication:</p>
+<pre class="hljs"><code><div>∀x (A ⇒ B)
+</div></code></pre>
+<p>CPSA determines whether every relevant execution satisfying <code>A</code> also satisfies <code>B</code>.</p>
+<p>Typical evaluation questions include:</p>
+<ul>
+<li>Does a corresponding responder strand exist?</li>
+<li>Are nonce values uniquely originating?</li>
+<li>Do participants agree on identities?</li>
+<li>Is a protected value secret?</li>
+<li>Are required ordering constraints satisfied?</li>
+</ul>
+<p>(Guttman &amp; Ramsdell, 2020; Ramsdell, 2015). 【1-6a7c56】【3-839e84】</p>
+<hr>
+<h3 id="step-7-produce-results">Step 7. Produce Results</h3>
+<p>After evaluation, CPSA reports whether the goal is satisfied.</p>
+<p>Possible outcomes include:</p>
+<h4 id="goal-satisfied">Goal Satisfied</h4>
+<p>Every shape satisfying the antecedent also satisfies the consequent.</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>All Shapes
+      ↓
+ Goal Holds
+      ↓
+ Verified
+</div></code></pre>
+<p>A satisfied result indicates that no counterexample execution was discovered within the space explored by CPSA. (Guttman &amp; Ramsdell, 2020). 【1-6a7c56】</p>
+<hr>
+<h4 id="goal-violated">Goal Violated</h4>
+<p>At least one shape satisfies the antecedent but violates the consequent.</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Shape
+  ↓
+Antecedent True
+  ↓
+Consequent False
+  ↓
+Counterexample
+</div></code></pre>
+<p>A violating shape serves as an explicit counterexample demonstrating that the security property does not hold. Such counterexamples frequently reveal protocol flaws, unsafe assumptions, or missing protocol constraints. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【3-839e84】【1-6a7c56】</p>
+<hr>
+<h4 id="goal-underdetermined">Goal Underdetermined</h4>
+<p>In some situations the analysis may indicate that additional assumptions are required before the desired property can be established.</p>
+<p>Examples include:</p>
+<ul>
+<li>Missing freshness assumptions.</li>
+<li>Missing non-originating assumptions.</li>
+<li>Missing protocol facts.</li>
+<li>Insufficient role constraints.</li>
+</ul>
+<p>Additional analysis assumptions may produce a stronger set of shapes capable of supporting the desired conclusion. (Guttman &amp; Ramsdell, 2020</p>
+<h1 id="618-uml-metamodel-specification">6.18 UML Metamodel Specification</h1>
+<p>The CPSA Goal Package provides the abstract syntax and semantic representation necessary for expressing protocol security requirements. The metamodel captures the structure of goal declarations independently of any concrete CPSA syntax and provides a foundation for UML-based modeling, validation, and tooling. (Ramsdell, 2015; Guttman &amp; Ramsdell, 2020). 【1-f2936c】【2-9d5003】</p>
+<p>The metamodel distinguishes between:</p>
+<ol>
+<li>Goal declarations.</li>
+<li>Logical formulas.</li>
+<li>Quantifiers.</li>
+<li>Predicates.</li>
+<li>Variables.</li>
+<li>Message terms.</li>
+</ol>
+<p>Each of these concepts possesses distinct semantics and therefore warrants representation as an explicit metamodel element.</p>
+<hr>
+<h2 id="class-goal">Class: Goal</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;Declaration&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents a CPSA security goal declaration.</p>
+<h3 id="attributes">Attributes</h3>
+<pre class="hljs"><code><div>name : String [0..1]
+protocol : Protocol [1]
+formula : Formula [1]
+</div></code></pre>
+<h3 id="description">Description</h3>
+<p>A Goal is associated with exactly one Protocol and contains exactly one root Formula. It represents a complete security requirement that can be evaluated against protocol executions. (Guttman &amp; Ramsdell, 2020). 【2-9d5003】</p>
+<hr>
+<h2 id="class-formula">Class: Formula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;LogicalExpression&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents an abstract logical expression.</p>
+<h3 id="attributes">Attributes</h3>
+<pre class="hljs"><code><div>operator : FormulaOperator
+</div></code></pre>
+<h3 id="description">Description</h3>
+<p>Formula serves as the abstract superclass for all logical constructs including quantifiers, implications, conjunctions, disjunctions, and predicates. (Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h2 id="class-universalformula">Class: UniversalFormula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;QuantifiedFormula&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents universal quantification.</p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">forall</span> ((<span class="hljs-name">a</span> name))
+  formula)
+</div></code></pre>
+<hr>
+<h2 id="class-existentialformula">Class: ExistentialFormula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;QuantifiedFormula&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents existential quantification.</p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">exists</span> ((<span class="hljs-name">z</span> strd))
+  formula)
+</div></code></pre>
+<hr>
+<h2 id="class-implicationformula">Class: ImplicationFormula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;BinaryFormula&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents logical implication.</p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">implies</span> A B)
+</div></code></pre>
+<hr>
+<h2 id="class-conjunctionformula">Class: ConjunctionFormula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;NaryFormula&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents logical conjunction.</p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">and</span> A B C)
+</div></code></pre>
+<hr>
+<h2 id="class-disjunctionformula">Class: DisjunctionFormula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;NaryFormula&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents logical disjunction.</p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">or</span> A B)
+</div></code></pre>
+<hr>
+<h2 id="class-negationformula">Class: NegationFormula</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;UnaryFormula&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents logical negation.</p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">not</span> A)
+</div></code></pre>
+<hr>
+<h2 id="class-predicate">Class: Predicate</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;AtomicFormula&gt;&gt;
+</div></code></pre>
+<h3 id="attributes">Attributes</h3>
+<pre class="hljs"><code><div>name : String
+arity : Integer
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents atomic assertions used within goal formulas.</p>
+<p>Examples include:</p>
+<pre class="hljs"><code><div>p
+uniq
+non
+fact
+prec
+=
+</div></code></pre>
+<p>(Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h2 id="class-variable">Class: Variable</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;ModelElement&gt;&gt;
+</div></code></pre>
+<h3 id="attributes">Attributes</h3>
+<pre class="hljs"><code><div>name : String
+sort : Sort
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents variables declared within quantified formulas.</p>
+<hr>
+<h2 id="class-term">Class: Term</h2>
+<h3 id="stereotype">Stereotype</h3>
+<pre class="hljs"><code><div>&lt;&lt;MessageAlgebraElement&gt;&gt;
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Represents message-algebra terms referenced by predicates and formulas.</p>
+<hr>
+<h1 id="619-containment-relationships">6.19 Containment Relationships</h1>
+<p>Containment relationships define the ownership structure of Goal Package elements.</p>
+<hr>
+<h2 id="goal-contains-formula">Goal Contains Formula</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Goal
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Formula
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Goal 1 ───◆ 1 Formula
+</div></code></pre>
+<h3 id="navigability">Navigability</h3>
+<pre class="hljs"><code><div>Goal → Formula
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Every Goal contains exactly one root Formula. Removal of a Goal removes the Formula hierarchy that defines it. (Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h2 id="formula-contains-subformulas">Formula Contains Subformulas</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Formula
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Formula
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Formula 1 ───◆ 0..* Formula
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Complex formulas may contain arbitrarily many nested formulas.</p>
+<p>Examples include:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">and</span>
+   Formula1
+   Formula2
+   Formula3)
+</div></code></pre>
+<hr>
+<h2 id="formula-contains-predicates">Formula Contains Predicates</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Formula
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Predicate
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Formula 1 ───◆ 0..* Predicate
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Predicates constitute the leaves of the logical expression tree.</p>
+<hr>
+<h1 id="620-reference-relationships">6.20 Reference Relationships</h1>
+<p>Reference relationships connect logical expressions to protocol-analysis concepts defined elsewhere in the CPSA metamodel.</p>
+<hr>
+<h2 id="goal-references-protocol">Goal References Protocol</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Goal
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Protocol
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Goal 1 ────▶ 1 Protocol
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Every Goal applies to exactly one Protocol. (Guttman &amp; Ramsdell, 2020). 【2-9d5003】</p>
+<hr>
+<h2 id="formula-references-variables">Formula References Variables</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Formula
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Variable
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Formula 1 ────▶ 0..* Variable
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Variables provide bindings used within quantified formulas.</p>
+<hr>
+<h2 id="predicate-references-terms">Predicate References Terms</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Predicate
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Term
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Predicate 1 ────▶ 0..* Term
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Terms provide the arguments used by predicates.</p>
+<hr>
+<h2 id="predicate-references-roles">Predicate References Roles</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Predicate
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Role
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Predicate 0..* ────▶ 0..* Role
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Role predicates such as <code>p</code> reference protocol roles and role parameters. (Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h2 id="goal-evaluated-against-shapes">Goal Evaluated Against Shapes</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Goal
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Shape
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>Goal 1 ────▶ 0..* Shape
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Goal satisfaction is determined by evaluating the logical formula against protocol shapes discovered through CPSA analysis. (Guttman &amp; Ramsdell, 2020). 【2-9d5003】</p>
+<hr>
+<h1 id="621-cardinality-constraints">6.21 Cardinality Constraints</h1>
+<p>The following multiplicity constraints are normative.</p>
+<table>
+<thead>
+<tr>
+<th>Relationship</th>
+<th>Cardinality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goal → Protocol</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Goal → Formula</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Formula → Predicate</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Formula → Variable</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Predicate → Term</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Goal → Shape</td>
+<td>0..*</td>
+</tr>
+</tbody>
+</table>
+<p>These constraints ensure that every goal remains associated with a protocol and a complete logical expression. (Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h1 id="622-umlocl-constraints">6.22 UML/OCL Constraints</h1>
+<p>The following OCL-style invariants express normative semantic requirements.</p>
+<hr>
+<h2 id="protocol-requirement">Protocol Requirement</h2>
+<pre class="hljs"><code><div>context Goal
+inv ProtocolRequired:
+    protocol &lt;&gt; null
+</div></code></pre>
+<p>Meaning:</p>
+<p>Every Goal must reference a Protocol.</p>
+<hr>
+<h2 id="formula-requirement">Formula Requirement</h2>
+<pre class="hljs"><code><div>context Goal
+inv FormulaRequired:
+    formula &lt;&gt; null
+</div></code></pre>
+<p>Meaning:</p>
+<p>Every Goal must contain exactly one root Formula.</p>
+<hr>
+<h2 id="single-root-formula">Single Root Formula</h2>
+<pre class="hljs"><code><div>context Goal
+inv ExactlyOneFormula:
+    self.formula-&gt;size() = 1
+</div></code></pre>
+<hr>
+<h2 id="variable-scope-constraint">Variable Scope Constraint</h2>
+<pre class="hljs"><code><div>context Formula
+inv VariableScope:
+    referencedVariables
+      -&gt;forAll(v |
+         declaredVariables
+            -&gt;includes(v))
+</div></code></pre>
+<p>Meaning:</p>
+<p>Every referenced variable must have been declared within an accessible scope.</p>
+<p>(Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h2 id="predicate-arity-constraint">Predicate Arity Constraint</h2>
+<pre class="hljs"><code><div>context Predicate
+inv CorrectArity:
+    arguments-&gt;size() = expectedArity
+</div></code></pre>
+<p>Meaning:</p>
+<p>Predicates must have the correct number of arguments.</p>
+<hr>
+<h2 id="protocol-consistency-constraint">Protocol Consistency Constraint</h2>
+<pre class="hljs"><code><div>context Goal
+inv ProtocolConsistency:
+    self.protocol.roles
+       -&gt;includesAll(
+            self.referencedRoles)
+</div></code></pre>
+<p>Meaning:</p>
+<p>Every referenced role must belong to the associated protocol.</p>
+<hr>
+<h2 id="sort-consistency-constraint">Sort Consistency Constraint</h2>
+<pre class="hljs"><code><div>context Variable
+inv SortRequired:
+    sort &lt;&gt; null
+</div></code></pre>
+<p>Meaning:</p>
+<p>All variables must possess an associated CPSA sort.</p>
+<hr>
+<h1 id="623-common-modeling-mistakes">6.23 Common Modeling Mistakes</h1>
+<p>Errors involving goal specifications typically arise from incorrectly scoped variables, incomplete assumptions, or misuse of predicates. (Ramsdell, 2015). 【1-f2936c】</p>
+<hr>
+<h2 id="missing-quantifiers">Missing Quantifiers</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> p
+   (<span class="hljs-name">implies</span> A B))
+</div></code></pre>
+<p>Correct:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> p
+   (<span class="hljs-name">forall</span> (...)
+      (<span class="hljs-name">implies</span> A B)))
+</div></code></pre>
+<p>Reason:</p>
+<p>Security properties generally require explicit quantification.</p>
+<hr>
+<h2 id="undeclared-variables">Undeclared Variables</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> <span class="hljs-string">"a"</span> z a)
+</div></code></pre>
+<p>when <code>a</code> has not been declared.</p>
+<p>Reason:</p>
+<p>Unbound variables have no defined interpretation.</p>
+<hr>
+<h2 id="undefined-roles">Undefined Roles</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">p</span> <span class="hljs-string">"server"</span> z <span class="hljs-number">3</span>)
+</div></code></pre>
+<p>if role <code>server</code> does not exist.</p>
+<p>Reason:</p>
+<p>Goal predicates may reference only roles defined within the associated protocol.</p>
+<hr>
+<h2 id="missing-authentication-witness">Missing Authentication Witness</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">implies</span>
+   initiator-complete
+   true)
+</div></code></pre>
+<p>Reason:</p>
+<p>The consequent imposes no authentication requirement and therefore provides no meaningful security guarantee. (Guttman et al., 2000).</p>
+<hr>
+<h2 id="missing-freshness-assumptions">Missing Freshness Assumptions</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">implies</span>
+   completed-run
+   responder-exists)
+</div></code></pre>
+<p>without any assumptions concerning freshness or unique origination.</p>
+<p>Reason:</p>
+<p>Authentication claims often depend upon nonce uniqueness or other freshness assumptions. (Guttman, 2000; Guttman et al., 2000).</p>
+<hr>
+<h2 id="incorrect-sort-usage">Incorrect Sort Usage</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">uniq</span> z)
+</div></code></pre>
+<p>where <code>z</code> is a strand variable.</p>
+<p>Reason:</p>
+<p>Unique origination applies to message terms rather than strand identifiers.</p>
+<hr>
+<h1 id="624-grammar-traceability-matrix">6.24 Grammar Traceability Matrix</h1>
+<p>The following matrix provides traceability between CPSA syntax and the goal metamodel.</p>
+<table>
+<thead>
+<tr>
+<th>Grammar Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defgoal</code></td>
+<td>Goal</td>
+</tr>
+<tr>
+<td><code>forall</code></td>
+<td>UniversalFormula</td>
+</tr>
+<tr>
+<td><code>exists</code></td>
+<td>ExistentialFormula</td>
+</tr>
+<tr>
+<td><code>implies</code></td>
+<td>ImplicationFormula</td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td>ConjunctionFormula</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td>DisjunctionFormula</td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>NegationFormula</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>non</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>uniq</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>fact</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td><code>prec</code></td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td>variable declaration</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>term reference</td>
+<td>Term</td>
+</tr>
+</tbody>
+</table>
+<p>This mapping ensures that every grammar construct is represented within the metamodel and that no semantically meaningful construct exists solely in prose. (CPSA DSL Requirements Specification).</p>
+<hr>
+<h1 id="625-complete-example">6.25 Complete Example</h1>
+<p>The following example is adapted from the Needham-Schroeder Public-Key protocol family and illustrates a typical authentication goal used in CPSA literature. (Guttman &amp; Ramsdell, 2020; UMBC Protocol Analysis Laboratory, 2026). 【2-9d5003】【3-83f9d5】</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defgoal</span> ns
+  (<span class="hljs-name">forall</span>
+      ((<span class="hljs-name">a</span> b name)
+       (<span class="hljs-name">na</span> nb text)
+       (<span class="hljs-name">z</span> strd))
+    (<span class="hljs-name">implies</span>
+      (<span class="hljs-name">and</span>
+        (<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> z <span class="hljs-number">3</span>)
+        (<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> <span class="hljs-string">"a"</span> z a)
+        (<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> <span class="hljs-string">"b"</span> z b)
+        (<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> <span class="hljs-string">"na"</span> z na)
+        (<span class="hljs-name">p</span> <span class="hljs-string">"init"</span> <span class="hljs-string">"nb"</span> z nb)
+        (<span class="hljs-name">uniq</span> na)
+        (<span class="hljs-name">non</span> (<span class="hljs-name">privk</span> a))
+        (<span class="hljs-name">non</span> (<span class="hljs-name">privk</span> b)))
+      (<span class="hljs-name">exists</span>
+          ((<span class="hljs-name">z2</span> strd))
+        (<span class="hljs-name">and</span>
+          (<span class="hljs-name">p</span> <span class="hljs-string">"resp"</span> z2 <span class="hljs-number">2</span>)
+          (<span class="hljs-name">p</span> <span class="hljs-string">"resp"</span> <span class="hljs-string">"a"</span> z2 a)
+          (<span class="hljs-name">p</span> <span class="hljs-string">"resp"</span> <span class="hljs-string">"b"</span> z2 b)
+          (<span class="hljs-name">p</span> <span class="hljs-string">"resp"</span> <span class="hljs-string">"na"</span> z2 na)
+          (<span class="hljs-name">p</span> <span class="hljs-string">"resp"</span> <span class="hljs-string">"nb"</span> z2 nb))))))
+</div></code></pre>
+<h2 id="interpretation">Interpretation</h2>
+<p>This goal states that whenever an initiator completes the Needham-Schroeder protocol under the stated assumptions, there must exist a corresponding responder execution that agrees on the participant identities and nonce values. This is a classic strand-space authentication property and exemplifies the authentication-witness pattern commonly used in CPSA analyses. (Guttman et al., 2000; Ramsdell, 2015; UMBC Protocol Analysis Laboratory, 2026). 【2-9d5003】【1-f2936c】【3-83f9d5】</p>
+<hr>
+<h1 id="626-uml-diagram-placeholders">6.26 UML Diagram Placeholders</h1>
+<h2 id="svg-uml-metamodel-placeholder">SVG UML Metamodel Placeholder</h2>
+<h3 id="diagram-identifier">Diagram Identifier</h3>
+<pre class="hljs"><code><div>CH06-GOAL-UML-SVG
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Canonical CPSA UML metamodel with the Goal Package highlighted.</p>
+<h3 id="required-diagram-content">Required Diagram Content</h3>
+<ul>
+<li>Protocol</li>
+<li>Role</li>
+<li>Rule</li>
+<li>Goal</li>
+<li>Formula</li>
+<li>Predicate</li>
+<li>Variable</li>
+<li>Term</li>
+<li>Event</li>
+<li>Node</li>
+<li>Strand</li>
+<li>Listener</li>
+<li>Skeleton</li>
+<li>Bundle</li>
+<li>Shape</li>
+<li>RealizedExecution</li>
+</ul>
+<h3 id="diagram-requirements">Diagram Requirements</h3>
+<ul>
+<li>Canonical layout</li>
+<li>Consistent package structure</li>
+<li>Multiplicity labels</li>
+<li>Navigable associations</li>
+<li>UML stereotypes</li>
+<li>Goal Package highlighting</li>
+<li>Relationship semantics</li>
+</ul>
+<h3 id="future-svg-location">Future SVG Location</h3>
+<pre class="hljs"><code><div>/images/ch06-defgoal-metamodel.svg
+</div></code></pre>
+<hr>
+<h2 id="plantuml-source-placeholder">PlantUML Source Placeholder</h2>
+<h3 id="diagram-identifier">Diagram Identifier</h3>
+<pre class="hljs"><code><div>CH06-GOAL-UML-PLANTUML
+</div></code></pre>
+<h3 id="purpose">Purpose</h3>
+<p>Authoritative UML source representation corresponding to the SVG diagram.</p>
+<h3 id="required-content">Required Content</h3>
+<ul>
+<li>Goal Package</li>
+<li>Formula hierarchy</li>
+<li>Predicate hierarchy</li>
+<li>Variable relationships</li>
+<li>Protocol associations</li>
+<li>Shape-analysis relationships</li>
+<li>Multiplicities</li>
+<li>Navigability</li>
+<li>UML stereotypes</li>
+</ul>
+<h3 id="future-plantuml-location">Future PlantUML Location</h3>
+<pre class="hljs"><code><div>/plantuml/ch06-defgoal.puml
+</div></code></pre>
+<hr>
+<h1 id="627-uml-metamodel-interpretation">6.27 UML Metamodel Interpretation</h1>
+<p>Within the canonical CPSA metamodel:</p>
+<ul>
+<li>Goal is a first-class declaration.</li>
+<li>Goal belongs to exactly one Protocol.</li>
+<li>Goal contains exactly one root Formula.</li>
+<li>Formula forms a recursive logical-expression hierarchy.</li>
+<li>Predicates provide atomic logical assertions.</li>
+<li>Variables provide scoped bindings for quantified formulas.</li>
+<li>Terms provide references into the CPSA message algebra.</li>
+<li>Goal satisfaction is evaluated over Shapes and RealizedExecutions derived through CPSA analysis. (Guttman &amp; Ramsdell, 2020; Ramsdell, 2015). 【2-9d5003】【1-f2936c】</li>
+</ul>
+<p>The Goal Package therefore provides the semantic bridge between protocol definition and protocol verification.</p>
+<hr>
+<h1 id="628-section-bibliography">6.28 Section Bibliography</h1>
+<p>Guttman, J. D. (2000). <em>Authentication tests and the structure of bundles</em>. <em>Theoretical Computer Science, 283</em>(2), 333–380. https://doi.org/10.1016/S0304-3975(01)00167-6</p>
+<p>Guttman, J. D., Herzog, J. C., &amp; Thayer, F. J. (2000). <em>Authentication tests and generalized roles</em>. In <em>Proceedings of the IEEE Symposium on Security and Privacy</em> (pp. 91–104). IEEE. https://doi.org/10.1109/SECPRI.2000.848448</p>
+<p>Guttman, J. D., &amp; Ramsdell, J. D. (2020). <em>CPSA Security Goals and Rules</em> (CPSA Version 4.2.3). The MITRE Corporation. Retrieved from https://hackage.haskell.org/package/cpsa-4.4.7/src/doc/cpsagoals.pdf 【2-9d5003】</p>
+<p>MITRE Corporation. (2026). <em>Cryptographic Protocol Shapes Analyzer (CPSA) Version 4 Repository</em>. GitHub. Retrieved August 8, 2026, from https://github.com/mitre/cpsa 【4-ca6408】</p>
+<p>Ramsdell, J. D. (2015). <em>CPSA and Formal Security Goals</em> (CPSA Version 2.5.1). The MITRE Corporation. Retrieved from https://paperzz.com/doc/8987799/cpsa-and-formal-security-goals---hackage 【1-f2936c】</p>
+<p>Thayer, F. J., Herzog, J. C., &amp; Guttman, J. D. (1999). <em>Strand spaces: Why is a security protocol correct?</em> In <em>Proceedings of the IEEE Symposium on Security and Privacy</em> (pp. 160–171). IEEE. https://doi.org/10.1109/SECPRI.1999.766910</p>
+<p>UMBC Protocol Analysis Laboratory. (2026). <em>Needham-Schroeder Goal and Shape Analysis Examples</em>. GitHub Repository. Retrieved August 8, 2026, from https://github.com/UMBC-Protocol-Analysis-Lab/CPSA-Summer-Session 【3-83f9d5】</p>
+<p>Woo, T. Y. C., &amp; Lam, S. S. (1993). <em>A semantic model for authentication protocols</em>. In <em>Proceedings of the IEEE Symposium on Research in Security and Privacy</em> (pp. 178–194). IEEE. https://doi.org/10.1109/RISP.1993.287647</p>
+
+</body>
+</html>

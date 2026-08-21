@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2600" height="1800" viewBox="0 0 2600 1800" font-family="Arial, Helvetica, sans-serif" font-size="13">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#111"/></marker>
+    <marker id="triangle" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,6 L0,12 z" fill="white" stroke="#111"/></marker>
+    <marker id="diamond" markerWidth="14" markerHeight="14" refX="2" refY="7" orient="auto" markerUnits="strokeWidth"><path d="M2,7 L7,2 L12,7 L7,12 z" fill="#111" stroke="#111"/></marker>
+  </defs>
+
+  <style>
+    .pkg { fill: #fbfbfb; stroke: #222; stroke-width: 1.5; }
+    .cls { fill: #ffffff; stroke: #222; stroke-width: 1; }
+    .abs { fill: #f5f5ff; stroke: #222; stroke-width: 1; }
+    .enum { fill: #fff8e8; stroke: #222; stroke-width: 1; }
+    .title { font-weight: bold; font-size: 16px; }
+    .name { font-weight: bold; }
+    .st { font-size: 11px; fill: #444; }
+    .rel { stroke: #111; stroke-width: 1.1; fill: none; }
+    .lbl { font-size: 12px; fill: #111; }
+  </style>
+
+  <!-- Package boxes -->
+  <rect class="pkg" x="30" y="30" width="360" height="220"/>
+  <text class="title" x="45" y="55">Document Package</text>
+
+  <rect class="pkg" x="30" y="290" width="560" height="570"/>
+  <text class="title" x="45" y="315">Protocol Package</text>
+
+  <rect class="pkg" x="640" y="30" width="620" height="830"/>
+  <text class="title" x="655" y="55">Message Algebra Package</text>
+
+  <rect class="pkg" x="1310" y="30" width="640" height="900"/>
+  <text class="title" x="1325" y="55">Analysis Package</text>
+
+  <rect class="pkg" x="1990" y="30" width="560" height="760"/>
+  <text class="title" x="2005" y="55">Goal Package</text>
+
+  <rect class="pkg" x="30" y="900" width="2520" height="330"/>
+  <text class="title" x="45" y="925">Enumeration Package</text>
+
+  <!-- Document classes -->
+  <rect class="abs" x="60" y="80" width="180" height="60"/><text class="st" x="96" y="100">&lt;&lt;top-level&gt;&gt;</text><text class="name" x="86" y="122">TopLevelDeclaration</text>
+  <rect class="cls" x="60" y="165" width="180" height="70"/><text class="st" x="112" y="185">&lt;&lt;document&gt;&gt;</text><text class="name" x="105" y="207">CPSADocument</text><line x1="60" y1="215" x2="240" y2="215" stroke="#222"/><text x="70" y="232">path : String</text>
+
+  <!-- Protocol classes -->
+  <rect class="cls" x="60" y="340" width="180" height="85"/><text class="st" x="100" y="360">&lt;&lt;defprotocol&gt;&gt;</text><text class="name" x="120" y="382">Protocol</text><line x1="60" y1="392" x2="240" y2="392" stroke="#222"/><text x="70" y="410">name : String</text><text x="70" y="426">algebra : AlgebraType</text>
+  <rect class="cls" x="320" y="340" width="140" height="65"/><text class="st" x="356" y="360">&lt;&lt;defrole&gt;&gt;</text><text class="name" x="372" y="382">Role</text>
+  <rect class="cls" x="320" y="430" width="140" height="65"/><text class="st" x="358" y="450">&lt;&lt;defrule&gt;&gt;</text><text class="name" x="372" y="472">Rule</text>
+  <rect class="cls" x="320" y="520" width="140" height="65"/><text class="st" x="365" y="540">&lt;&lt;vars&gt;&gt;</text><text class="name" x="363" y="562">Variable</text>
+  <rect class="cls" x="60" y="520" width="140" height="65"/><text class="st" x="100" y="540">&lt;&lt;sort&gt;&gt;</text><text class="name" x="112" y="562">Sort</text>
+  <rect class="cls" x="60" y="625" width="140" height="65"/><text class="st" x="98" y="645">&lt;&lt;trace&gt;&gt;</text><text class="name" x="112" y="667">Trace</text>
+  <rect class="abs" x="60" y="730" width="140" height="65"/><text class="st" x="102" y="750">&lt;&lt;event&gt;&gt;</text><text class="name" x="112" y="772">Event</text>
+  <rect class="cls" x="320" y="650" width="140" height="65"/><text class="st" x="363" y="670">&lt;&lt;send&gt;&gt;</text><text class="name" x="358" y="692">SendEvent</text>
+  <rect class="cls" x="320" y="730" width="140" height="65"/><text class="st" x="363" y="750">&lt;&lt;recv&gt;&gt;</text><text class="name" x="350" y="772">ReceiveEvent</text>
+  <rect class="cls" x="320" y="810" width="140" height="65"/><text class="st" x="338" y="830">&lt;&lt;channel-event&gt;&gt;</text><text class="name" x="346" y="852">ChannelEvent</text>
+  <rect class="cls" x="60" y="810" width="140" height="65"/><text class="st" x="93" y="830">&lt;&lt;channel&gt;&gt;</text><text class="name" x="105" y="852">Channel</text>
+
+  <!-- Message algebra classes -->
+  <rect class="abs" x="680" y="80" width="160" height="60"/><text class="st" x="735" y="100">&lt;&lt;term&gt;&gt;</text><text class="name" x="742" y="122">Term</text>
+  <rect class="cls" x="680" y="180" width="160" height="60"/><text class="st" x="735" y="200">&lt;&lt;atom&gt;&gt;</text><text class="name" x="742" y="222">Atom</text>
+  <rect class="cls" x="680" y="260" width="160" height="60"/><text class="st" x="715" y="280">&lt;&lt;constant&gt;&gt;</text><text class="name" x="730" y="302">Constant</text>
+  <rect class="cls" x="680" y="340" width="160" height="60"/><text class="st" x="720" y="360">&lt;&lt;var-ref&gt;&gt;</text><text class="name" x="702" y="382">VariableReference</text>
+  <rect class="cls" x="680" y="420" width="180" height="60"/><text class="st" x="710" y="440">&lt;&lt;operator-application&gt;&gt;</text><text class="name" x="708" y="462">FunctionApplication</text>
+  <rect class="abs" x="1000" y="80" width="160" height="60"/><text class="st" x="1045" y="100">&lt;&lt;operator&gt;&gt;</text><text class="name" x="1050" y="122">Operator</text>
+  <rect class="cls" x="980" y="180" width="170" height="450"/><text class="name" x="1015" y="205">Concrete Operators</text><line x1="980" y1="215" x2="1150" y2="215" stroke="#222"/><text x="995" y="238">CatOperator</text><text x="995" y="263">EncOperator</text><text x="995" y="288">HashOperator</text><text x="995" y="313">PubkOperator</text><text x="995" y="338">PrivkOperator</text><text x="995" y="363">LtkOperator</text><text x="995" y="388">GenOperator</text><text x="995" y="413">ExpOperator</text><text x="995" y="438">MulOperator</text><text x="995" y="463">RecOperator</text><text x="995" y="488">OneOperator</text>
+
+  <!-- Analysis classes -->
+  <rect class="cls" x="1340" y="80" width="170" height="70"/><text class="st" x="1381" y="100">&lt;&lt;defskeleton&gt;&gt;</text><text class="name" x="1392" y="124">Skeleton</text>
+  <rect class="cls" x="1580" y="80" width="150" height="60"/><text class="st" x="1610" y="100">&lt;&lt;instance&gt;&gt;</text><text class="name" x="1625" y="122">Instance</text>
+  <rect class="cls" x="1580" y="170" width="150" height="70"/><text class="st" x="1614" y="190">&lt;&lt;defstrand&gt;&gt;</text><text class="name" x="1628" y="212">Strand</text>
+  <rect class="cls" x="1580" y="270" width="150" height="60"/><text class="name" x="1640" y="305">Node</text>
+  <rect class="cls" x="1340" y="170" width="170" height="60"/><text class="st" x="1378" y="190">&lt;&lt;deflistener&gt;&gt;</text><text class="name" x="1397" y="212">Listener</text>
+  <rect class="cls" x="1340" y="260" width="170" height="60"/><text class="st" x="1404" y="280">&lt;&lt;fact&gt;&gt;</text><text class="name" x="1410" y="302">Fact</text>
+  <rect class="cls" x="1340" y="350" width="170" height="60"/><text class="st" x="1390" y="370">&lt;&lt;precedes&gt;&gt;</text><text class="name" x="1367" y="392">PrecedenceRelation</text>
+  <rect class="cls" x="1580" y="370" width="150" height="60"/><text class="st" x="1612" y="390">&lt;&lt;non-orig&gt;&gt;</text><text class="name" x="1592" y="412">NonOrigAssumption</text>
+  <rect class="cls" x="1580" y="460" width="150" height="60"/><text class="st" x="1612" y="480">&lt;&lt;uniq-orig&gt;&gt;</text><text class="name" x="1592" y="502">UniqOrigAssumption</text>
+  <rect class="cls" x="1580" y="550" width="150" height="60"/><text class="st" x="1612" y="570">&lt;&lt;uniq-gen&gt;&gt;</text><text class="name" x="1595" y="592">UniqGenAssumption</text>
+  <rect class="cls" x="1340" y="460" width="170" height="60"/><text class="st" x="1392" y="480">&lt;&lt;bundle&gt;&gt;</text><text class="name" x="1400" y="502">Bundle</text>
+  <rect class="cls" x="1340" y="550" width="170" height="60"/><text class="st" x="1370" y="570">&lt;&lt;communication&gt;&gt;</text><text class="name" x="1365" y="592">CommunicationEdge</text>
+  <rect class="cls" x="1580" y="650" width="150" height="60"/><text class="st" x="1617" y="670">&lt;&lt;shape&gt;&gt;</text><text class="name" x="1634" y="692">Shape</text>
+  <rect class="cls" x="1340" y="650" width="170" height="60"/><text class="st" x="1400" y="670">&lt;&lt;realized&gt;&gt;</text><text class="name" x="1370" y="692">RealizedExecution</text>
+
+  <!-- Goal classes -->
+  <rect class="cls" x="2020" y="80" width="160" height="70"/><text class="st" x="2062" y="100">&lt;&lt;defgoal&gt;&gt;</text><text class="name" x="2083" y="124">Goal</text>
+  <rect class="abs" x="2020" y="190" width="160" height="60"/><text class="st" x="2060" y="210">&lt;&lt;formula&gt;&gt;</text><text class="name" x="2074" y="232">Formula</text>
+  <rect class="cls" x="2020" y="290" width="160" height="60"/><text class="st" x="2062" y="310">&lt;&lt;atomic&gt;&gt;</text><text class="name" x="2058" y="332">AtomicFormula</text>
+  <rect class="cls" x="2020" y="390" width="160" height="60"/><text class="st" x="2055" y="410">&lt;&lt;predicate&gt;&gt;</text><text class="name" x="2067" y="432">Predicate</text>
+  <rect class="cls" x="2020" y="490" width="180" height="60"/><text class="st" x="2040" y="510">&lt;&lt;predicate-application&gt;&gt;</text><text class="name" x="2042" y="532">PredicateApplication</text>
+  <rect class="cls" x="2260" y="190" width="170" height="340"/><text class="name" x="2302" y="215">Formula Subclasses</text><line x1="2260" y1="225" x2="2430" y2="225" stroke="#222"/><text x="2280" y="250">Conjunction</text><text x="2280" y="275">Disjunction</text><text x="2280" y="300">Implication</text><text x="2280" y="325">Negation</text><text x="2280" y="350">UniversalFormula</text><text x="2280" y="375">ExistentialFormula</text>
+
+  <!-- Enumerations -->
+  <rect class="enum" x="60" y="960" width="240" height="120"/><text class="st" x="130" y="982">&lt;&lt;enumeration&gt;&gt;</text><text class="name" x="133" y="1004">AlgebraType</text><line x1="60" y1="1014" x2="300" y2="1014" stroke="#222"/><text x="80" y="1038">basic</text><text x="80" y="1062">diffie-hellman</text>
+  <rect class="enum" x="340" y="960" width="240" height="120"/><text class="st" x="410" y="982">&lt;&lt;enumeration&gt;&gt;</text><text class="name" x="408" y="1004">EventDirection</text><line x1="340" y1="1014" x2="580" y2="1014" stroke="#222"/><text x="360" y="1038">send</text><text x="360" y="1062">receive</text>
+  <rect class="enum" x="620" y="960" width="260" height="150"/><text class="st" x="700" y="982">&lt;&lt;enumeration&gt;&gt;</text><text class="name" x="710" y="1004">ChannelType</text><line x1="620" y1="1014" x2="880" y2="1014" stroke="#222"/><text x="640" y="1038">plain</text><text x="640" y="1062">confidential</text><text x="640" y="1086">authenticated</text><text x="640" y="1110">secure</text>
+
+  <!-- Core relationships: Protocol -->
+  <line class="rel" x1="240" y1="370" x2="320" y2="370" marker-start="url(#diamond)"/><text class="lbl" x="260" y="360">1..*</text>
+  <line class="rel" x1="240" y1="395" x2="320" y2="462" marker-start="url(#diamond)"/><text class="lbl" x="260" y="445">0..*</text>
+  <line class="rel" x1="390" y1="405" x2="390" y2="520" marker-start="url(#diamond)"/><text class="lbl" x="398" y="500">0..*</text>
+  <line class="rel" x1="320" y1="382" x2="200" y2="650" marker-start="url(#diamond)"/><text class="lbl" x="214" y="620">1</text>
+  <line class="rel" x1="320" y1="552" x2="200" y2="552" marker-end="url(#arrow)"/><text class="lbl" x="238" y="545">sort</text>
+  <line class="rel" x1="130" y1="690" x2="130" y2="730" marker-start="url(#diamond)"/><text class="lbl" x="142" y="720">1..*</text>
+  <line class="rel" x1="320" y1="682" x2="200" y2="762" marker-end="url(#triangle)"/>
+  <line class="rel" x1="320" y1="762" x2="200" y2="762" marker-end="url(#triangle)"/>
+  <line class="rel" x1="320" y1="842" x2="200" y2="762" marker-end="url(#triangle)"/>
+  <line class="rel" x1="320" y1="842" x2="200" y2="842" marker-end="url(#arrow)"/><text class="lbl" x="225" y="835">channel</text>
+
+  <!-- Message relationships -->
+  <line class="rel" x1="760" y1="180" x2="760" y2="140" marker-end="url(#triangle)"/>
+  <line class="rel" x1="760" y1="260" x2="760" y2="140" marker-end="url(#triangle)"/>
+  <line class="rel" x1="760" y1="340" x2="760" y2="140" marker-end="url(#triangle)"/>
+  <line class="rel" x1="770" y1="420" x2="770" y2="140" marker-end="url(#triangle)"/>
+  <line class="rel" x1="840" y1="370" x2="320" y2="552" marker-end="url(#arrow)"/><text class="lbl" x="505" y="435">variable</text>
+  <line class="rel" x1="860" y1="450" x2="1000" y2="110" marker-end="url(#arrow)"/><text class="lbl" x="910" y="250">operator</text>
+  <line class="rel" x1="860" y1="470" x2="680" y2="110" marker-start="url(#diamond)"/><text class="lbl" x="618" y="250">arguments 1..*</text>
+  <line class="rel" x1="1065" y1="180" x2="1080" y2="140" marker-end="url(#triangle)"/><text class="lbl" x="1090" y="165">all operator rows specialize Operator</text>
+
+  <!-- Cross references from Event, Listener, assumptions, formulas to Term -->
+  <line class="rel" x1="200" y1="762" x2="680" y2="110" marker-end="url(#arrow)"/><text class="lbl" x="430" y="655">message</text>
+  <line class="rel" x1="1340" y1="200" x2="840" y2="110" marker-end="url(#arrow)"/><text class="lbl" x="1100" y="185">listenedTerm</text>
+  <line class="rel" x1="1580" y1="400" x2="840" y2="110" marker-end="url(#arrow)"/><text class="lbl" x="1180" y="345">term</text>
+  <line class="rel" x1="1580" y1="490" x2="840" y2="110" marker-end="url(#arrow)"/>
+  <line class="rel" x1="1580" y1="580" x2="840" y2="110" marker-end="url(#arrow)"/>
+  <line class="rel" x1="2020" y1="520" x2="840" y2="110" marker-start="url(#diamond)"/><text class="lbl" x="1370" y="785">predicate arguments 0..*</text>
+
+  <!-- Analysis relationships -->
+  <line class="rel" x1="1340" y1="110" x2="240" y2="382" marker-end="url(#arrow)"/><text class="lbl" x="930" y="155">protocol</text>
+  <line class="rel" x1="1510" y1="115" x2="1580" y2="110" marker-start="url(#diamond)"/><text class="lbl" x="1520" y="100">0..*</text>
+  <line class="rel" x1="1510" y1="130" x2="1580" y2="200" marker-start="url(#diamond)"/><text class="lbl" x="1535" y="170">0..*</text>
+  <line class="rel" x1="1340" y1="135" x2="1510" y2="300" marker-start="url(#diamond)"/><text class="lbl" x="1440" y="255">0..*</text>
+  <line class="rel" x1="1340" y1="150" x2="1510" y2="385" marker-start="url(#diamond)"/><text class="lbl" x="1450" y="355">0..*</text>
+  <line class="rel" x1="1510" y1="200" x2="1580" y2="300" marker-start="url(#diamond)"/><text class="lbl" x="1540" y="260">1..*</text>
+  <line class="rel" x1="1580" y1="205" x2="460" y2="372" marker-end="url(#arrow)"/><text class="lbl" x="1030" y="270">role</text>
+  <line class="rel" x1="1580" y1="300" x2="200" y2="762" marker-end="url(#arrow)"/><text class="lbl" x="1000" y="550">event</text>
+  <line class="rel" x1="1510" y1="380" x2="1580" y2="300" marker-end="url(#arrow)"/><text class="lbl" x="1530" y="345">predecessor</text>
+  <line class="rel" x1="1510" y1="395" x2="1580" y2="315" marker-end="url(#arrow)"/><text class="lbl" x="1530" y="365">successor</text>
+  <line class="rel" x1="1510" y1="490" x2="1580" y2="205" marker-start="url(#diamond)"/><text class="lbl" x="1525" y="460">strands 1..*</text>
+  <line class="rel" x1="1510" y1="580" x2="1580" y2="300" marker-end="url(#arrow)"/><text class="lbl" x="1525" y="540">sender/receiver</text>
+  <line class="rel" x1="1580" y1="680" x2="1510" y2="115" marker-end="url(#arrow)"/><text class="lbl" x="1540" y="640">skeleton</text>
+  <line class="rel" x1="1340" y1="680" x2="1510" y2="115" marker-end="url(#arrow)"/><text class="lbl" x="1360" y="640">skeleton</text>
+  <line class="rel" x1="1340" y1="690" x2="1510" y2="490" marker-end="url(#arrow)"/><text class="lbl" x="1390" y="615">bundle 0..1</text>
+
+  <!-- Goal relationships -->
+  <line class="rel" x1="2020" y1="115" x2="240" y2="382" marker-end="url(#arrow)"/><text class="lbl" x="1300" y="122">protocol</text>
+  <line class="rel" x1="2100" y1="150" x2="2100" y2="190" marker-start="url(#diamond)"/><text class="lbl" x="2110" y="178">1..*</text>
+  <line class="rel" x1="2020" y1="320" x2="2030" y2="250" marker-end="url(#triangle)"/>
+  <line class="rel" x1="2260" y1="250" x2="2180" y2="220" marker-end="url(#triangle)"/><text class="lbl" x="2235" y="170">subclasses</text>
+  <line class="rel" x1="2020" y1="320" x2="2020" y2="520" marker-start="url(#diamond)"/><text class="lbl" x="1900" y="365">predicateApplication</text>
+  <line class="rel" x1="2100" y1="490" x2="2100" y2="450" marker-end="url(#arrow)"/><text class="lbl" x="2110" y="475">predicate</text>
+  <line class="rel" x1="460" y1="462" x2="2020" y2="220" marker-end="url(#arrow)"/><text class="lbl" x="1020" y="425">rule formula</text>
+
+  <!-- Document inheritance / declarations -->
+  <line class="rel" x1="150" y1="165" x2="150" y2="140" marker-start="url(#diamond)"/><text class="lbl" x="160" y="158">declarations 0..*</text>
+  <line class="rel" x1="150" y1="340" x2="150" y2="140" marker-end="url(#triangle)"/><text class="lbl" x="165" y="275">Protocol</text>
+  <line class="rel" x1="1425" y1="80" x2="240" y2="110" marker-end="url(#triangle)"/><text class="lbl" x="820" y="90">Skeleton, Strand, Listener, Goal, Rule specialize TopLevelDeclaration</text>
+</svg>

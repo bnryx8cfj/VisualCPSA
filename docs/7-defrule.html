@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>7-defrule.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-7-defrule">Chapter 7. <code>defrule</code></h1>
+<h2 id="71-purpose">7.1 Purpose</h2>
+<p>The <code>defrule</code> declaration defines logical inference rules that extend CPSA protocol analysis with additional semantic knowledge, state-transition constraints, environmental assumptions, trust relationships, and domain-specific reasoning.</p>
+<p>Where protocol roles describe participant behavior, rules describe logical relationships that must hold during analysis. Rules enable CPSA to derive additional information from existing observations and constraints.</p>
+<p>Typical uses include:</p>
+<ul>
+<li>Modeling stateful protocols.</li>
+<li>Expressing protocol invariants.</li>
+<li>Capturing environmental assumptions.</li>
+<li>Defining trust relationships.</li>
+<li>Supporting state transition systems.</li>
+<li>Constraining execution spaces.</li>
+<li>Deriving new analysis facts.</li>
+<li>Supporting rely-guarantee reasoning.</li>
+</ul>
+<hr>
+<h2 id="72-semantics">7.2 Semantics</h2>
+<h3 id="721-conceptual-meaning">7.2.1 Conceptual Meaning</h3>
+<p>A <code>defrule</code> declaration introduces a named logical inference rule into the analysis environment.</p>
+<p>A rule consists of:</p>
+<ol>
+<li>A rule identifier.</li>
+<li>Variable declarations.</li>
+<li>Antecedent conditions (premises).</li>
+<li>Consequent conditions (conclusions).</li>
+</ol>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>If Antecedent Holds
+Then Consequent Must Hold
+</div></code></pre>
+<p>A rule does not describe protocol execution behavior.</p>
+<p>Rather, it defines logical implications that CPSA may use while constructing realized executions, shapes, and analysis results.</p>
+<hr>
+<h3 id="722-analysis-role">7.2.2 Analysis Role</h3>
+<p>Rules participate in:</p>
+<ul>
+<li>Fact propagation</li>
+<li>State reasoning</li>
+<li>Skeleton realization</li>
+<li>Constraint propagation</li>
+<li>Shape generation</li>
+<li>Goal evaluation</li>
+<li>Derived fact generation</li>
+</ul>
+<p>Rules belong primarily to the Analysis Layer of the CPSA metamodel.</p>
+<hr>
+<h2 id="73-position-in-the-cpsa-metamodel">7.3 Position in the CPSA Metamodel</h2>
+<h3 id="concrete-syntax-layer">Concrete Syntax Layer</h3>
+<pre class="hljs"><code><div>defrule
+</div></code></pre>
+<p>maps to</p>
+<h3 id="semantic-layer">Semantic Layer</h3>
+<pre class="hljs"><code><div>Rule
+</div></code></pre>
+<p>and related semantic elements:</p>
+<ul>
+<li>Formula</li>
+<li>Predicate</li>
+<li>Fact</li>
+<li>Variable</li>
+<li>Term</li>
+</ul>
+<h3 id="analysis-layer">Analysis Layer</h3>
+<p>Rules interact with:</p>
+<ul>
+<li>Skeleton</li>
+<li>Strand</li>
+<li>Node</li>
+<li>Bundle</li>
+<li>Shape</li>
+<li>RealizedExecution</li>
+</ul>
+<hr>
+<h2 id="74-syntax">7.4 Syntax</h2>
+<h3 id="741-abstract-syntax">7.4.1 Abstract Syntax</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">defrule</span> rule-name
+  (<span class="hljs-name">vars</span> ...)
+  antecedent-formula
+  consequent-formula)
+</div></code></pre>
+<p>Every rule contains:</p>
+<ul>
+<li>Rule name</li>
+<li>Variable declarations</li>
+<li>Premise specification</li>
+<li>Conclusion specification</li>
+</ul>
+<hr>
+<h3 id="742-syntax-elements">7.4.2 Syntax Elements</h3>
+<h4 id="rule-name">Rule Name</h4>
+<p>The name uniquely identifies the rule within the enclosing protocol.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defrule</span> state-transition
+  ...)
+</div></code></pre>
+<hr>
+<h4 id="variable-block">Variable Block</h4>
+<p>Variables used by the rule are declared in a variable block.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">vars</span>
+  (<span class="hljs-name">a</span> b name)
+  (<span class="hljs-name">n</span> text))
+</div></code></pre>
+<p>Variables are scoped to the rule.</p>
+<hr>
+<h4 id="antecedent">Antecedent</h4>
+<p>The antecedent specifies conditions that must already hold.</p>
+<p>Examples include:</p>
+<ul>
+<li>Facts</li>
+<li>Predicates</li>
+<li>Strand references</li>
+<li>Node references</li>
+<li>Ordering constraints</li>
+<li>Message term relationships</li>
+</ul>
+<hr>
+<h4 id="consequent">Consequent</h4>
+<p>The consequent specifies information that may be inferred.</p>
+<p>Examples include:</p>
+<ul>
+<li>New facts</li>
+<li>Additional predicates</li>
+<li>Ordering constraints</li>
+<li>State assertions</li>
+<li>Derived analysis relationships</li>
+</ul>
+<hr>
+<h2 id="75-purpose-within-cpsa-analysis">7.5 Purpose within CPSA Analysis</h2>
+<p>Unlike protocol roles, rules do not generate protocol events.</p>
+<p>Instead, they:</p>
+<ul>
+<li>Restrict admissible executions.</li>
+<li>Introduce semantic assumptions.</li>
+<li>Provide state transition semantics.</li>
+<li>Define derived facts.</li>
+<li>Assist realization reasoning.</li>
+</ul>
+<p>Rules therefore augment the protocol interpretation rather than defining protocol behavior itself.</p>
+<hr>
+<h2 id="76-uml-metamodel-mapping">7.6 UML Metamodel Mapping</h2>
+<h3 id="primary-class">Primary Class</h3>
+<h4 id="rule">Rule</h4>
+<p>Represents a CPSA inference rule.</p>
+<h5 id="attributes">Attributes</h5>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Rule identifier</td>
+</tr>
+<tr>
+<td>description</td>
+<td>String [0..1]</td>
+<td>Optional documentation</td>
+</tr>
+<tr>
+<td>enabled</td>
+<td>Boolean</td>
+<td>Indicates whether the rule participates in analysis</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="associated-classes">Associated Classes</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Relationship to Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>Contains Rule</td>
+</tr>
+<tr>
+<td>Formula</td>
+<td>Represents premises and conclusions</td>
+</tr>
+<tr>
+<td>Predicate</td>
+<td>Atomic logical assertions</td>
+</tr>
+<tr>
+<td>Variable</td>
+<td>Rule-scoped variables</td>
+</tr>
+<tr>
+<td>Fact</td>
+<td>Analysis assertions</td>
+</tr>
+<tr>
+<td>Term</td>
+<td>Message algebra terms</td>
+</tr>
+<tr>
+<td>Skeleton</td>
+<td>Evaluation context</td>
+</tr>
+<tr>
+<td>Strand</td>
+<td>Referenced by analysis predicates</td>
+</tr>
+<tr>
+<td>Node</td>
+<td>Referenced by analysis predicates</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="77-containment-relationships">7.7 Containment Relationships</h2>
+<h3 id="protocol-contains-rule">Protocol Contains Rule</h3>
+<p><strong>Source</strong></p>
+<p><code>Protocol</code></p>
+<p><strong>Target</strong></p>
+<p><code>Rule</code></p>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Protocol 1 ---- 0..* Rule
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>A protocol may contain zero or more rules.</p>
+<p>Each rule belongs to exactly one protocol.</p>
+<hr>
+<h3 id="rule-contains-variable">Rule Contains Variable</h3>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Rule 1 ---- 0..* Variable
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>Variables declared by a rule are owned by that rule.</p>
+<hr>
+<h3 id="rule-contains-formula">Rule Contains Formula</h3>
+<p><strong>Multiplicity</strong></p>
+<pre class="hljs"><code><div>Rule 1 ---- 1..* Formula
+</div></code></pre>
+<p><strong>Meaning</strong></p>
+<p>The rule owns the formulas that define its premises and conclusions.</p>
+<hr>
+<h2 id="78-reference-relationships">7.8 Reference Relationships</h2>
+<h3 id="rule-references-fact">Rule References Fact</h3>
+<p>Rules may reference facts already available in the analysis context.</p>
+<hr>
+<h3 id="rule-references-predicate">Rule References Predicate</h3>
+<p>Rules may test or derive predicates.</p>
+<hr>
+<h3 id="rule-references-variable">Rule References Variable</h3>
+<p>Rules reference declared variables.</p>
+<hr>
+<h3 id="rule-references-term">Rule References Term</h3>
+<p>Rules may reason about message algebra terms.</p>
+<hr>
+<h3 id="rule-references-node">Rule References Node</h3>
+<p>Rules may constrain specific protocol nodes.</p>
+<hr>
+<h3 id="rule-references-strand">Rule References Strand</h3>
+<p>Rules may define relationships between strands.</p>
+<hr>
+<h3 id="rule-references-skeleton">Rule References Skeleton</h3>
+<p>Rules are evaluated within skeletons.</p>
+<hr>
+<h2 id="79-cardinality-constraints">7.9 Cardinality Constraints</h2>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Cardinality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol owns Rule</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Rule belongs to Protocol</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Rule name</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Rule variables</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Rule antecedent formulas</td>
+<td>1..*</td>
+</tr>
+<tr>
+<td>Rule consequent formulas</td>
+<td>1..*</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="710-umlocl-style-invariants">7.10 UML/OCL Style Invariants</h2>
+<h3 id="rule-must-have-a-name">Rule Must Have A Name</h3>
+<pre class="hljs"><code><div>context Rule
+inv HasName:
+    self.name &lt;&gt; ''
+</div></code></pre>
+<hr>
+<h3 id="rule-must-belong-to-exactly-one-protocol">Rule Must Belong To Exactly One Protocol</h3>
+<pre class="hljs"><code><div>context Rule
+inv HasProtocol:
+    self.protocol-&gt;size() = 1
+</div></code></pre>
+<hr>
+<h3 id="rule-must-define-an-antecedent">Rule Must Define An Antecedent</h3>
+<pre class="hljs"><code><div>context Rule
+inv HasAntecedent:
+    self.antecedent-&gt;size() &gt; 0
+</div></code></pre>
+<hr>
+<h3 id="rule-must-define-a-consequent">Rule Must Define A Consequent</h3>
+<pre class="hljs"><code><div>context Rule
+inv HasConsequent:
+    self.consequent-&gt;size() &gt; 0
+</div></code></pre>
+<hr>
+<h3 id="variable-references-must-resolve">Variable References Must Resolve</h3>
+<pre class="hljs"><code><div>context Rule
+inv VariableResolution:
+    self.variableReferences-&gt;forAll(v |
+        self.variables-&gt;includes(v))
+</div></code></pre>
+<hr>
+<h2 id="711-cpsa-processing-semantics">7.11 CPSA Processing Semantics</h2>
+<p>Rules are evaluated after protocol structures have been parsed and instantiated.</p>
+<p>A simplified processing sequence is:</p>
+<ol>
+<li>Parse protocol.</li>
+<li>Parse roles.</li>
+<li>Parse rules.</li>
+<li>Parse skeleton.</li>
+<li>Construct analysis structures.</li>
+<li>Evaluate rule premises.</li>
+<li>Apply rule conclusions.</li>
+<li>Propagate constraints.</li>
+<li>Attempt realization.</li>
+<li>Generate shapes.</li>
+<li>Evaluate goals.</li>
+</ol>
+<p>Rule evaluation may:</p>
+<ul>
+<li>Derive new facts.</li>
+<li>Introduce additional constraints.</li>
+<li>Eliminate infeasible executions.</li>
+<li>Establish state transitions.</li>
+<li>Support authentication and state reasoning.</li>
+</ul>
+<p>Rules do not replace trace semantics.</p>
+<p>Instead, they extend the semantic interpretation of protocol executions.</p>
+<hr>
+<h2 id="712-interaction-with-state-modeling">7.12 Interaction with State Modeling</h2>
+<p>Rules play a central role in CPSA state reasoning.</p>
+<p>Typical pattern:</p>
+<pre class="hljs"><code><div>Observed Fact
+      ↓
+Rule Application
+      ↓
+Derived Fact
+      ↓
+Additional Constraint
+      ↓
+Further Analysis
+</div></code></pre>
+<p>Common applications include:</p>
+<ul>
+<li>Mutable state</li>
+<li>Authorization systems</li>
+<li>Capability systems</li>
+<li>Trust management</li>
+<li>State transition systems</li>
+<li>Rely-guarantee reasoning</li>
+</ul>
+<hr>
+<h2 id="713-common-modeling-mistakes">7.13 Common Modeling Mistakes</h2>
+<h3 id="mistake-1-describing-protocol-behavior">Mistake 1: Describing Protocol Behavior</h3>
+<p>Incorrect:</p>
+<p>Using a rule to define message flow.</p>
+<p>Correct:</p>
+<p>Use <code>defrole</code> traces for protocol behavior.</p>
+<hr>
+<h3 id="mistake-2-undeclared-variables">Mistake 2: Undeclared Variables</h3>
+<p>Incorrect:</p>
+<p>Referencing variables not declared in the rule.</p>
+<p>Correct:</p>
+<p>Declare all rule variables using <code>vars</code>.</p>
+<hr>
+<h3 id="mistake-3-encoding-sendreceive-logic">Mistake 3: Encoding Send/Receive Logic</h3>
+<p>Incorrect:</p>
+<p>Using rules to model communication events.</p>
+<p>Correct:</p>
+<p>Use trace events within roles.</p>
+<hr>
+<h3 id="mistake-4-circular-derivations">Mistake 4: Circular Derivations</h3>
+<p>Incorrect:</p>
+<p>Creating inference cycles that continuously derive one another.</p>
+<p>Correct:</p>
+<p>Create acyclic logical relationships whenever possible.</p>
+<hr>
+<h3 id="mistake-5-confusing-goals-and-rules">Mistake 5: Confusing Goals and Rules</h3>
+<p>Incorrect:</p>
+<p>Encoding a required security property as a rule.</p>
+<p>Correct:</p>
+<p>Model security requirements using <code>defgoal</code>.</p>
+<p>Use rules only for inference and constraints.</p>
+<hr>
+<h2 id="714-uml-metamodel-interpretation">7.14 UML Metamodel Interpretation</h2>
+<p>Within the canonical metamodel, <code>defrule</code> is mapped to the semantic class <code>Rule</code>.</p>
+<pre class="hljs"><code><div>defrule
+   ↓
+Rule
+   ↓
+Formula
+   ↓
+Predicate
+   ↓
+Fact / Variable / Term
+</div></code></pre>
+<p>The rule is therefore a first-class metamodel element with explicit relationships, semantics, constraints, and analysis behavior.</p>
+<hr>
+<h2 id="715-grammar-to-metamodel-traceability">7.15 Grammar-to-Metamodel Traceability</h2>
+<table>
+<thead>
+<tr>
+<th>Grammar Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>defrule</td>
+<td>Rule</td>
+</tr>
+<tr>
+<td>vars</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>formula</td>
+<td>Formula</td>
+</tr>
+<tr>
+<td>predicate</td>
+<td>Predicate</td>
+</tr>
+<tr>
+<td>fact</td>
+<td>Fact</td>
+</tr>
+<tr>
+<td>term</td>
+<td>Term</td>
+</tr>
+<tr>
+<td>antecedent</td>
+<td>Formula</td>
+</tr>
+<tr>
+<td>consequent</td>
+<td>Formula</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="716-canonical-uml-metamodel-diagram-placeholder">7.16 Canonical UML Metamodel Diagram Placeholder</h2>
+<h3 id="svg-diagram-placeholder">SVG Diagram Placeholder</h3>
+<p><strong>Future Diagram Identifier</strong></p>
+<pre class="hljs"><code><div>[SVG-DIAGRAM-CH07-DEFRULE]
+</div></code></pre>
+<p><strong>Required Content</strong></p>
+<ul>
+<li>Complete CPSA canonical metamodel</li>
+<li>Protocol Package</li>
+<li>Language Package</li>
+<li>Analysis Package</li>
+<li>Goal Package</li>
+<li>Message Algebra Package</li>
+<li>Rule highlighted</li>
+<li>Multiplicities shown</li>
+<li>Navigability shown</li>
+<li>Constraints shown</li>
+<li>Consistent layout with all other chapters</li>
+</ul>
+<hr>
+<h2 id="717-canonical-plantuml-diagram-placeholder">7.17 Canonical PlantUML Diagram Placeholder</h2>
+<h3 id="plantuml-diagram-placeholder">PlantUML Diagram Placeholder</h3>
+<p><strong>Future Diagram Identifier</strong></p>
+<pre class="hljs"><code><div>[PLANTUML-CH07-DEFRULE]
+</div></code></pre>
+<p><strong>Required Content</strong></p>
+<ul>
+<li>Complete canonical metamodel</li>
+<li>Full package structure</li>
+<li>Highlighted Rule class</li>
+<li>Complete attribute set</li>
+<li>Complete associations</li>
+<li>Identical semantics to SVG version</li>
+</ul>
+<hr>
+<h2 id="718-complete-example">7.18 Complete Example</h2>
+<h3 id="example-protocol-with-rule">Example: Protocol with Rule</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">defprotocol</span> example basic
+
+  (<span class="hljs-name">defrole</span> initiator
+    (<span class="hljs-name">vars</span>
+      (<span class="hljs-name">a</span> b name)
+      (<span class="hljs-name">n</span> text))
+    (<span class="hljs-name">trace</span>
+      (<span class="hljs-name">send</span> n)
+      (<span class="hljs-name">recv</span> (<span class="hljs-name">hash</span> n))))
+
+  (<span class="hljs-name">defrule</span> state-transition
+    (<span class="hljs-name">vars</span> (<span class="hljs-name">n</span> text))
+    ...))
+</div></code></pre>
+<p>This example illustrates placement of a rule within a protocol specification.</p>
+<hr>
+<h2 id="719-metamodel-class-specification">7.19 Metamodel Class Specification</h2>
+<h3 id="rule">Rule</h3>
+<p><strong>Stereotype</strong></p>
+<pre class="hljs"><code><div>&lt;&lt;AnalysisConstruct&gt;&gt;
+</div></code></pre>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Encapsulates inference logic.</li>
+<li>Connects premises and conclusions.</li>
+<li>Supports state reasoning.</li>
+<li>Derives facts.</li>
+<li>Constrains admissible executions.</li>
+<li>Assists realization analysis.</li>
+</ul>
+<p><strong>Key Relationships</strong></p>
+<pre class="hljs"><code><div>Protocol ◼── Rule
+Rule ◼── Variable
+Rule ◼── Formula
+Rule ──► Predicate
+Rule ──► Fact
+Rule ──► Skeleton
+Rule ──► Strand
+Rule ──► Node
+</div></code></pre>
+<hr>
+<h2 id="720-analysis-package-placement">7.20 Analysis Package Placement</h2>
+<p>The <code>Rule</code> class resides in the Analysis Package.</p>
+<pre class="hljs"><code><div>Analysis Package
+├── Skeleton
+├── Strand
+├── Listener
+├── Fact
+├── Rule
+├── Bundle
+├── Shape
+└── RealizedExecution
+</div></code></pre>
+<p>The rule acts as a bridge between protocol specifications and analysis reasoning.</p>
+<hr>
+<h2 id="721-validation-checklist">7.21 Validation Checklist</h2>
+<p>The Chapter 7 metamodel satisfies the following requirements:</p>
+<ul>
+<li><code>defrule</code> represented as UML class.</li>
+<li>Syntax mapped to semantic elements.</li>
+<li>Traceability established.</li>
+<li>Containment documented.</li>
+<li>Reference relationships documented.</li>
+<li>Cardinalities documented.</li>
+<li>OCL constraints documented.</li>
+<li>Processing semantics documented.</li>
+<li>Analysis role documented.</li>
+<li>UML placeholder defined.</li>
+<li>PlantUML placeholder defined.</li>
+</ul>
+<hr>
+<h2 id="722-section-bibliography">7.22 Section Bibliography</h2>
+<h3 id="primary-cpsa-references">Primary CPSA References</h3>
+<p>Liskov, M. D., Ramsdell, J. D., Guttman, J. D., &amp; Rowe, P. D. (2026). <em>The Cryptographic Protocol Shapes Analyzer: A Manual for CPSA 4</em> (Version 4.4.8). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.8/src/doc/cpsa4manual.pdf 【1-cfc99b】</p>
+<p>Ramsdell, J. D., &amp; Guttman, J. D. (2023). <em>CPSA Primer</em> (Version 4.4.3). The MITRE Corporation. https://hackage.haskell.org/package/cpsa-4.4.6/src/doc/cpsaprimer.pdf 【2-e13718】</p>
+<p>The MITRE Corporation. (2026). <em>CPSA: Cryptographic Protocol Shapes Analyzer (Version 4) [Computer software]</em>. GitHub. https://github.com/mitre/cpsa 【3-b2d9c6】【4-1b822d】</p>
+<h3 id="strand-space-foundations">Strand-Space Foundations</h3>
+<p>Thayer Fábrega, F. J., Herzog, J. C., &amp; Guttman, J. D. (1998, May). <em>Strand spaces: Why is a security protocol correct?</em> In <em>Proceedings of the 1998 IEEE Symposium on Security and Privacy</em> (pp. 160–171). IEEE Computer Society. https://www.mitre.org/sites/default/files/pdf/guttman_strands.pdf 【5-6b62e1】【6-e98ba9】</p>
+<p>Thayer, F. J., Herzog, J. C., &amp; Guttman, J. D. (1999). Strand spaces: Proving security protocols correct. <em>Journal of Computer Security, 7</em>(2–3), 191–230. https://people.csail.mit.edu/jherzog/papers/JCS_Strands.pdf 【7-eee0a2】</p>
+<h3 id="authentication-and-bundle-theory">Authentication and Bundle Theory</h3>
+<p>Guttman, J. D., &amp; Thayer, F. J. (2002). Authentication tests and the structure of bundles. <em>Theoretical Computer Science</em>. Available from https://web.cs.wpi.edu/~guttman/list_of_pubs.html</p>
+<p>Guttman, J. D. (2004). Authentication tests and disjoint encryption: A design method for security protocols. <em>Journal of Computer Security, 12</em>(3–4), 409–433. Available from https://web.cs.wpi.edu/~guttman/list_of_pubs.html</p>
+<h3 id="trust-management-and-rule-based-reasoning">Trust Management and Rule-Based Reasoning</h3>
+<p>Guttman, J. D., Thayer, F. J., Carlson, J. A., Herzog, J. C., Ramsdell, J. D., &amp; Sniffen, B. T. (2004). Trust management in strand spaces: A rely-guarantee method. In D. Schmidt (Ed.), <em>Programming Languages and Systems: 13th European Symposium on Programming (ESOP 2004)</em> (Lecture Notes in Computer Science, Vol. 2986, pp. 325–339). Springer. ISBN 978-3-540-21313-9. https://people.csail.mit.edu/jherzog/herzog_papers.html 【6-e98ba9】</p>
+<h3 id="security-goals-and-state-reasoning">Security Goals and State Reasoning</h3>
+<p>Guttman, J. D. (2012). State and progress in strand spaces: Proving fair exchange. <em>Journal of Automated Reasoning, 48</em>(2), 159–195. https://doi.org/10.1007/s10817-010-9202-1</p>
+<p>Guttman, J. D. (2014). Establishing and preserving protocol security goals. <em>Journal of Computer Security, 22</em>(2), 203–267. Available from https://web.cs.wpi.edu/~guttman/list_of_pubs.html</p>
+<p>Guttman, J. D., Liskov, M. D., &amp; Rowe, P. D. (2016). Measuring protocol strength with security goals. <em>International Journal of Information Security</em>. https://doi.org/10.1007/s10207-016-0319-z</p>
+<h3 id="related-strand-space-research">Related Strand-Space Research</h3>
+<p>Herzog, J. C. (2003). The Diffie-Hellman key-agreement scheme in the strand-space model. In <em>Proceedings of the 16th IEEE Computer Security Foundations Workshop</em> (pp. 234–247). IEEE Computer Society Press. https://people.csail.mit.edu/jherzog/herzog_papers.html 【6-e98ba9】</p>
+<p>Dong, J. S., Liu, Y., Sun, J., &amp; Wang, H. (2011). An inductive approach to strand spaces. <em>Innovations in Systems and Software Engineering, 7</em>, 243–255. https://doi.org/10.1007/s00165-011-0187-2 【8-5316e5】</p>
+<h3 id="traceability-statement">Traceability Statement</h3>
+<p>The semantics of <code>defrule</code>, rule-based protocol analysis, state reasoning, fact propagation, authentication reasoning, skeleton realization, bundle theory, and strand-space analysis documented in this chapter are derived from the CPSA 4 Manual, CPSA Primer, CPSA source repository, and the foundational strand-space literature authored by Guttman, Ramsdell, Herzog, Thayer, Rowe, and collaborators. 【1-cfc99b】【2-e13718】【3-b2d9c6】【5-6b62e1】【7-eee0a2】</p>
+
+</body>
+</html>

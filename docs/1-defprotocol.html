@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1-defprotocol.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-1-defprotocol">Chapter 1. defprotocol</h1>
+<h2 id="11-overview">1.1 Overview</h2>
+<p>The <code>defprotocol</code> declaration is the root declaration construct used to define a CPSA protocol. A protocol declaration establishes the protocol namespace, selects the message algebra used during symbolic analysis, and serves as the containment context for role definitions and protocol-specific rules. A protocol declaration establishes the context within which CPSA interprets role definitions, protocol rules, and subsequent analysis specifications. (Liskov, Ramsdell, Guttman, &amp; Rowe, 2024; Guttman, Ramsdell, Rowe, &amp; Liskov, 2026)</p>
+<p>A protocol definition is the foundational unit from which CPSA constructs its internal protocol model. All role behavior, message traces, variables, assumptions, and protocol-specific inference rules are interpreted within the context established by a <code>defprotocol</code> declaration. CPSA documentation presents protocols as the primary organizational unit used to model participant behavior and support shape analysis. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<hr>
+<h2 id="12-purpose">1.2 Purpose</h2>
+<p>The purpose of <code>defprotocol</code> is to:</p>
+<ul>
+<li>Assign a unique protocol identifier.</li>
+<li>Select the protocol algebra.</li>
+<li>Define the scope in which roles are declared.</li>
+<li>Define the scope in which protocol-specific rules are declared.</li>
+<li>Provide the protocol model referenced by skeleton and goal declarations.</li>
+</ul>
+<p>These responsibilities correspond to the use of protocol declarations described throughout the CPSA 4 manuals, where protocols provide the structural context for participant roles and analysis inputs. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<p>A CPSA model SHALL define protocol behavior using one or more protocol declarations. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<hr>
+<h2 id="13-cpsa-4-source-syntax">1.3 CPSA 4 Source Syntax</h2>
+<p>A protocol declaration begins with the keyword <code>defprotocol</code> followed by a protocol name and algebra identifier. This structure is consistent with the CPSA 4 input language documented in the CPSA manuals and example protocol specifications. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h3 id="general-form">General Form</h3>
+<pre class="hljs"><code><div>(<span class="hljs-name">defprotocol</span> &lt;protocol-name&gt; &lt;algebra&gt;
+  protocol-body*)
+</div></code></pre>
+<h3 id="informal-syntax-descripion">Informal Syntax Descrip*ion</h3>
+<p>The first parameter identifie* the protocol.</p>
+<p>The second paramet<em>r identifies the message algebra u</em>ed by the protocol.</p>
+<p>The remaining<em>contents of the declaration consis</em> of protocol-owned declarations.</p>
+<p>*n CPSA 4 these owned declarations *re primarily:</p>
+<ul>
+<li><code>defrole</code></li>
+<li><code>defr*le</code></li>
+</ul>
+<hr>
+<h2 id="14-parameter-definitons">1.4 Parameter Definit*ons</h2>
+<h3 id="protocol-name">protocol-name</h3>
+<h4 id="purpoe">Purpo*e</h4>
+<p>Identifies the protocol.</p>
+<h4 id="etamodel-attribute">*etamodel Attribute</h4>
+<pre class="hljs"><code><div>Protoc*l.name : Identifier
+</div></code></pre>
+<h4 id="sematics">Sema*tics</h4>
+<p>The protocol name provides t<em>e identifier referenced by analysi</em> declarations and goal declaration*. (Liskov et al., 2024; Guttman et*al., 2026)</p>
+<h4 id="uml-constraint">UML Constraint</h4>
+<p><code>*</code>text
+context Protocol
+inv UniqueP*otocolName</p>
+<pre class="hljs"><code><div>
+### algebra
+
+#### *urpose
+
+Selects the symbolic messa*e algebra.
+
+#### Metamodel Attribu*e
+
+```text
+Protocol.algebra : Alge*raKind
+</div></code></pre>
+<h4 id="supported-values">Supported Values</h4>
+<p>*- basic</p>
+<ul>
+<li>diffie-hellman</li>
+</ul>
+<h4 id="semntics">Sem*ntics</h4>
+<p>The selected algebra determ*nes:</p>
+<ul>
+<li>Available operators.</li>
+<li>Alg*braic identities.</li>
+<li>Message constr*ction rules.</li>
+<li>Message reduction r*les.</li>
+<li>Analysis behavior.</li>
+</ul>
+<p>The cho<em>ce of algebra affects protocol mod</em>ling expressiveness, available con<em>tructors, and the reasoning proced</em>res applied during shape analysis.<em>CPSA 4 documents both the <code>basic</code> <em>nd <code>diffie-hellman</code> algebras as su</em>ported protocol-modeling environme</em>ts. (Liskov et al., 2024; Guttman *t al., 2026)</p>
+<h4 id="uml-constraint">UML Constraint</h4>
+<p><em>```text
+context Protocol
+inv Exact</em>yOneAlgebra</p>
+<pre class="hljs"><code><div>
+### 1.4.1 Algebra*Binding Semantics
+
+The selected al*ebra determines the operators avai*able within protocol terms and inf*uences the symbolic reasoning perf*rmed during CPSA analysis. CPSA 4 *xplicitly documents both the `basi*` and `diffie-hellman` algebras as*supported protocol-modeling enviro*ments. (Liskov et al., 2024; Guttm*n et al., 2026)
+
+#### basic Algebr*
+
+The `basic` algebra is the defau*t CPSA message algebra. It provide* symbolic constructors for message*concatenation, encryption, hashing* public-key operations, private-ke* operations, and long-term key mod*ling. The `basic` algebra is used *n many introductory CPSA examples,*including Needham-Schroeder protoc*l models presented in CPSA documen*ation. (Liskov et al., 2024; Guttm*n et al., 2026)
+
+The `basic` algeb*a supports, at minimum:
+
+```lisp
+c*t
+enc
+hash
+pubk
+privk
+ltk
+</div></code></pre>
+<p>All<em>roles and rules contained within a</em>protocol declared using the <code>basic* algebra SHALL be interpreted usin* the operators and assumptions of *he </code>basic` algebra. (Liskov et al.* 2024; Guttman et al., 2026)</p>
+<p>####*diffie-hellman Algebra</p>
+<p>The <code>diffi*-hellman</code> algebra extends the CPSA<em>term algebra to support symbolic D</em>ffie-Hellman protocol analysis. The algebra introduces exponentiation and group-theoretic operators used for modeling key-exchange protocols. The <code>diffie-hellman</code> algebra extends CPSA's symbolic term language with operators intended for reasoning about protocols that rely on exponentiation and group operations. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<p>The <code>diffie-hellman</code> algebra supports, at minimum:</p>
+<pre class="hljs"><code><div>gen
+exp
+mul
+rec
+one
+</div></code></pre>
+<p>When a protocol is declared using the <code>diffie-hellman</code> algebra, all contained roles and rules SHALL be interpreted according to that algebra's symbolic semantics. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h3 id="142-algebra-consistency-constraints">1.4.2 Algebra Consistency Constraints</h3>
+<pre class="hljs"><code><div>context Protocol
+inv ExactlyOneAlgebra
+
+context Role
+inv UsesProtocolAlgebra
+
+context Rule
+inv UsesProtocolAlgebra
+</div></code></pre>
+<p>No role or rule may be interpreted independently of the algebra selected by its owning protocol. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<hr>
+<h2 id="15-immediate-child-declarations">1.5 Immediate Child Declarations</h2>
+<p>The immediate children of a protocol declaration are role and rule declarations. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h3 id="defrole">defrole</h3>
+<p>Roles define participant behavior.</p>
+<p>A role specifies:</p>
+<ul>
+<li>Variables.</li>
+<li>Message events.</li>
+<li>Origination assumptions.</li>
+<li>Non-origination assumptions.</li>
+<li>Facts.</li>
+</ul>
+<p>The role construct is the CPSA mechanism for modeling the local behavior of protocol participants as traces of message events. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h3 id="defrule">defrule</h3>
+<p>Rules define protocol-specific inference behavior.</p>
+<p>Rules extend the logical theory available during analysis. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h3 id="151-protocol-namespace-semantics">1.5.1 Protocol Namespace Semantics</h3>
+<p>A protocol declaration establishes a namespace that contains protocol-owned declarations. Namespace scoping allows CPSA to distinguish declarations belonging to different protocols contained within the same specification environment. References originating in analysis and goal declarations are resolved through protocol identifiers. (Liskov et al., 2024; Ramsdell, n.d.)</p>
+<p>The namespace includes:</p>
+<ul>
+<li>The protocol identifier.</li>
+<li>All contained role identifiers.</li>
+<li>All contained rule identifiers.</li>
+<li>Protocol-local vocabulary introduced by contained declarations.</li>
+</ul>
+<p>The namespace created by a protocol SHALL be used when resolving references originating from protocol, analysis, and goal declarations that reference the protocol by name. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<p>Identifiers defined within one protocol SHALL NOT automatically become visible within another protocol. (Liskov et al., 2024; Ramsdell, n.d.)</p>
+<h4 id="uml-interpretation">UML Interpretation</h4>
+<pre class="hljs"><code><div>Protocol
+  owns Namespace
+
+Namespace
+  contains Role names
+  contains Rule names
+</div></code></pre>
+<h4 id="uml-constraints">UML Constraints</h4>
+<pre class="hljs"><code><div>context Protocol
+inv UniqueRoleNames
+
+context Protocol
+inv UniqueRuleNames
+</div></code></pre>
+<h3 id="152-protocol-body-ordering-rules">1.5.2 Protocol Body Ordering Rules</h3>
+<p>Conceptually, the protocol body consists of protocol-owned declarations interpreted within the protocol namespace. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defprotocol</span> protocol-name algebra
+  protocol-body*)
+</div></code></pre>
+<h4 id="ordering-independence">Ordering Independence</h4>
+<p>The semantic meaning of a protocol derives from its contained declarations and their relationships. CPSA documentation emphasizes protocol content and structure rather than presentation formatting. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h4 id="recommended-organization">Recommended Organization</h4>
+<p>For specification clarity, protocol definitions SHOULD:</p>
+<ol>
+<li>Define roles before rules.</li>
+<li>Group related participant roles together.</li>
+<li>Place protocol constraints and inference rules after participant definitions.</li>
+</ol>
+<p>This ordering convention is a documentation recommendation for readability, not a distinct CPSA declaration construct. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defprotocol</span> example basic
+
+  (<span class="hljs-name">defrole</span> initiator
+    ...)
+
+  (<span class="hljs-name">defrole</span> responder
+    ...)
+
+  (<span class="hljs-name">defrule</span> authentication-property
+    ...))
+</div></code></pre>
+<hr>
+<h2 id="16-declaration-relationships">1.6 Declaration Relationships</h2>
+<h3 id="relationship-to-defrole">Relationship to defrole</h3>
+<p>A protocol owns one or more role definitions. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h4 id="multiplicity">Multiplicity</h4>
+<pre class="hljs"><code><div>Protocol 1 ---- 1..* Role
+</div></code></pre>
+<h4 id="ownership">Ownership</h4>
+<pre class="hljs"><code><div>Protocol ◼── Role
+</div></code></pre>
+<h4 id="semantics">Semantics</h4>
+<p>A role SHALL belong to exactly one protocol.</p>
+<p>A role inherits:</p>
+<ul>
+<li>Protocol algebra.</li>
+<li>Protocol namespace.</li>
+<li>Protocol semantic context.</li>
+</ul>
+<p>This relationship reflects CPSA's organization of participant-role behavior within protocol declarations. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h3 id="relationship-to-defrule">Relationship to defrule</h3>
+<p>A protocol may own zero or more rules. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<h4 id="multiplicity">Multiplicity</h4>
+<pre class="hljs"><code><div>Protocol 1 ---- 0..* Rule
+</div></code></pre>
+<h4 id="ownership">Ownership</h4>
+<pre class="hljs"><code><div>Protocol ◼── Rule
+</div></code></pre>
+<h4 id="semantics">Semantics</h4>
+<p>A rule SHALL belong to exactly one protocol.</p>
+<p>Rules are interpreted using the algebra and vocabulary defined by the owning protocol. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<hr>
+<h2 id="17-metamodel-definition">1.7 Metamodel Definition</h2>
+<h3 id="protocol-class">Protocol Class</h3>
+<pre class="hljs"><code><div>&lt;&lt;defprotocol&gt;&gt;
+Protocol
+---------------------------------
+name : Identifier
+algebra : AlgebraKind
+</div></code></pre>
+<h3 id="uml-representation-svg">UML Representation (SVG)</h3>
+<p><strong>[SVG UML Diagram Placeholder: Canonical Declaration Metamodel with Protocol Highlighted]</strong></p>
+<h3 id="uml-representation-plantuml">UML Representation (PlantUML)</h3>
+<p><strong>[PlantUML Diagram Placeholder: Canonical Declaration Metamodel with Protocol Highlighted]</strong></p>
+<h3 id="metamodel-interpretation">Metamodel Interpretation</h3>
+<p>The Protocol metaclass is the aggregate root of the Protocol Package.</p>
+<p>The Protocol metaclass owns the following attributes:</p>
+<pre class="hljs"><code><div>name : Identifier
+algebra : AlgebraKind
+</div></code></pre>
+<p>The Protocol metaclass participates in the following composition relationships:</p>
+<pre class="hljs"><code><div>Protocol 1 *-- 1..* Role
+Protocol 1 *-- 0..* Rule
+</div></code></pre>
+<p>The composition relationships indicate that roles and rules are lifecycle-dependent upon their owning protocol within the declaration metamodel.</p>
+<p>The Protocol metaclass is referenced, but not owned, by analysis and goal declarations. Analysis declarations refer to protocol definitions by identifier. Consequently, a protocol forms the semantic root from which strands, skeletons, listeners, goals, and formulas derive their protocol-specific meaning. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<p>The UML metamodel described in this reference is a documentation abstraction intended to make declaration ownership, cardinality, and navigability explicit. Although CPSA specifications are written as Lisp-style forms, the metamodel provides a consistent architectural view of declaration relationships. (Liskov et al., 2024; Ramsdell, n.d.)</p>
+<hr>
+<h2 id="18-uml-constraints">1.8 UML Constraints</h2>
+<pre class="hljs"><code><div>context Protocol
+inv UniqueProtocolName
+
+context Protocol
+inv ExactlyOneAlgebra
+
+context Protocol
+inv AtLeastOneRole
+
+context Protocol
+inv UniqueRoleNames
+
+context Protocol
+inv UniqueRuleNames
+
+context Role
+inv OwnedByExactlyOneProtocol
+
+context Role
+inv UsesProtocolAlgebra
+
+context Rule
+inv OwnedByExactlyOneProtocol
+
+context Rule
+inv UsesProtocolAlgebra
+</div></code></pre>
+<p>These constraints describe the protocol-level UML metamodel used by this reference. They are intended to formalize ownership, cardinality, and algebra inheritance relationships implied by the CPSA protocol declaration structure. (Liskov et al., 2024; Ramsdell, n.d.)</p>
+<hr>
+<h2 id="19-cpsa-processing-semantics">1.9 CPSA Processing Semantics</h2>
+<p>When CPSA processes a protocol declaration it performs the following conceptual activities:</p>
+<ol>
+<li>Parse the protocol identifier.</li>
+<li>Resolve the algebra.</li>
+<li>Establish the protocol namespace.</li>
+<li>Create the protocol model.</li>
+<li>Parse all contained role declarations.</li>
+<li>Parse all contained rule declarations.</li>
+<li>Validate protocol consistency.</li>
+<li>Register the protocol for subsequent analysis declarations.</li>
+</ol>
+<p>CPSA subsequently analyzes skeletons that reference the protocol and derives shape analyses using the protocol's roles, assumptions, and selected algebra. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<p>The resulting protocol model is then referenced by skeleton and goal declarations. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<hr>
+<h2 id="110-common-modeling-mistakes">1.10 Common Modeling Mistakes</h2>
+<h3 id="missing-roles">Missing Roles</h3>
+<p>Protocols without roles do not define participant behavior.</p>
+<h3 id="duplicate-role-names">Duplicate Role Names</h3>
+<p>Role identifiers should be unique within the protocol.</p>
+<h3 id="duplicate-rule-names">Duplicate Rule Names</h3>
+<p>Rule identifiers should be unique within the protocol.</p>
+<h3 id="algebra-mismatch">Algebra Mismatch</h3>
+<p>Diffie-Hellman operators should not be used in a protocol declared using the <code>basic</code> algebra.</p>
+<h3 id="protocol-logic-embedded-in-skeletons">Protocol Logic Embedded in Skeletons</h3>
+<p>Reusable protocol assumptions should be modeled as protocol-level rules when appropriate.</p>
+<p>These modeling mistakes are expressed here as reference-document guidance derived from the CPSA declaration structure, algebra selection model, and common protocol-modeling patterns described in CPSA documentation. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<hr>
+<h2 id="111-example">1.11 Example</h2>
+<p>The following example is inspired by the Needham-Schroeder public-key protocol examples used throughout CPSA documentation. The example is not a verbatim reproduction of CPSA source material but illustrates the same structure of a protocol declaration containing roles and protocol-level reasoning constructs. (Liskov et al., 2024; Guttman et al., 2026)</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defprotocol</span> needham-schroeder basic
+
+  (<span class="hljs-name">defrole</span> initiator
+    ...)
+
+  (<span class="hljs-name">defrole</span> responder
+    ...)
+
+  (<span class="hljs-name">defrule</span> authentication-invariant
+    ...))
+</div></code></pre>
+<p>In this example:</p>
+<ul>
+<li>The protocol name is <code>needham-schroeder</code>.</li>
+<li>The selected algebra is <code>basic</code>.</li>
+<li>Two roles are declared.</li>
+<li>One protocol rule is declared.</li>
+</ul>
+<p>Needham-Schroeder is frequently used within both CPSA documentation and the protocol-analysis literature because it demonstrates participant-role modeling and provides a well-known case in which automated analysis reveals non-obvious authentication vulnerabilities. (Liskov et al., 2024; Guttman et al., 2026; Lowe, 1996)</p>
+<hr>
+<h2 id="112-section-bibliography">1.12 Section Bibliography</h2>
+<p>Guttman, J. D., Ramsdell, J. D., Rowe, P. D., &amp; Liskov, M. D. (2026). <em>The Cryptographic Protocol Shapes Analyzer: A Manual for CPSA 4</em> (Version 4.4.8). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.8/src/doc/cpsa4manual.pdf</p>
+<p>Liskov, M. D., Ramsdell, J. D., Guttman, J. D., &amp; Rowe, P. D. (2024). <em>The Cryptographic Protocol Shapes Analyzer: A Manual for CPSA 4</em> (Version 4.4.5). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.5/src/doc/cpsa4manual.pdf</p>
+<p>Lowe, G. (1996). Breaking and fixing the Needham-Schroeder public-key protocol using FDR. In T. Margaria &amp; B. Steffen (Eds.), <em>Tools and Algorithms for the Construction and Analysis of Systems</em> (pp. 147-166). Springer. https://www.cs.ox.ac.uk/people/gavin.lowe/Security/Papers/NSFDR.ps</p>
+<p>Ramsdell, J. D. (n.d.). <em>CPSA source repository</em>. GitHub. https://github.com/ramsdell/cpsa</p>
+
+</body>
+</html>

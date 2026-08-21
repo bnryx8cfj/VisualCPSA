@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2-defrole.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chapter-2-defrole">Chapter 2: <code>defrole</code></h1>
+<h2 id="21-overview">2.1 Overview</h2>
+<p>The <code>defrole</code> declaration defines a protocol role within a CPSA protocol specification. Protocols in CPSA are composed of roles and rules, and role definitions provide the behavioral templates from which execution strands are instantiated during analysis. 【1-65b48d】【2-cf2cc9】</p>
+<p>A role models the expected behavior of an honest protocol participant and contains declarations that describe message exchanges, assumptions, variables, and protocol-specific analysis information. 【1-65b48d】【2-cf2cc9】</p>
+<p>Within the CPSA semantic domain, a role corresponds to an abstract strand specification consisting of:</p>
+<ul>
+<li>Variables</li>
+<li>Message events</li>
+<li>Ordering constraints</li>
+<li>Origination assumptions</li>
+<li>Non-origination assumptions</li>
+<li>Facts</li>
+<li>Channel annotations where supported</li>
+<li>State-related annotations where supported</li>
+</ul>
+<p>A role does not represent an execution instance. Instead, it defines a reusable behavioral specification that may be instantiated one or more times as strands during shape analysis. Individual strand instances may subsequently participate in skeletons, bundles, shapes, and realized executions. 【1-65b48d】【3-5768ef】</p>
+<p>The distinction between protocol definitions and execution instances is fundamental to CPSA's analytic approach. Protocols define what honest participants are intended to do, whereas CPSA's search procedures determine what executions are compatible with those definitions. 【3-5768ef】【2-cf2cc9】</p>
+<hr>
+<h1 id="22-purpose">2.2 Purpose</h1>
+<p>The purpose of <code>defrole</code> is to:</p>
+<ol>
+<li>Define protocol participant behavior. 【1-65b48d】【2-cf2cc9】</li>
+<li>Specify ordered message transmission and reception events. 【1-65b48d】【2-cf2cc9】</li>
+<li>Declare variables used within protocol messages. 【1-65b48d】【2-cf2cc9】</li>
+<li>Express assumptions required for protocol correctness. 【1-65b48d】【2-cf2cc9】</li>
+<li>Provide templates for strand instantiation. 【1-65b48d】【2-cf2cc9】</li>
+<li>Enable authentication analysis. 【3-5768ef】【2-cf2cc9】</li>
+<li>Enable secrecy analysis. 【3-5768ef】【2-cf2cc9】</li>
+<li>Support shape generation and protocol exploration. 【3-5768ef】【2-cf2cc9】</li>
+</ol>
+<p>Every participant behavior represented in CPSA is described through one or more roles. Typical protocol participants include initiators, responders, trusted servers, certification authorities, registration authorities, directory services, and hardware security devices. 【1-65b48d】【2-cf2cc9】</p>
+<hr>
+<h1 id="23-semantic-meaning">2.3 Semantic Meaning</h1>
+<p>A role is a declarative specification of an expected participant behavior. It describes how a participant is intended to behave rather than documenting what has already occurred in an execution. 【1-65b48d】【2-cf2cc9】</p>
+<p>Semantically, a role defines:</p>
+<ul>
+<li>A sequence of protocol events.</li>
+<li>Parameters represented by variables.</li>
+<li>Assumptions regarding origination.</li>
+<li>Assumptions regarding compromise.</li>
+<li>Optional facts.</li>
+<li>Optional channel information.</li>
+<li>Optional state-related annotations.</li>
+</ul>
+<p>A role becomes operational only when instantiated as a strand. CPSA analyzes executions by reasoning about strands generated from role definitions and determining what additional behavior must necessarily exist in any execution compatible with the available evidence. 【3-5768ef】【1-65b48d】</p>
+<p>Conceptually:</p>
+<pre class="hljs"><code><div>Role
+  ↓ instantiation
+Strand
+  ↓ participation
+Skeleton
+  ↓ completion
+Shape
+  ↓ realization
+Realized Execution
+</div></code></pre>
+<p>A role belongs to the protocol-definition layer, whereas strands, skeletons, bundles, shapes, and realized executions belong to the analysis layer. This separation allows CPSA to distinguish between protocol intent and protocol behavior. 【1-65b48d】【2-cf2cc9】</p>
+<hr>
+<h1 id="24-relationship-to-strand-space-theory">2.4 Relationship to Strand Space Theory</h1>
+<p>CPSA is founded on strand-space theory, a formal framework for representing and reasoning about cryptographic protocol executions. In strand-space theory, executions are represented as strands consisting of ordered communication events connected through causal relationships. 【1-65b48d】【2-cf2cc9】</p>
+<p>The CPSA <code>defrole</code> construct maps directly onto strand-space concepts.</p>
+<table>
+<thead>
+<tr>
+<th>CPSA Construct</th>
+<th>Strand-Space Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>defrole</code></td>
+<td>Strand Template</td>
+</tr>
+<tr>
+<td><code>trace</code></td>
+<td>Ordered Event Sequence</td>
+</tr>
+<tr>
+<td><code>send</code></td>
+<td>Positive Node</td>
+</tr>
+<tr>
+<td><code>recv</code></td>
+<td>Negative Node</td>
+</tr>
+<tr>
+<td>Instantiated Role</td>
+<td>Strand</td>
+</tr>
+<tr>
+<td>Strand Collection</td>
+<td>Skeleton</td>
+</tr>
+<tr>
+<td>Realized Skeleton</td>
+<td>Shape</td>
+</tr>
+</tbody>
+</table>
+<p>A role is not itself a strand. Instead, it acts as a template from which strands are generated during analysis. Multiple strands may therefore be instantiated from a single role definition. 【1-65b48d】【2-cf2cc9】</p>
+<p>The sequence of events contained in a role corresponds to the sequence of nodes that characterize an execution strand. Each transmission event corresponds to a positive node, and each reception event corresponds to a negative node. 【1-65b48d】</p>
+<p>Authentication arguments frequently depend on the relationships among strands, the uniqueness of originating values, and causal ordering constraints among nodes. CPSA uses these concepts extensively when generating shapes and evaluating security goals. 【3-5768ef】【1-65b48d】</p>
+<hr>
+<h1 id="25-uml-metamodel-mapping">2.5 UML Metamodel Mapping</h1>
+<h2 id="primary-semantic-element">Primary Semantic Element</h2>
+<pre class="hljs"><code><div>Grammar Construct: defrole
+Metamodel Element: Role
+Package: Protocol
+Stereotype: &lt;&lt;ProtocolDefinition&gt;&gt;
+</div></code></pre>
+<p>The <code>Role</code> metaclass provides the semantic representation corresponding to the concrete CPSA <code>defrole</code> declaration. Each syntactically valid <code>defrole</code> declaration is represented within the metamodel as an instance of the <code>Role</code> class. The metamodel therefore establishes traceability between language syntax and semantic structure. 【1-65b48d】【2-cf2cc9】</p>
+<h2 id="related-metamodel-elements">Related Metamodel Elements</h2>
+<ul>
+<li>Protocol</li>
+<li>Role</li>
+<li>Variable</li>
+<li>Sort</li>
+<li>Trace</li>
+<li>Event</li>
+<li>SendEvent</li>
+<li>ReceiveEvent</li>
+<li>Fact</li>
+<li>Strand</li>
+<li>Node</li>
+</ul>
+<p>These classes together represent the protocol-definition and execution semantics associated with CPSA role specifications. 【1-65b48d】【2-cf2cc9】</p>
+<hr>
+<h1 id="26-abstract-syntax">2.6 Abstract Syntax</h1>
+<p>General form:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defrole</span> role-name
+  declarations
+  role-body)
+</div></code></pre>
+<p>Canonical structure:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defrole</span> initiator
+  (<span class="hljs-name">vars</span>
+    (<span class="hljs-name">a</span> b name)
+    (<span class="hljs-name">n</span> text))
+
+  (<span class="hljs-name">trace</span>
+    (<span class="hljs-name">send</span> ...)
+    (<span class="hljs-name">recv</span> ...))
+
+  (<span class="hljs-name">uniq-orig</span> n)
+  (<span class="hljs-name">non-orig</span> (<span class="hljs-name">privk</span> a)))
+</div></code></pre>
+<p>This structure reflects the standard CPSA role definition format in which variable declarations provide role parameters and the trace defines participant behavior. Origination assumptions and non-origination assumptions constrain the security properties considered during analysis. 【1-65b48d】【2-cf2cc9】</p>
+<hr>
+<h1 id="27-english-description-of-syntax">2.7 English Description of Syntax</h1>
+<p>A <code>defrole</code> declaration:</p>
+<ol>
+<li>Begins with the keyword <code>defrole</code>.</li>
+<li>Specifies a unique role identifier.</li>
+<li>Declares role-local variables using one or more <code>vars</code> forms.</li>
+<li>Defines behavior through exactly one trace.</li>
+<li>May declare uniquely originating values.</li>
+<li>May declare non-originating values.</li>
+<li>May declare facts.</li>
+<li>May include additional CPSA-supported annotations.</li>
+</ol>
+<p>Collectively, these declarations define the behavior expected of an honest participant executing the protocol. 【1-65b48d】【2-cf2cc9】</p>
+<hr>
+<h1 id="28-syntax-components">2.8 Syntax Components</h1>
+<h2 id="281-role-name">2.8.1 Role Name</h2>
+<p>The role name uniquely identifies the role within a protocol definition. Each role name serves as a symbolic identifier that can later be referenced by strands, skeletons, goals, and analysis constructs. 【2-cf2cc9】【1-65b48d】</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">defrole</span> initiator
+ ...)
+</div></code></pre>
+<h3 id="constraints">Constraints</h3>
+<ul>
+<li>Must be unique within a protocol.</li>
+<li>Must be a valid CPSA identifier.</li>
+<li>Must not conflict with another role in the same protocol.</li>
+</ul>
+<h3 id="metamodel-mapping">Metamodel Mapping</h3>
+<pre class="hljs"><code><div>defrole name → Role.name
+</div></code></pre>
+<hr>
+<h2 id="282-variable-declarations">2.8.2 Variable Declarations</h2>
+<p>Variables define symbolic parameters used within traces and message terms. CPSA employs a many-sorted message algebra in which each variable is associated with a declared sort. 【2-cf2cc9】【1-65b48d】</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">vars</span>
+  (<span class="hljs-name">a</span> b name)
+  (<span class="hljs-name">n</span> text)
+  (<span class="hljs-name">k</span> skey))
+</div></code></pre>
+<h3 id="semantics">Semantics</h3>
+<p>Variables represent unknown protocol values that become bound during strand instantiation and analysis. Sort declarations restrict the kinds of values that may be substituted for variables. 【2-cf2cc9】【1-65b48d】</p>
+<h3 id="semantic-mapping">Semantic Mapping</h3>
+<pre class="hljs"><code><div>vars → Variable
+name → Sort
+text → Sort
+skey → Sort
+</div></code></pre>
+<h3 id="uml-classes">UML Classes</h3>
+<ul>
+<li>Variable</li>
+<li>Sort</li>
+</ul>
+<h3 id="example-attribution">Example Attribution</h3>
+<p>The style of variable declaration shown above follows the conventions established throughout CPSA documentation and examples. Principal identities are typically represented using the <code>name</code> sort, fresh values using the <code>text</code> sort, and cryptographic keys using key-related sorts such as <code>skey</code>. 【2-cf2cc9】【3-5768ef】</p>
+<hr>
+<h2 id="283-trace-declaration">2.8.3 Trace Declaration</h2>
+<p>A role contains exactly one trace.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">trace</span>
+  (<span class="hljs-name">send</span> m1)
+  (<span class="hljs-name">recv</span> m2)
+  (<span class="hljs-name">send</span> m3))
+</div></code></pre>
+<p>A trace defines the ordered sequence of communication events associated with a role. Event ordering is semantically significant because strand-space reasoning depends on the causal ordering of transmissions and receptions. 【1-65b48d】【2-cf2cc9】</p>
+<h3 id="semantic-mapping">Semantic Mapping</h3>
+<pre class="hljs"><code><div>trace → Trace
+</div></code></pre>
+<h3 id="constraints">Constraints</h3>
+<ul>
+<li>Trace ordering is significant.</li>
+<li>Event order is immutable.</li>
+<li>Events are indexed by position.</li>
+<li>Every trace contains at least one event.</li>
+</ul>
+<h3 id="example-attribution">Example Attribution</h3>
+<p>This pattern reflects the standard CPSA view of protocol behavior as an ordered sequence of communication events occurring along a strand. Similar structures appear throughout CPSA examples and the strand-space literature. 【1-65b48d】【2-cf2cc9】</p>
+<hr>
+<h2 id="284-send-events">2.8.4 Send Events</h2>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">send</span> (<span class="hljs-name">enc</span> n (<span class="hljs-name">pubk</span> b)))
+</div></code></pre>
+<p>A send event represents transmission of a message by a protocol participant. Within strand-space terminology, a transmission event corresponds to a positive node within a strand. 【1-65b48d】</p>
+<h3 id="meaning">Meaning</h3>
+<p>The participant transmits the specified message onto the communication medium.</p>
+<h3 id="metamodel-mapping">Metamodel Mapping</h3>
+<pre class="hljs"><code><div>send → SendEvent
+</div></code></pre>
+<h3 id="processing-semantics">Processing Semantics</h3>
+<p>During analysis, send events contribute information that may explain receptions observed elsewhere in a skeleton. CPSA attempts to determine what transmissions must exist to satisfy observed communication patterns. 【3-5768ef】【2-cf2cc9】</p>
+<hr>
+<h2 id="285-receive-events">2.8.5 Receive Events</h2>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">recv</span> (<span class="hljs-name">enc</span> n (<span class="hljs-name">pubk</span> a)))
+</div></code></pre>
+<p>A receive event represents reception of a message by a protocol participant. Within strand-space terminology, a reception event corresponds to a negative node within a strand. 【1-65b48d】</p>
+<h3 id="meaning">Meaning</h3>
+<p>The participant expects reception of a message compatible with the specified message pattern.</p>
+<h3 id="metamodel-mapping">Metamodel Mapping</h3>
+<pre class="hljs"><code><div>recv → ReceiveEvent
+</div></code></pre>
+<h3 id="processing-semantics">Processing Semantics</h3>
+<p>Receive events frequently drive CPSA augmentation because the analyzer must determine what preceding behavior could account for the observed reception. 【3-5768ef】【2-cf2cc9】</p>
+<h2 id="286-uniq-orig">2.8.6 <code>uniq-orig</code></h2>
+<p>The <code>uniq-orig</code> construct specifies that one or more terms originate uniquely within honest protocol behavior. Unique origination assumptions are central to CPSA authentication reasoning and are commonly used to model freshness assumptions associated with nonces, session identifiers, and newly generated values. 【1-057dd3】【2-487b95】</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">uniq-orig</span> n)
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>The specified term originates at exactly one location within honest protocol execution.</p>
+<h3 id="typical-uses">Typical Uses</h3>
+<ul>
+<li>Nonces</li>
+<li>Session identifiers</li>
+<li>Transaction identifiers</li>
+<li>Fresh cryptographic material</li>
+</ul>
+<h3 id="metamodel-mapping">Metamodel Mapping</h3>
+<pre class="hljs"><code><div>uniq-orig → OriginationConstraint
+</div></code></pre>
+<h3 id="example-attribution">Example Attribution</h3>
+<p>The use of uniquely originating nonces is a standard modeling practice throughout CPSA documentation and strand-space analyses because authentication arguments frequently depend on proving that a value has a single honest source. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="287-non-orig">2.8.7 <code>non-orig</code></h2>
+<p>The <code>non-orig</code> construct identifies terms assumed not to originate within honest protocol behavior. Such values are treated as uncompromised inputs to the analysis and are frequently used to model protected long-term secrets. 【1-057dd3】【2-487b95】</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">non-orig</span> (<span class="hljs-name">privk</span> a))
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>The specified value is assumed not to originate from any honest protocol participant during the execution under consideration.</p>
+<h3 id="typical-uses">Typical Uses</h3>
+<ul>
+<li>Long-term private keys</li>
+<li>Shared master secrets</li>
+<li>Root credentials</li>
+<li>Protected security parameters</li>
+</ul>
+<h3 id="metamodel-mapping">Metamodel Mapping</h3>
+<pre class="hljs"><code><div>non-orig → NonOriginationConstraint
+</div></code></pre>
+<h3 id="example-attribution">Example Attribution</h3>
+<p>Modeling private keys as non-originating values is a common CPSA practice because authentication and secrecy analyses often assume uncompromised cryptographic credentials. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="288-facts">2.8.8 Facts</h2>
+<p>Facts provide analysis annotations that extend protocol reasoning beyond pure message exchange. Facts are especially important in CPSA models involving state reasoning, trusted relationships, authorization constraints, and protocol-specific assumptions. 【3-337807】【1-057dd3】</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">facts</span>
+  (<span class="hljs-name">trusted</span> a)
+  (<span class="hljs-name">registered</span> b))
+</div></code></pre>
+<h3 id="semantic-mapping">Semantic Mapping</h3>
+<pre class="hljs"><code><div>facts → Fact
+</div></code></pre>
+<h3 id="uml-classes">UML Classes</h3>
+<ul>
+<li>Fact</li>
+</ul>
+<h3 id="example-attribution">Example Attribution</h3>
+<p>The use of facts extends the original strand-space formalism and supports richer protocol-analysis scenarios including state-based reasoning and rule processing. 【3-337807】【1-057dd3】</p>
+<hr>
+<h1 id="29-parameters-and-attributes">2.9 Parameters and Attributes</h1>
+<h2 id="role-class">Role Class</h2>
+<h3 id="required-attributes">Required Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>Identifier</td>
+<td>Unique role identifier</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-attributes">Recommended Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>trace</td>
+<td>Trace</td>
+<td>Role behavior</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>Variable[*]</td>
+<td>Declared role variables</td>
+</tr>
+<tr>
+<td>facts</td>
+<td>Fact[*]</td>
+<td>Associated facts</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>Protocol</td>
+<td>Owning protocol</td>
+</tr>
+</tbody>
+</table>
+<h3 id="contained-elements">Contained Elements</h3>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Multiplicity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Variable</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Trace</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Fact</td>
+<td>0..*</td>
+</tr>
+</tbody>
+</table>
+<h3 id="referenced-elements">Referenced Elements</h3>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Relationship</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>Container</td>
+</tr>
+<tr>
+<td>Strand</td>
+<td>Instantiated As</td>
+</tr>
+</tbody>
+</table>
+<p>The Role metaclass serves as the central behavioral abstraction within CPSA protocol specifications and functions as the source from which execution strands are derived. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h1 id="210-containment-relationships">2.10 Containment Relationships</h1>
+<h2 id="protocol-contains-role">Protocol Contains Role</h2>
+<h3 id="source">Source</h3>
+<pre class="hljs"><code><div>Protocol
+</div></code></pre>
+<h3 id="target">Target</h3>
+<pre class="hljs"><code><div>Role
+</div></code></pre>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Protocol → 1..* Roles
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Every role belongs to exactly one protocol and cannot exist independently of a protocol definition. CPSA protocols are defined in terms of collections of roles and rules. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="role-contains-variable">Role Contains Variable</h2>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Role → 0..* Variables
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Variables are declared within the scope of a role and parameterize the behavior described by its trace. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="role-contains-trace">Role Contains Trace</h2>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Role → 1 Trace
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>Every CPSA role defines exactly one behavioral trace describing the participant's expected sequence of events. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="trace-contains-event">Trace Contains Event</h2>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Trace → 1..* Events
+</div></code></pre>
+<h3 id="meaning">Meaning</h3>
+<p>The trace consists of an ordered collection of communication events. Event ordering is semantically significant and preserved throughout analysis. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h1 id="211-reference-relationships">2.11 Reference Relationships</h1>
+<h2 id="role-to-strand">Role to Strand</h2>
+<h3 id="meaning">Meaning</h3>
+<p>A strand is created by instantiating a role under a particular substitution and execution context. Multiple strands may originate from the same role specification. 【1-057dd3】【2-487b95】</p>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Role → 0..* Strands
+</div></code></pre>
+<hr>
+<h2 id="event-to-term">Event to Term</h2>
+<h3 id="meaning">Meaning</h3>
+<p>Events reference message terms drawn from the CPSA message algebra. Transmissions and receptions are therefore associated with explicit algebraic message representations. 【2-487b95】【1-057dd3】</p>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Event → 1 Term
+</div></code></pre>
+<hr>
+<h2 id="strand-to-node">Strand to Node</h2>
+<h3 id="meaning">Meaning</h3>
+<p>Nodes represent event occurrences within strands. Every node belongs to exactly one strand. 【1-057dd3】</p>
+<h3 id="multiplicity">Multiplicity</h3>
+<pre class="hljs"><code><div>1 Strand → 1..* Nodes
+</div></code></pre>
+<hr>
+<h1 id="212-cardinality-constraints">2.12 Cardinality Constraints</h1>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Cardinality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol contains Role</td>
+<td>1..*</td>
+</tr>
+<tr>
+<td>Role contains Trace</td>
+<td>Exactly 1</td>
+</tr>
+<tr>
+<td>Trace contains Event</td>
+<td>1..*</td>
+</tr>
+<tr>
+<td>Role contains Variable</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Role contains Fact</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Role instantiates Strand</td>
+<td>0..*</td>
+</tr>
+<tr>
+<td>Strand contains Node</td>
+<td>1..*</td>
+</tr>
+</tbody>
+</table>
+<p>These multiplicities ensure consistency between protocol definitions and the execution structures used by CPSA analysis. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h1 id="213-umlocl-style-invariants">2.13 UML/OCL Style Invariants</h1>
+<h2 id="role-name-uniqueness">Role Name Uniqueness</h2>
+<pre class="hljs"><code><div>context Protocol
+inv UniqueRoleNames:
+self.role-&gt;isUnique(name)
+</div></code></pre>
+<h3 id="rationale">Rationale</h3>
+<p>Role identifiers must be unique within a protocol.</p>
+<hr>
+<h2 id="single-trace-requirement">Single Trace Requirement</h2>
+<pre class="hljs"><code><div>context Role
+inv SingleTrace:
+self.trace-&gt;size() = 1
+</div></code></pre>
+<h3 id="rationale">Rationale</h3>
+<p>Each role defines exactly one behavioral trace.</p>
+<hr>
+<h2 id="nonempty-trace">Nonempty Trace</h2>
+<pre class="hljs"><code><div>context Trace
+inv HasEvent:
+self.event-&gt;size() &gt; 0
+</div></code></pre>
+<h3 id="rationale">Rationale</h3>
+<p>A trace without events provides no protocol behavior.</p>
+<hr>
+<h2 id="ordered-events">Ordered Events</h2>
+<pre class="hljs"><code><div>context Trace
+inv OrderedEvents:
+self.event-&gt;isOrdered()
+</div></code></pre>
+<h3 id="rationale">Rationale</h3>
+<p>Strand-space analysis depends on event ordering. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="variable-ownership">Variable Ownership</h2>
+<pre class="hljs"><code><div>context Variable
+inv BelongsToRole:
+self.role-&gt;size() = 1
+</div></code></pre>
+<h3 id="rationale">Rationale</h3>
+<p>Variable declarations are role scoped.</p>
+<hr>
+<h1 id="214-cpsa-processing-semantics">2.14 CPSA Processing Semantics</h1>
+<p>During protocol loading, CPSA:</p>
+<ol>
+<li>Parses the role definition. 【2-487b95】</li>
+<li>Creates internal variable representations. 【2-487b95】</li>
+<li>Builds trace event structures. 【2-487b95】</li>
+<li>Validates sort consistency. 【2-487b95】</li>
+<li>Registers uniqueness assumptions. 【2-487b95】</li>
+<li>Registers non-origination assumptions. 【2-487b95】</li>
+<li>Associates the role with its enclosing protocol. 【2-487b95】</li>
+</ol>
+<p>During analysis, CPSA:</p>
+<ol>
+<li>Instantiates roles as strands. 【1-057dd3】【2-487b95】</li>
+<li>Performs term substitutions. 【2-487b95】</li>
+<li>Evaluates origination assumptions. 【1-057dd3】【2-487b95】</li>
+<li>Applies protocol rules. 【1-057dd3】</li>
+<li>Constructs and transforms skeletons. 【2-487b95】【4-426c98】</li>
+<li>Performs augmentation and reduction operations. 【2-487b95】</li>
+<li>Computes protocol shapes. 【4-426c98】【2-487b95】</li>
+<li>Identifies realized executions. 【1-057dd3】</li>
+</ol>
+<p>One of CPSA's primary goals is the enumeration of all essentially distinct shapes compatible with an initial problem description. Authentication properties, secrecy properties, attacks, and anomalies can frequently be determined from these shapes. 【4-426c98】【2-487b95】</p>
+<hr>
+<h1 id="215-common-modeling-mistakes">2.15 Common Modeling Mistakes</h1>
+<h2 id="mistake-1-omitting-variable-declarations">Mistake 1: Omitting Variable Declarations</h2>
+<p>Incorrect:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">send</span> (<span class="hljs-name">enc</span> n (<span class="hljs-name">pubk</span> b)))
+</div></code></pre>
+<p>without declaring <code>n</code> or <code>b</code>.</p>
+<h3 id="consequence">Consequence</h3>
+<p>Undefined variables prevent proper interpretation and analysis.</p>
+<hr>
+<h2 id="mistake-2-incorrect-event-ordering">Mistake 2: Incorrect Event Ordering</h2>
+<p>Placing events in an order inconsistent with the protocol design.</p>
+<h3 id="consequence">Consequence</h3>
+<p>Strand-space reasoning may produce unintended or misleading results. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="mistake-3-missing-uniq-orig-assumptions">Mistake 3: Missing <code>uniq-orig</code> Assumptions</h2>
+<p>Fresh values used without uniqueness assumptions.</p>
+<h3 id="consequence">Consequence</h3>
+<p>Authentication arguments may fail because freshness cannot be established. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h2 id="mistake-4-misuse-of-non-orig">Mistake 4: Misuse of <code>non-orig</code></h2>
+<p>Declaring values as non-originating when protocol participants legitimately generate them.</p>
+<h3 id="consequence">Consequence</h3>
+<p>The model no longer accurately reflects protocol semantics.</p>
+<hr>
+<h2 id="mistake-5-role-duplication">Mistake 5: Role Duplication</h2>
+<p>Creating multiple roles that express identical behavior.</p>
+<h3 id="consequence">Consequence</h3>
+<p>Unnecessary complexity and reduced model clarity.</p>
+<hr>
+<h1 id="216-uml-metamodel-interpretation">2.16 UML Metamodel Interpretation</h1>
+<p>The <code>Role</code> metaclass represents the semantic abstraction of CPSA participant behavior. It acts as the central protocol-definition construct from which execution strands are instantiated. 【1-057dd3】【2-487b95】</p>
+<p>Responsibilities include:</p>
+<ul>
+<li>Owning Variable instances.</li>
+<li>Owning a Trace.</li>
+<li>Owning optional Fact instances.</li>
+<li>Defining participant behavior.</li>
+<li>Supporting strand instantiation.</li>
+<li>Supporting protocol-level reasoning.</li>
+</ul>
+<p>The UML representation explicitly separates:</p>
+<ol>
+<li>Concrete syntax (<code>defrole</code>).</li>
+<li>Semantic abstraction (<code>Role</code>).</li>
+<li>Execution representation (<code>Strand</code>).</li>
+</ol>
+<p>This separation promotes traceability between CPSA language constructs and their execution semantics. 【1-057dd3】【2-487b95】</p>
+<hr>
+<h1 id="217-svg-diagram-placeholder">2.17 SVG Diagram Placeholder</h1>
+<h2 id="placeholder-canonical-uml-metamodel-highlighting-role">Placeholder: Canonical UML Metamodel Highlighting <code>Role</code></h2>
+<p><strong>Future SVG Location</strong></p>
+<pre class="hljs"><code><div>[SVG-DIAGRAM-CH02-DEFROLE]
+</div></code></pre>
+<h3 id="intended-uml-content">Intended UML Content</h3>
+<ul>
+<li>Protocol package</li>
+<li>Analysis package</li>
+<li>Goal package</li>
+<li>Protocol</li>
+<li>Role</li>
+<li>Rule</li>
+<li>Variable</li>
+<li>Sort</li>
+<li>Trace</li>
+<li>Event</li>
+<li>SendEvent</li>
+<li>ReceiveEvent</li>
+<li>Strand</li>
+<li>Node</li>
+<li>Skeleton</li>
+<li>Shape</li>
+<li>RealizedExecution</li>
+<li>Fact</li>
+<li>Goal</li>
+<li>Formula</li>
+</ul>
+<h3 id="rendering-requirements">Rendering Requirements</h3>
+<ul>
+<li>Complete canonical CPSA metamodel</li>
+<li><code>Role</code> highlighted</li>
+<li>Multiplicities displayed</li>
+<li>Stereotypes displayed</li>
+<li>Package structure displayed</li>
+<li>Consistent layout with all other chapters</li>
+</ul>
+<hr>
+<h1 id="218-plantuml-diagram-placeholder">2.18 PlantUML Diagram Placeholder</h1>
+<h2 id="placeholder-canonical-uml-metamodel-source-diagram">Placeholder: Canonical UML Metamodel Source Diagram</h2>
+<p><strong>Future PlantUML Location</strong></p>
+<pre class="hljs"><code><div>[PLANTUML-DIAGRAM-CH02-DEFROLE]
+</div></code></pre>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>Identical semantics to SVG version</li>
+<li>Canonical package layout</li>
+<li>Consistent relationship routing</li>
+<li>Consistent highlighting strategy</li>
+<li><code>Role</code> visually emphasized</li>
+</ul>
+<hr>
+<h1 id="219-complete-example">2.19 Complete Example</h1>
+<h2 id="needham-schroeder-public-key-protocol-lineage-example">Needham-Schroeder Public-Key Protocol Lineage Example</h2>
+<pre class="hljs"><code><div>(<span class="hljs-name">defrole</span> initiator
+  (<span class="hljs-name">vars</span>
+    (<span class="hljs-name">a</span> b name)
+    (<span class="hljs-name">na</span> text))
+
+  (<span class="hljs-name">trace</span>
+    (<span class="hljs-name">send</span> (<span class="hljs-name">enc</span> na a (<span class="hljs-name">pubk</span> b)))
+    (<span class="hljs-name">recv</span> (<span class="hljs-name">enc</span> na nb (<span class="hljs-name">pubk</span> a)))
+    (<span class="hljs-name">send</span> (<span class="hljs-name">enc</span> nb (<span class="hljs-name">pubk</span> b))))
+
+  (<span class="hljs-name">uniq-orig</span> na)
+  (<span class="hljs-name">non-orig</span> (<span class="hljs-name">privk</span> a))
+  (<span class="hljs-name">non-orig</span> (<span class="hljs-name">privk</span> b)))
+</div></code></pre>
+<h3 id="example-attribution">Example Attribution</h3>
+<p>This example is derived from the Needham-Schroeder Public-Key Protocol introduced by Needham and Schroeder and follows a modeling style commonly used in strand-space and CPSA analyses. The example has been simplified for explanatory purposes while preserving the essential structure of the initiator role. 【1-057dd3】</p>
+<p>The modeling style used in this example is consistent with CPSA protocol examples, particularly the representation of principals as variables, explicit nonce generation, and long-term key protection assumptions. 【4-426c98】【2-487b95】</p>
+<h3 id="interpretation">Interpretation</h3>
+<p>The variable <code>a</code> represents the initiator principal, while <code>b</code> represents the intended responder. Variables are declared using CPSA's many-sorted message algebra and parameterize the role definition. 【1-057dd3】【2-487b95】</p>
+<p>The nonce <code>na</code> is introduced as a fresh value and is declared uniquely originating through the <code>uniq-orig</code> declaration. Unique origination assumptions support freshness reasoning and authentication analysis. 【1-057dd3】【2-487b95】</p>
+<p>The trace consists of three ordered communication events. Event ordering is semantically significant because strand-space analysis depends on causal relationships among transmission and reception nodes. 【1-057dd3】【2-487b95】</p>
+<p>The declarations:</p>
+<pre class="hljs"><code><div>(<span class="hljs-name">non-orig</span> (<span class="hljs-name">privk</span> a))
+(<span class="hljs-name">non-orig</span> (<span class="hljs-name">privk</span> b))
+</div></code></pre>
+<p>assert that the long-term private keys remain uncompromised throughout the analysis. Such assumptions are common in authentication and secrecy studies conducted with CPSA. 【1-057dd3】【2-487b95】</p>
+<h3 id="relationship-to-the-metamodel">Relationship to the Metamodel</h3>
+<table>
+<thead>
+<tr>
+<th>CPSA Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>defrole</td>
+<td>Role</td>
+</tr>
+<tr>
+<td>vars</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Sort</td>
+</tr>
+<tr>
+<td>text</td>
+<td>Sort</td>
+</tr>
+<tr>
+<td>trace</td>
+<td>Trace</td>
+</tr>
+<tr>
+<td>send</td>
+<td>SendEvent</td>
+</tr>
+<tr>
+<td>recv</td>
+<td>ReceiveEvent</td>
+</tr>
+<tr>
+<td>uniq-orig</td>
+<td>OriginationConstraint</td>
+</tr>
+<tr>
+<td>non-orig</td>
+<td>NonOriginationConstraint</td>
+</tr>
+<tr>
+<td>enc</td>
+<td>FunctionApplication</td>
+</tr>
+<tr>
+<td>pubk</td>
+<td>FunctionApplication</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="220-grammar-to-metamodel-traceability-matrix">2.20 Grammar-to-Metamodel Traceability Matrix</h1>
+<table>
+<thead>
+<tr>
+<th>Grammar Construct</th>
+<th>Metamodel Element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>defrole</td>
+<td>Role</td>
+</tr>
+<tr>
+<td>vars</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>trace</td>
+<td>Trace</td>
+</tr>
+<tr>
+<td>send</td>
+<td>SendEvent</td>
+</tr>
+<tr>
+<td>recv</td>
+<td>ReceiveEvent</td>
+</tr>
+<tr>
+<td>uniq-orig</td>
+<td>OriginationConstraint</td>
+</tr>
+<tr>
+<td>non-orig</td>
+<td>NonOriginationConstraint</td>
+</tr>
+<tr>
+<td>facts</td>
+<td>Fact</td>
+</tr>
+<tr>
+<td>term</td>
+<td>Term</td>
+</tr>
+<tr>
+<td>variable reference</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td>message expression</td>
+<td>FunctionApplication</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="221-citation-and-source-attribution-policy">2.21 Citation and Source Attribution Policy</h1>
+<h2 id="citation-policy">Citation Policy</h2>
+<p>This reference uses inline citations to provide traceability from CPSA language constructs, semantics, and examples to authoritative sources.</p>
+<p>Citations are required for:</p>
+<ul>
+<li>CPSA language semantics</li>
+<li>CPSA processing semantics</li>
+<li>Strand-space theory</li>
+<li>Message algebra concepts</li>
+<li>Authentication reasoning</li>
+<li>Secrecy reasoning</li>
+<li>Analysis concepts</li>
+<li>Historical statements</li>
+<li>Research-derived examples</li>
+<li>Paraphrases of CPSA documentation</li>
+<li>Direct quotations</li>
+</ul>
+<p>Whenever practical, assertions should be supported by both CPSA documentation and foundational strand-space literature. 【1-057dd3】【2-487b95】</p>
+<h2 id="example-attribution-policy">Example Attribution Policy</h2>
+<p>Examples appearing in this chapter are derived from, inspired by, or adapted from CPSA documentation, CPSA repositories, strand-space literature, and published protocol analyses. Examples may be simplified for instructional purposes while preserving essential semantic properties. 【4-426c98】【5-bf247c】【1-057dd3】【2-487b95】</p>
+<p>Needham-Schroeder examples explicitly identify their protocol lineage and distinguish between the original protocol and CPSA-oriented adaptations. 【1-057dd3】</p>
+<hr>
+<h1 id="222-section-bibliography">2.22 Section Bibliography</h1>
+<p>Dolev, D., &amp; Yao, A. C. (1983). <em>On the security of public key protocols</em>. IEEE Transactions on Information Theory, 29(2), 198–208. https://doi.org/10.1109/TIT.1983.1056650</p>
+<p>Guttman, J. D. (2009). Security protocol shapes. In S. Artemov &amp; A. Nerode (Eds.), <em>Logical Foundations of Computer Science (LFCS 2009)</em> (pp. 129–143). Springer. https://doi.org/10.1007/978-3-540-92687-0_13</p>
+<p>Guttman, J. D., Liskov, M. D., Ramsdell, J. D., &amp; Rowe, P. D. (2015). <em>Formal support for standardizing protocols with state</em>. The MITRE Corporation. https://www.mitre.org/sites/default/files/publications/pr-15-1884-formal-support-standardizing-protocols-with-state.pdf 【3-337807】</p>
+<p>Guttman, J. D., &amp; Ramsdell, J. D. (2026). <em>Strand spaces with channels and rules</em> (CPSA Version 4.4.8). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.8/src/doc/cpsafoundation.pdf 【1-057dd3】</p>
+<p>Herzog, J. C., Thayer, F. J., &amp; Guttman, J. D. (1999). <em>Strand spaces: Why is a security protocol correct?</em> Proceedings of the IEEE Symposium on Security and Privacy. ISBN 0-7695-0071-7.</p>
+<p>Needham, R. M., &amp; Schroeder, M. D. (1978). Using encryption for authentication in large networks of computers. <em>Communications of the ACM, 21</em>(12), 993–999. https://doi.org/10.1145/359657.359659</p>
+<p>Ramsdell, J. D. (n.d.). <em>Cryptographic Protocol Shapes Analyzer (CPSA) Source Repository</em>. GitHub. Retrieved August 8, 2026, from https://github.com/ramsdell/cpsa 【5-bf247c】</p>
+<p>Ramsdell, J. D., &amp; Guttman, J. D. (2022). <em>CPSA Design</em> (Version 4.3.1). The MITRE Corporation. https://hackage-content.haskell.org/package/cpsa-4.4.3/src/doc/cpsadesign.pdf 【2-487b95】</p>
+<p>The MITRE Corporation. (n.d.). <em>CPSA4: Cryptographic Protocol Shapes Analyzer Version 4</em>. GitHub Repository. Retrieved August 8, 2026, from https://github.com/mitre/cpsa 【4-426c98】</p>
+
+</body>
+</html>
