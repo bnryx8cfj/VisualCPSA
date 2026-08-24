@@ -61,3 +61,11 @@ If `show_intro` is true in the settings file, a splash screen appears before the
 - an animated GIF introduction,
 - a `show introduction` checkbox,
 - and a `Dismiss` button.
+
+## Logging CLI
+
+```bat
+python main.py --config visualcpsa_settings.json --log-level DEBUG --log-file vcpsa.log
+```
+
+The settings file is migrated automatically to include `log_level` and `log_file` when either key is missing.

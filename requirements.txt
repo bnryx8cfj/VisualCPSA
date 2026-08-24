@@ -1,1 +1,1 @@
-# No third-party packages are required at runtime.
+# No third-party runtime dependencies.

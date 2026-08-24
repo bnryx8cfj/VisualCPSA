@@ -62,7 +62,7 @@ class VisualCPSAModelTestCase(unittest.TestCase):
         )
         lifeline = LifelineView(
             participant_id=participant.id,
-            x=x_position,
+            x_position=x_position,
         )
         self.project.semantic_model.participants.append(participant)
         self.protocol.participant_ids.append(participant.id)
@@ -97,9 +97,9 @@ class VisualCPSAModelTestCase(unittest.TestCase):
             exchange_id=exchange.id,
             source_lifeline_id=source_lifeline.id,
             target_lifeline_id=target_lifeline.id,
-            y=row_y,
+            y_position=row_y,
             label_position=(
-                (source_lifeline.x + target_lifeline.x) / 2,
+                (source_lifeline.x_position + target_lifeline.x_position) / 2,
                 row_y - 15,
             ),
         )
@@ -251,7 +251,7 @@ class VisualCPSAModelTestCase(unittest.TestCase):
         self.assertIn("semantic_model", decoded_json)
         self.assertEqual(len(loaded.semantic_model.exchanges), 3)
         self.assertEqual(
-            [view.y for view in loaded.active_diagram().sorted_message_views()],
+            [view.y_position for view in loaded.active_diagram().sorted_message_views()],
             [140.0, 200.0, 260.0],
         )
 
@@ -260,8 +260,7 @@ class VisualCPSAModelTestCase(unittest.TestCase):
         alice, alice_lifeline = self.add_participant("Alice", "init", 120.0)
         incomplete = MessageExchangeDraft(
             source_participant_id=alice.id,
-            target_participant_id=None,
-            message_term_id=None,
+            message_term_id="",
             ordinal_hint=150.0,
         )
         self.project.semantic_model.exchanges.append(incomplete)
@@ -270,14 +269,13 @@ class VisualCPSAModelTestCase(unittest.TestCase):
             MessageExchangeView(
                 exchange_id=incomplete.id,
                 source_lifeline_id=alice_lifeline.id,
-                target_lifeline_id=None,
-                y=150.0,
+                y_position=150.0,
             )
         )
         reconstructed = CPSAGraphicalProject.from_dict(self.project.to_dict())
         restored = reconstructed.semantic_model.exchanges_by_id()[incomplete.id]
-        self.assertIsNone(restored.target_participant_id)
-        self.assertIsNone(restored.message_term_id)
+        self.assertFalse(restored.target_participant_id)
+        self.assertFalse(restored.message_term_id)
         diagnostics = validate_project(self.project)
         self.assertTrue(any("target participant" in message for message in diagnostics))
         self.assertTrue(any("term" in message for message in diagnostics))
